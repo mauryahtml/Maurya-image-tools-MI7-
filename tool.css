@@ -148,27 +148,44 @@ margin-top:10px;
 font-size:16px;
 
 }
-const targetValue=document.getElementById("targetValue");
-const targetUnit=document.getElementById("targetUnit");
+.target-size{
 
-function getTargetBytes(){
+display:flex;
 
-let value=parseFloat(targetValue.value);
+gap:10px;
 
-if(isNaN(value)||value<=0){
-
-value=100;
-
-targetValue.value=100;
+margin:15px 0;
 
 }
 
-if(targetUnit.value==="MB"){
+.target-size input{
 
-return value*1024*1024;
+flex:2;
+
+padding:12px;
+
+border:2px solid #2563eb;
+
+border-radius:10px;
+
+font-size:16px;
+
+outline:none;
 
 }
 
-return value*1024;
+.target-size select{
 
-   }
+flex:1;
+
+padding:12px;
+
+border:2px solid #2563eb;
+
+border-radius:10px;
+
+font-size:16px;
+
+background:#fff;
+
+}
