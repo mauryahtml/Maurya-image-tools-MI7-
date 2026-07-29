@@ -121,3 +121,27 @@ resetBtn.addEventListener("click", function () {
     selectedFile = null;
 
 });
+
+const qualitySlider=document.getElementById("qualitySlider");
+
+const qualityValue=document.getElementById("qualityValue");
+
+const originalSize=document.getElementById("originalSize");
+
+const compressedSize=document.getElementById("compressedSize");
+
+qualitySlider.oninput=function(){
+
+qualityValue.innerHTML=this.value+"%";
+
+};
+
+imageInput.addEventListener("change",function(){
+
+const file=this.files[0];
+
+if(!file) return;
+
+originalSize.innerHTML=(file.size/1024).toFixed(2)+" KB";
+
+});
