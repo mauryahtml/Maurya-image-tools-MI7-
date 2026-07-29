@@ -196,3 +196,27 @@ compressBtn.addEventListener("click", () => {
     img.src = URL.createObjectURL(selectedFile);
 
 });
+const targetValue=document.getElementById("targetValue");
+const targetUnit=document.getElementById("targetUnit");
+
+function getTargetBytes(){
+
+let value=parseFloat(targetValue.value);
+
+if(isNaN(value)||value<=0){
+
+value=100;
+
+targetValue.value=100;
+
+}
+
+if(targetUnit.value==="MB"){
+
+return value*1024*1024;
+
+}
+
+return value*1024;
+
+}
