@@ -67,6 +67,80 @@ Compress JPG, PNG and WEBP Images directly in your browser.
 
 <label class="upload-box">
 
+  <div class="tool-options">
+
+<h3>Compression Settings</h3>
+
+<label>Target Size</label>
+
+<select id="targetSize">
+
+<option value="100">100 KB</option>
+
+<option value="200">200 KB</option>
+
+<option value="300">300 KB</option>
+
+<option value="500">500 KB</option>
+
+<option value="1024">1 MB</option>
+
+<option value="2048">2 MB</option>
+
+<option value="5120">5 MB</option>
+
+</select>
+
+<br><br>
+
+<label>Image Quality</label>
+
+<input
+type="range"
+id="qualitySlider"
+min="10"
+max="100"
+value="80">
+
+<p>
+
+Quality :
+<span id="qualityValue">
+
+80%
+
+</span>
+
+</p>
+
+<hr>
+
+<p>
+
+Original Size :
+
+<b id="originalSize">
+
+0 KB
+
+</b>
+
+</p>
+
+<p>
+
+Compressed Size :
+
+<b id="compressedSize">
+
+0 KB
+
+</b>
+
+</p>
+
+  </div>
+  
 📤
 
 <h2>Click to Upload Image</h2>
