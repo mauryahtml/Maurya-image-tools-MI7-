@@ -145,3 +145,54 @@ if(!file) return;
 originalSize.innerHTML=(file.size/1024).toFixed(2)+" KB";
 
 });
+
+/* ==========================
+   Real Compression Engine
+========================== */
+
+let compressedBlob = null;
+
+compressBtn.addEventListener("click", () => {
+
+    if (!selectedFile) {
+        alert("Please upload an image first.");
+        return;
+    }
+
+    const img = new Image();
+
+    img.onload = () => {
+
+        const canvas = document.createElement("canvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        ctx.drawImage(img, 0, 0);
+
+        const quality = Number(qualitySlider.value) / 100;
+
+        canvas.toBlob((blob) => {
+
+            if (!blob) {
+                alert("Compression failed.");
+                return;
+            }
+
+            compressedBlob = blob;
+
+            compressedSize.textContent =
+                (blob.size / 1024).toFixed(2) + " KB";
+
+            previewImage.src = URL.createObjectURL(blob);
+
+            alert("Image compressed successfully!");
+
+        }, "image/jpeg", quality);
+
+    };
+
+    img.src = URL.createObjectURL(selectedFile);
+
+});
