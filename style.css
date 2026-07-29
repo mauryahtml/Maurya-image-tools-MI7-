@@ -194,3 +194,138 @@ font-size:34px;
 }
 
   }
+
+/* ===================================
+   Tool Cards Section
+=================================== */
+
+.tools-section{
+    width:90%;
+    max-width:1200px;
+    margin:50px auto;
+}
+
+.tools-section h2{
+    font-size:30px;
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:30px;
+}
+
+.tool-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.tool-card{
+    background:#ffffff;
+    text-decoration:none;
+    color:#222;
+    padding:20px;
+    border-radius:15px;
+    font-size:18px;
+    font-weight:600;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+    transition:.3s;
+    border:2px solid transparent;
+}
+
+.tool-card:hover{
+    transform:translateY(-8px);
+    border-color:#10b981;
+    box-shadow:0 12px 25px rgba(37,99,235,.20);
+}
+
+/* ===================================
+   Privacy Section
+=================================== */
+
+.privacy{
+
+    width:90%;
+    max-width:1000px;
+
+    margin:60px auto;
+
+    background:#ffffff;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+
+}
+
+.privacy h2{
+
+    color:#2563eb;
+
+    margin-bottom:20px;
+
+}
+
+.privacy p{
+
+    color:#555;
+
+    line-height:1.9;
+
+    font-size:17px;
+
+}
+
+.privacy a{
+
+display:inline-block;
+
+margin-top:20px;
+
+text-decoration:none;
+
+background:#2563eb;
+
+color:white;
+
+padding:12px 25px;
+
+border-radius:30px;
+
+font-weight:bold;
+
+transition:.3s;
+
+}
+
+.privacy a:hover{
+
+background:#10b981;
+
+}
+
+/* ===================================
+   Mobile
+=================================== */
+
+@media(max-width:768px){
+
+.tool-grid{
+
+grid-template-columns:1fr;
+
+}
+
+.tools-section h2{
+
+font-size:24px;
+
+}
+
+.tool-card{
+
+font-size:16px;
+
+}
+
+   }
