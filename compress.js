@@ -220,3 +220,256 @@ return value*1024*1024;
 return value*1024;
 
 }
+/* ==========================================
+   PART 4 - Target Size Compression
+========================================== */
+
+async function compressImage(file){
+
+    return new Promise((resolve,reject)=>{
+
+        const img=new Image();
+
+        img.onload=()=>{
+
+            const canvas=document.createElement("canvas");
+            const ctx=canvas.getContext("2d");
+
+            canvas.width=img.width;
+            canvas.height=img.height;
+
+            ctx.drawImage(img,0,0);
+
+            let quality=qualitySlider.value/100;
+
+            const targetBytes=getTargetBytes();
+
+            function tryCompress(){
+
+                canvas.toBlob(function(blob){
+
+                    if(!blob){
+
+                        reject();
+
+                        return;
+
+                    }
+
+                    if(blob.size<=targetBytes || quality<=0.05){
+
+                        resolve(blob);
+
+                        return;
+
+                    }
+
+                    quality-=0.05;
+
+                    tryCompress();
+
+                },"image/jpeg",quality);
+
+            }
+
+            tryCompress();
+
+        };
+
+        img.onerror=reject;
+
+        img.src=URL.createObjectURL(file);
+
+    });
+
+}
+
+/* Compress Button */
+
+compressBtn.onclick=async()=>{
+
+    if(!selectedFile){
+
+        alert("Select an image first.");
+
+        return;
+
+    }
+
+    compressBtn.disabled=true;
+
+    compressBtn.innerText="Compressing...";
+
+    try{
+
+        compressedBlob=await compressImage(selectedFile);
+
+        compressedSize.innerHTML=
+        (compressedBlob.size/1024).toFixed(2)+" KB";
+
+        previewImage.src=URL.createObjectURL(compressedBlob);
+
+        alert("Compression Completed.");
+
+    }
+
+    catch{
+
+        alert("Compression Failed.");
+
+    }
+
+    compressBtn.disabled=false;
+
+    compressBtn.innerText="Compress";
+
+};
+/* ==========================================
+   PART 5 - Download, Share & Reset
+========================================== */
+
+/* Download */
+
+downloadBtn.onclick=()=>{
+
+    if(!compressedBlob){
+
+        alert("Please compress the image first.");
+
+        return;
+
+    }
+
+    const link=document.createElement("a");
+
+    link.href=URL.createObjectURL(compressedBlob);
+
+    link.download="MI7-Compressed.jpg";
+
+    document.body.appendChild(link);
+
+    link.click();
+
+    document.body.removeChild(link);
+
+};
+
+
+
+/* Share */
+
+shareBtn.onclick=async()=>{
+
+    if(!compressedBlob){
+
+        alert("Please compress the image first.");
+
+        return;
+
+    }
+
+    if(!navigator.canShare){
+
+        alert("Sharing is not supported.");
+
+        return;
+
+    }
+
+    const file=new File(
+
+        [compressedBlob],
+
+        "MI7-Compressed.jpg",
+
+        {
+
+            type:"image/jpeg"
+
+        }
+
+    );
+
+    try{
+
+        await navigator.share({
+
+            title:"MI7 Image Compressor",
+
+            text:"Compressed using MI7.",
+
+            files:[file]
+
+        });
+
+    }
+
+    catch(e){
+
+        console.log(e);
+
+    }
+
+};
+
+
+
+/* Reset */
+
+resetBtn.onclick=()=>{
+
+    imageInput.value="";
+
+    previewImage.src="";
+
+    previewImage.style.display="none";
+
+    originalSize.innerHTML="0 KB";
+
+    compressedSize.innerHTML="0 KB";
+
+    qualitySlider.value=80;
+
+    qualityValue.innerHTML="80%";
+
+    targetValue.value=100;
+
+    targetUnit.value="KB";
+
+    selectedFile=null;
+
+    compressedBlob=null;
+
+};
+
+
+
+/* Auto Preview */
+
+imageInput.onchange=(e)=>{
+
+    const file=e.target.files[0];
+
+    if(!file)return;
+
+    selectedFile=file;
+
+    originalSize.innerHTML=(file.size/1024).toFixed(2)+" KB";
+
+    const reader=new FileReader();
+
+    reader.onload=function(ev){
+
+        previewImage.src=ev.target.result;
+
+        previewImage.style.display="block";
+
+    };
+
+    reader.readAsDataURL(file);
+
+};
+
+
+
+console.log("MI7 Image Compressor Ready");
