@@ -97,7 +97,9 @@ return;
 if(blob.size<=target || quality<=0.05){
 
 compressedBlob=blob;
-
+document.getElementById("resultInfo").innerHTML =
+"Testing... Working";
+  
   const before=(originalFile.size/1024).toFixed(2);
 
 const after=(blob.size/1024).toFixed(2);
