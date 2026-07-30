@@ -381,7 +381,7 @@ imageInput.dispatchEvent(new Event("change"));
 
 console.log("MI7 Image Compressor Loaded");
   
-                                         }
+                                        
 
 // ===============================
 // PART 4 - Image Information
