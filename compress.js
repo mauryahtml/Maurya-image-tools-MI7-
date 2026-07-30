@@ -98,6 +98,14 @@ if(blob.size<=target || quality<=0.05){
 
 compressedBlob=blob;
 
+  const before=(originalFile.size/1024).toFixed(2);
+
+const after=(blob.size/1024).toFixed(2);
+
+document.getElementById("resultInfo").innerHTML=
+`Original : ${before} KB <br>
+Compressed : ${after} KB`;
+  
 preview.src=URL.createObjectURL(blob);
 
 resolve();
