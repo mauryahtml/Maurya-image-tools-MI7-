@@ -93,3 +93,17 @@ cursor:pointer;
 button:hover{
 background:#0047c2;
 }
+
+#resultInfo{
+
+margin:15px 0;
+
+font-size:18px;
+
+font-weight:bold;
+
+color:#0f62fe;
+
+text-align:center;
+
+}
