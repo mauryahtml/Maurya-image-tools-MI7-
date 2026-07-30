@@ -1,475 +1,495 @@
-/* ==========================================
-   MI7 - Image Compressor
-   compress.js (Part 1)
-========================================== */
+// ===============================
+// MI7 Image Compressor
+// Part 1
+// ===============================
 
-const imageInput = document.getElementById("imageInput");
-const previewImage = document.getElementById("previewImage");
+// Elements
 
-const compressBtn = document.getElementById("compressBtn");
-const downloadBtn = document.getElementById("downloadBtn");
-const shareBtn = document.getElementById("shareBtn");
-const resetBtn = document.getElementById("resetBtn");
+const imageInput=document.getElementById("imageInput");
 
-let selectedFile = null;
+const previewImage=document.getElementById("previewImage");
 
-/* ==========================
-   Image Upload & Preview
-========================== */
+const compressBtn=document.getElementById("compressBtn");
 
-imageInput.addEventListener("change", function () {
+const downloadBtn=document.getElementById("downloadBtn");
 
-    const file = this.files[0];
+const shareBtn=document.getElementById("shareBtn");
 
-    if (!file) return;
-
-    selectedFile = file;
-
-    const reader = new FileReader();
-
-    reader.onload = function (e) {
-
-        previewImage.src = e.target.result;
-        previewImage.style.display = "block";
-
-    };
-
-    reader.readAsDataURL(file);
-
-});
-
-/* ==========================
-   Compress Button
-========================== */
-
-compressBtn.addEventListener("click", function () {
-
-    if (!selectedFile) {
-
-        alert("Please upload an image first.");
-
-        return;
-
-    }
-
-    alert("Compression feature will be added in Part 2.");
-
-});
-
-/* ==========================
-   Download Button
-========================== */
-
-downloadBtn.addEventListener("click", function () {
-
-    if (!previewImage.src) {
-
-        alert("Nothing to download.");
-
-        return;
-
-    }
-
-    alert("Download feature will be added in Part 2.");
-
-});
-
-/* ==========================
-   Share Button
-========================== */
-
-shareBtn.addEventListener("click", async function () {
-
-    if (navigator.share) {
-
-        try {
-
-            await navigator.share({
-
-                title: "MI7 Image Compressor",
-
-                text: "Try MI7 - Maurya Image Tools"
-
-            });
-
-        } catch (e) {
-
-            console.log(e);
-
-        }
-
-    } else {
-
-        alert("Sharing is not supported on this device.");
-
-    }
-
-});
-
-/* ==========================
-   Reset
-========================== */
-
-resetBtn.addEventListener("click", function () {
-
-    imageInput.value = "";
-
-    previewImage.src = "";
-
-    previewImage.style.display = "none";
-
-    selectedFile = null;
-
-});
+const resetBtn=document.getElementById("resetBtn");
 
 const qualitySlider=document.getElementById("qualitySlider");
 
 const qualityValue=document.getElementById("qualityValue");
 
+const targetValue=document.getElementById("targetValue");
+
+const targetUnit=document.getElementById("targetUnit");
+
 const originalSize=document.getElementById("originalSize");
 
 const compressedSize=document.getElementById("compressedSize");
 
-qualitySlider.oninput=function(){
+const progressBar=document.getElementById("progressBar");
 
-qualityValue.innerHTML=this.value+"%";
+const progressText=document.getElementById("progressText");
 
-};
+const successBox=document.getElementById("successBox");
 
-imageInput.addEventListener("change",function(){
 
-const file=this.files[0];
+// Variables
+
+let selectedFile=null;
+
+let compressedBlob=null;
+
+
+// Quality Slider
+
+qualitySlider.addEventListener("input",()=>{
+
+qualityValue.textContent=qualitySlider.value+"%";
+
+});
+
+
+// Upload Image
+
+imageInput.addEventListener("change",(e)=>{
+
+const file=e.target.files[0];
 
 if(!file) return;
 
-originalSize.innerHTML=(file.size/1024).toFixed(2)+" KB";
+selectedFile=file;
+
+originalSize.textContent=(file.size/1024).toFixed(2)+" KB";
+
+const reader=new FileReader();
+
+reader.onload=function(event){
+
+previewImage.src=event.target.result;
+
+previewImage.style.display="block";
+
+};
+
+reader.readAsDataURL(file);
+
+progressText.textContent="Image Loaded";
+
+progressBar.value=10;
+
+successBox.style.display="none";
 
 });
 
-/* ==========================
-   Real Compression Engine
-========================== */
 
-let compressedBlob = null;
-
-compressBtn.addEventListener("click", () => {
-
-    if (!selectedFile) {
-        alert("Please upload an image first.");
-        return;
-    }
-
-    const img = new Image();
-
-    img.onload = () => {
-
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-
-        canvas.width = img.width;
-        canvas.height = img.height;
-
-        ctx.drawImage(img, 0, 0);
-
-        const quality = Number(qualitySlider.value) / 100;
-
-        canvas.toBlob((blob) => {
-
-            if (!blob) {
-                alert("Compression failed.");
-                return;
-            }
-
-            compressedBlob = blob;
-
-            compressedSize.textContent =
-                (blob.size / 1024).toFixed(2) + " KB";
-
-            previewImage.src = URL.createObjectURL(blob);
-
-            alert("Image compressed successfully!");
-
-        }, "image/jpeg", quality);
-
-    };
-
-    img.src = URL.createObjectURL(selectedFile);
-
-});
-const targetValue=document.getElementById("targetValue");
-const targetUnit=document.getElementById("targetUnit");
+// Target Bytes
 
 function getTargetBytes(){
 
-let value=parseFloat(targetValue.value);
+let size=parseFloat(targetValue.value);
 
-if(isNaN(value)||value<=0){
+if(isNaN(size)||size<=0){
 
-value=100;
-
-targetValue.value=100;
+size=100;
 
 }
 
 if(targetUnit.value==="MB"){
 
-return value*1024*1024;
+return size*1024*1024;
 
 }
 
-return value*1024;
+return size*1024;
+   }
 
-}
-/* ==========================================
-   PART 4 - Target Size Compression
-========================================== */
+// ===============================
+// PART 2 - Compression Engine
+// ===============================
 
 async function compressImage(file){
 
-    return new Promise((resolve,reject)=>{
+return new Promise((resolve,reject)=>{
 
-        const img=new Image();
+const img=new Image();
 
-        img.onload=()=>{
+img.onload=()=>{
 
-            const canvas=document.createElement("canvas");
-            const ctx=canvas.getContext("2d");
+const canvas=document.createElement("canvas");
 
-            canvas.width=img.width;
-            canvas.height=img.height;
+const ctx=canvas.getContext("2d");
 
-            ctx.drawImage(img,0,0);
+canvas.width=img.width;
 
-            let quality=qualitySlider.value/100;
+canvas.height=img.height;
 
-            const targetBytes=getTargetBytes();
+ctx.drawImage(img,0,0);
 
-            function tryCompress(){
+let quality=qualitySlider.value/100;
 
-                canvas.toBlob(function(blob){
+const targetSize=getTargetBytes();
 
-                    if(!blob){
+function tryCompress(){
 
-                        reject();
+canvas.toBlob((blob)=>{
 
-                        return;
+if(!blob){
 
-                    }
+reject("Compression Failed");
 
-                    if(blob.size<=targetBytes || quality<=0.05){
-
-                        resolve(blob);
-
-                        return;
-
-                    }
-
-                    quality-=0.05;
-
-                    tryCompress();
-
-                },"image/jpeg",quality);
-
-            }
-
-            tryCompress();
-
-        };
-
-        img.onerror=reject;
-
-        img.src=URL.createObjectURL(file);
-
-    });
+return;
 
 }
 
-/* Compress Button */
+progressBar.value=50;
 
-compressBtn.onclick=async()=>{
+progressText.textContent="Compressing...";
 
-    if(!selectedFile){
+if(blob.size<=targetSize||quality<=0.05){
 
-        alert("Select an image first.");
+compressedBlob=blob;
 
-        return;
+compressedSize.textContent=(blob.size/1024).toFixed(2)+" KB";
 
-    }
+previewImage.src=URL.createObjectURL(blob);
 
-    compressBtn.disabled=true;
+progressBar.value=100;
 
-    compressBtn.innerText="Compressing...";
+progressText.textContent="Compression Completed";
 
-    try{
+successBox.style.display="block";
 
-        compressedBlob=await compressImage(selectedFile);
+resolve(blob);
 
-        compressedSize.innerHTML=
-        (compressedBlob.size/1024).toFixed(2)+" KB";
+return;
 
-        previewImage.src=URL.createObjectURL(compressedBlob);
+}
 
-        alert("Compression Completed.");
+quality-=0.05;
 
-    }
+tryCompress();
 
-    catch{
+},"image/jpeg",quality);
 
-        alert("Compression Failed.");
+}
 
-    }
-
-    compressBtn.disabled=false;
-
-    compressBtn.innerText="Compress";
-
-};
-/* ==========================================
-   PART 5 - Download, Share & Reset
-========================================== */
-
-/* Download */
-
-downloadBtn.onclick=()=>{
-
-    if(!compressedBlob){
-
-        alert("Please compress the image first.");
-
-        return;
-
-    }
-
-    const link=document.createElement("a");
-
-    link.href=URL.createObjectURL(compressedBlob);
-
-    link.download="MI7-Compressed.jpg";
-
-    document.body.appendChild(link);
-
-    link.click();
-
-    document.body.removeChild(link);
+tryCompress();
 
 };
 
+img.onerror=()=>{
 
-
-/* Share */
-
-shareBtn.onclick=async()=>{
-
-    if(!compressedBlob){
-
-        alert("Please compress the image first.");
-
-        return;
-
-    }
-
-    if(!navigator.canShare){
-
-        alert("Sharing is not supported.");
-
-        return;
-
-    }
-
-    const file=new File(
-
-        [compressedBlob],
-
-        "MI7-Compressed.jpg",
-
-        {
-
-            type:"image/jpeg"
-
-        }
-
-    );
-
-    try{
-
-        await navigator.share({
-
-            title:"MI7 Image Compressor",
-
-            text:"Compressed using MI7.",
-
-            files:[file]
-
-        });
-
-    }
-
-    catch(e){
-
-        console.log(e);
-
-    }
+reject("Image Load Failed");
 
 };
 
+img.src=URL.createObjectURL(file);
+
+});
+
+}
 
 
-/* Reset */
+// Compress Button
 
-resetBtn.onclick=()=>{
+compressBtn.addEventListener("click",async()=>{
 
-    imageInput.value="";
+if(!selectedFile){
 
-    previewImage.src="";
+alert("Please select an image.");
 
-    previewImage.style.display="none";
+return;
 
-    originalSize.innerHTML="0 KB";
+}
 
-    compressedSize.innerHTML="0 KB";
+progressBar.value=20;
 
-    qualitySlider.value=80;
+progressText.textContent="Preparing...";
 
-    qualityValue.innerHTML="80%";
+try{
 
-    targetValue.value=100;
+await compressImage(selectedFile);
 
-    targetUnit.value="KB";
+}catch(err){
 
-    selectedFile=null;
+alert(err);
 
-    compressedBlob=null;
+}
+
+});
+
+// ===============================
+// PART 3 - Download / Share / Reset
+// ===============================
+
+
+// Download
+
+downloadBtn.addEventListener("click",()=>{
+
+if(!compressedBlob){
+
+alert("Please compress image first.");
+
+return;
+
+}
+
+const a=document.createElement("a");
+
+a.href=URL.createObjectURL(compressedBlob);
+
+a.download="MI7-Compressed.jpg";
+
+document.body.appendChild(a);
+
+a.click();
+
+document.body.removeChild(a);
+
+});
+
+
+
+
+// Share
+
+shareBtn.addEventListener("click",async()=>{
+
+if(!compressedBlob){
+
+alert("Please compress image first.");
+
+return;
+
+}
+
+if(!navigator.share){
+
+alert("Sharing is not supported on this browser.");
+
+return;
+
+}
+
+const file=new File(
+
+[compressedBlob],
+
+"MI7-Compressed.jpg",
+
+{type:"image/jpeg"}
+
+);
+
+try{
+
+await navigator.share({
+
+title:"MI7 Image Compressor",
+
+text:"Compressed with MI7 Image Tools",
+
+files:[file]
+
+});
+
+}catch(err){
+
+console.log(err);
+
+}
+
+});
+
+
+
+
+// Reset
+
+resetBtn.addEventListener("click",()=>{
+
+imageInput.value="";
+
+previewImage.src="";
+
+previewImage.style.display="none";
+
+selectedFile=null;
+
+compressedBlob=null;
+
+qualitySlider.value=80;
+
+qualityValue.textContent="80%";
+
+targetValue.value=100;
+
+targetUnit.value="KB";
+
+originalSize.textContent="0 KB";
+
+compressedSize.textContent="0 KB";
+
+progressBar.value=0;
+
+progressText.textContent="Waiting for Image...";
+
+successBox.style.display="none";
+
+});
+
+
+
+
+// Drag & Drop
+
+const uploadBox=document.querySelector(".upload-box");
+
+uploadBox.addEventListener("dragover",(e)=>{
+
+e.preventDefault();
+
+uploadBox.classList.add("drag");
+
+});
+
+uploadBox.addEventListener("dragleave",()=>{
+
+uploadBox.classList.remove("drag");
+
+});
+
+uploadBox.addEventListener("drop",(e)=>{
+
+e.preventDefault();
+
+uploadBox.classList.remove("drag");
+
+const file=e.dataTransfer.files[0];
+
+if(!file) return;
+
+imageInput.files=e.dataTransfer.files;
+
+imageInput.dispatchEvent(new Event("change"));
+
+});
+
+console.log("MI7 Image Compressor Loaded");
+  
+                                         }
+
+// ===============================
+// PART 4 - Image Information
+// ===============================
+
+// Image Width & Height
+
+const imageInfo=document.createElement("p");
+
+document.querySelector(".info-box").appendChild(imageInfo);
+
+imageInput.addEventListener("change",(e)=>{
+
+const file=e.target.files[0];
+
+if(!file)return;
+
+const img=new Image();
+
+img.onload=function(){
+
+imageInfo.innerHTML=
+
+"Resolution : <b>"+
+
+img.width+
+
+" × "+
+
+img.height+
+
+"</b> px";
 
 };
 
+img.src=URL.createObjectURL(file);
 
-
-/* Auto Preview */
-
-imageInput.onchange=(e)=>{
-
-    const file=e.target.files[0];
-
-    if(!file)return;
-
-    selectedFile=file;
-
-    originalSize.innerHTML=(file.size/1024).toFixed(2)+" KB";
-
-    const reader=new FileReader();
-
-    reader.onload=function(ev){
-
-        previewImage.src=ev.target.result;
-
-        previewImage.style.display="block";
-
-    };
-
-    reader.readAsDataURL(file);
-
-};
+});
 
 
 
-console.log("MI7 Image Compressor Ready");
+
+// Compression Percentage
+
+const compressPercent=document.createElement("p");
+
+document.querySelector(".info-box").appendChild(compressPercent);
+
+function updateCompressionInfo(){
+
+if(!selectedFile||!compressedBlob)return;
+
+const original=selectedFile.size;
+
+const compressed=compressedBlob.size;
+
+const saved=((original-compressed)/original*100).toFixed(1);
+
+compressPercent.innerHTML=
+
+"Saved : <b>"+saved+"%</b>";
+
+}
+
+
+
+
+// Update After Compression
+
+compressBtn.addEventListener("click",()=>{
+
+setTimeout(()=>{
+
+updateCompressionInfo();
+
+},500);
+
+});
+
+
+
+
+// File Type
+
+const fileType=document.createElement("p");
+
+document.querySelector(".info-box").appendChild(fileType);
+
+imageInput.addEventListener("change",(e)=>{
+
+const file=e.target.files[0];
+
+if(!file)return;
+
+fileType.innerHTML=
+
+"Format : <b>"+
+
+file.type.replace("image/","").toUpperCase()
+
++"</b>";
+
+});
+
+
+
+
+// Final Ready
+
+console.log("MI7 Compressor Version 1.0 Ready");
+
