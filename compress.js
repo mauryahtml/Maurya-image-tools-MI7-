@@ -37,14 +37,16 @@ alert("Enter Target Size");
 return null;
 
 }
+function targetBytes(){
+    let size = parseFloat(targetSize.value);
 
-if(unit.value==="MB"){
+    if(!size || size<=0){
+        alert("Enter Target Size");
+        return null;
+    }
 
-return size*1024*1024;
-
+    return size * 1024;
 }
-
-return size*1024;
 
 }
 
@@ -270,7 +272,7 @@ preview.style.display="none";
 
 targetSize.value="";
 
-unit.value="KB";
+
 
 originalFile=null;
 
