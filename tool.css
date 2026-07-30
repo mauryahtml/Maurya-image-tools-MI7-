@@ -57,7 +57,7 @@ border-radius:10px;
 }
 
 .sizeBox{
-display:flex;
+display:block;
 gap:10px;
 margin-bottom:20px;
 }
