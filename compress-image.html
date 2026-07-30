@@ -5,83 +5,44 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Image Compress (KB & MB) | MI7</title>
+<title>MI7 image reduce size in kb / mb</title>
 
-<link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="tool.css">
 
 </head>
 
 <body>
 
-<!-- Header -->
+<div class="container">
 
-<header>
+<h1>MI7 Image Reduce</h1>
 
-<div class="brand">
+<p>Reduce Image in KB or MB</p>
 
-<div class="logo-circle small">
-<span>MI7</span>
-</div>
+<label for="imageInput" class="uploadBox">
 
-<div>
-<h2>MI7 - Maurya Image Tools</h2>
-<p>Fast • Free • Secure</p>
-</div>
+Click Here To Select Image
 
-</div>
+<input
+type="file"
+id="imageInput"
+accept="image/*"
+hidden>
 
-<nav>
+</label>
 
-<a href="index.html">Home</a>
+<img id="preview">
 
-<a href="all-tools.html">All Tools</a>
-
-<a href="image-tools.html">Image Tools</a>
-
-<a href="pdf-tools.html">PDF Tools</a>
-
-<a href="contact.html">Contact</a>
-
-</nav>
-
-</header>
-
-<!-- Tool -->
-
-<div class="tool-container">
-
-<h1 class="tool-title">
-
-Image Compress (KB & MB)
-
-</h1>
-
-<p class="tool-description">
-
-Compress JPG, PNG and WEBP Images directly in your browser.
-
-</p>
-
-<label class="upload-box">
-
-  <div class="tool-options">
-
-<h3>Compression Settings</h3>
-    <label>Target File Size</label>
-
-<div class="target-size">
+<div class="sizeBox">
 
 <input
 type="number"
-id="targetValue"
-placeholder="Enter Size"
-value="100"
-min="1">
+id="targetSize"
+placeholder="Enter Size">
 
-<select id="targetUnit">
+<select id="unit">
 
 <option value="KB">KB</option>
 
@@ -89,153 +50,36 @@ min="1">
 
 </select>
 
-  </div>
-
-<label>Target Size</label>
-
-<select id="targetSize">
-
-<option value="100">100 KB</option>
-
-<option value="200">200 KB</option>
-
-<option value="300">300 KB</option>
-
-<option value="500">500 KB</option>
-
-<option value="1024">1 MB</option>
-
-<option value="2048">2 MB</option>
-
-<option value="5120">5 MB</option>
-
-</select>
-
-<br><br>
-
-<label>Image Quality</label>
-
-<input
-type="range"
-id="qualitySlider"
-min="10"
-max="100"
-value="80">
-
-<p>
-
-Quality :
-<span id="qualityValue">
-
-80%
-
-</span>
-
-</p>
-
-<hr>
-
-<p>
-
-Original Size :
-
-<b id="originalSize">
-
-0 KB
-
-</b>
-
-</p>
-
-<p>
-
-Compressed Size :
-
-<b id="compressedSize">
-
-0 KB
-
-</b>
-
-</p>
-
-  </div>
-  
-     📤
-
-<h2>Click to Upload Image</h2>
-
-<p>JPG • PNG • WEBP</p>
-
-<input
-type="file"
-id="imageInput"
-accept="image/*">
-
-</label>
-
-<div class="preview-box">
-
-<img
-id="previewImage"
-style="display:none;">
-
 </div>
 
-<div class="action-buttons">
+<button id="compressBtn">
 
-<button
-class="btn"
-id="compressBtn">
-
-Compress
+Compress Image
 
 </button>
 
-<button
-class="btn"
-id="downloadBtn">
+<button id="downloadBtn">
 
 Download
 
 </button>
 
-<button
-class="btn"
-id="shareBtn">
+<button id="shareBtn">
 
 Share
 
 </button>
 
-<button
-class="btn"
-id="resetBtn">
+<button id="resetBtn">
 
 Reset
 
 </button>
 
-</div>
-
-<div class="safe-box">
-
-🔒 Safe & Secure
-
-<br><br>
-
-Your image is processed inside your browser.
-
-No server upload.
-
-Temporary processing on your device.
-
-</div>
-
-</div>
-
 <script src="compress.js"></script>
+
+</div>
 
 </body>
 
-  </html>
+</html>
