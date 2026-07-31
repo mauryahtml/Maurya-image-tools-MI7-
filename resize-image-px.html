@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Resize Image in Pixels (px) | MI7 Image Tools</title>
+    <meta name="description" content="Resize JPG, PNG and WEBP images by Width × Height in Pixels (px).">
+
+    <link rel="stylesheet" href="../tool.css">
+</head>
+
+<body>
+
+<div class="tool-container">
+
+    <h1>Resize Image in Pixels (px)</h1>
+
+    <p class="tool-description">
+        Resize JPG, PNG & WEBP images by entering custom Width × Height in Pixels (px). Maximum 4 images can be resized at once.
+    </p>
+
+    <!-- Upload -->
+    <label>Select Images</label>
+
+    <input
+        type="file"
+        id="imageInput"
+        accept="image/jpeg,image/png,image/webp"
+        multiple>
+
+    <small>Maximum 4 Images</small>
+
+    <hr>
+
+    <!-- Width -->
+    <label>Width (px)</label>
+
+    <input
+        type="number"
+        id="width"
+        placeholder="800"
+        min="1">
+
+    <!-- Height -->
+    <label>Height (px)</label>
+
+    <input
+        type="number"
+        id="height"
+        placeholder="600"
+        min="1">
+
+    <br><br>
+
+    <label>
+
+        <input
+            type="checkbox"
+            id="lockRatio"
+            checked>
+
+        Maintain Aspect Ratio
+
+    </label>
+
+    <hr>
+
+    <!-- Output Format -->
+
+    <label>Download Format</label>
+
+    <select id="outputFormat">
+
+        <option value="jpg">
+            JPG (Recommended)
+        </option>
+
+        <option value="png">
+            PNG
+        </option>
+
+        <option value="webp">
+            WEBP
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <button id="resizeBtn">
+        Resize Image
+    </button>
+
+    <div id="result"></div>
+
+</div>
+
+<!-- Privacy -->
+
+<div class="privacy-box">
+
+    <h3>Privacy Protected</h3>
+
+    <p>
+        Your images are processed locally in your browser.
+        They are never uploaded or stored on any server.
+        Everything stays private on your device.
+    </p>
+
+</div>
+
+<script src="resize.js"></script>
+
+</body>
+  </html>
