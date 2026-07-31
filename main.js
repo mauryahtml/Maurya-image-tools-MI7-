@@ -67,3 +67,23 @@ if (searchBox) {
 // Recently Used Tools
 
 console.log("MI7 Loaded Successfully");
+
+const menuBtn = document.getElementById("menuBtn");
+const closeMenu = document.getElementById("closeMenu");
+const sideMenu = document.getElementById("sideMenu");
+const overlay = document.getElementById("overlay");
+
+menuBtn.onclick = () => {
+    sideMenu.classList.add("show");
+    overlay.classList.add("show");
+};
+
+closeMenu.onclick = () => {
+    sideMenu.classList.remove("show");
+    overlay.classList.remove("show");
+};
+
+overlay.onclick = () => {
+    sideMenu.classList.remove("show");
+    overlay.classList.remove("show");
+};
