@@ -1,4 +1,4 @@
-/* ===========================
+u/* ===========================
    MI7 - Maurya Image Tools
    style.css (Part-1)
 =========================== */
@@ -328,4 +328,63 @@ font-size:16px;
 
 }
 
+   }
+
+/* ===========================
+   SIDE MENU
+=========================== */
+
+#sideMenu{
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 260px;
+    height: 100%;
+    background: #ffffff;
+    box-shadow: 3px 0 15px rgba(0,0,0,.15);
+    padding: 20px;
+    transition: .35s;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+#sideMenu.show{
+    left: 0;
+}
+
+#sideMenu h2{
+    margin-bottom:20px;
+}
+
+#sideMenu a{
+    display:block;
+    text-decoration:none;
+    color:#222;
+    padding:12px 0;
+    border-bottom:1px solid #eee;
+    font-size:16px;
+}
+
+#sideMenu a:hover{
+    color:#1565d8;
+}
+
+#closeMenu{
+    float:right;
+    border:none;
+    background:none;
+    font-size:26px;
+    cursor:pointer;
+}
+
+#overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.45);
+    display:none;
+    z-index:999;
+}
+
+#overlay.show{
+    display:block;
    }
