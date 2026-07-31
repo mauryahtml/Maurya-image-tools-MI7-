@@ -1049,6 +1049,140 @@ button:hover{
 }
 
 /* ===================================================
+   HERO SECTION
+=================================================== */
+
+.heroSection{
+
+    width:92%;
+    max-width:1200px;
+    margin:30px auto;
+
+}
+
+.heroBox{
+
+    background:linear-gradient(135deg,#1565D8,#0EA5E9);
+
+    color:#fff;
+
+    border-radius:22px;
+
+    padding:35px 20px;
+
+    text-align:center;
+
+    box-shadow:0 12px 30px rgba(0,0,0,.15);
+
+}
+
+.heroLogo{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin-bottom:20px;
+
+}
+
+.heroBox h1{
+
+    font-size:34px;
+
+    margin-bottom:10px;
+
+}
+
+.heroText{
+
+    font-size:17px;
+
+    opacity:.95;
+
+    margin-bottom:25px;
+
+}
+
+.heroFeatures{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:15px;
+
+    margin-bottom:30px;
+
+}
+
+.featureCard{
+
+    background:rgba(255,255,255,.15);
+
+    backdrop-filter:blur(8px);
+
+    padding:18px;
+
+    border-radius:15px;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+}
+
+.featureCard span{
+
+    display:block;
+
+    margin-top:8px;
+
+}
+
+.startBtn{
+
+    display:inline-block;
+
+    background:#fff;
+
+    color:#1565D8;
+
+    font-weight:bold;
+
+    padding:15px 28px;
+
+    border-radius:50px;
+
+    transition:.3s;
+
+}
+
+.startBtn:hover{
+
+    background:#FF9800;
+
+    color:#fff;
+
+}
+
+@media(max-width:768px){
+
+.heroBox h1{
+
+    font-size:28px;
+
+}
+
+.heroFeatures{
+
+    grid-template-columns:1fr 1fr;
+
+}
+
+   }
+
+/* ===================================================
    END OF STYLE.CSS
 =================================================== */
 
