@@ -1,89 +1,98 @@
-/* ==========================
+/* ======================================
    MI7 - Maurya Image Tools
-   main.js (Part-1)
-========================== */
+   Universal Main JS
+====================================== */
 
-// Wait until page loads
-window.addEventListener("load", function () {
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* =========================
+       Welcome Loader
+    ========================= */
 
     const loader = document.getElementById("loader");
     const home = document.getElementById("home");
 
-    // Show Welcome Screen for 3 Seconds
-    setTimeout(function () {
+    if (loader && home) {
 
-        loader.style.opacity = "0";
-        loader.style.transition = "0.6s";
+        setTimeout(() => {
 
-        setTimeout(function () {
+            loader.style.opacity = "0";
 
-            loader.style.display = "none";
-            home.style.display = "block";
+            setTimeout(() => {
 
-            // Smooth Fade In
-            home.style.opacity = "0";
+                loader.style.display = "none";
 
-            setTimeout(function () {
-                home.style.transition = "0.8s";
-                home.style.opacity = "1";
-            }, 50);
+                home.style.display = "block";
 
-        }, 600);
+                home.style.opacity = "0";
 
-    }, 3000);
+                setTimeout(() => {
+
+                    home.style.transition = "0.5s";
+                    home.style.opacity = "1";
+
+                }, 50);
+
+            }, 500);
+
+        }, 1500);
+
+    }
+
+
+    /* =========================
+       Search
+    ========================= */
+
+    const searchBox = document.getElementById("searchBox");
+
+    if (searchBox) {
+
+        searchBox.addEventListener("input", function () {
+
+            console.log("Searching :", this.value);
+
+        });
+
+    }
+
+
+    /* =========================
+       Side Menu
+    ========================= */
+
+    const menuBtn = document.getElementById("menuBtn");
+    const closeMenu = document.getElementById("closeMenu");
+    const sideMenu = document.getElementById("sideMenu");
+    const overlay = document.getElementById("overlay");
+
+    if (menuBtn && closeMenu && sideMenu && overlay) {
+
+        menuBtn.addEventListener("click", () => {
+
+            sideMenu.classList.add("show");
+            overlay.classList.add("show");
+
+        });
+
+        closeMenu.addEventListener("click", () => {
+
+            sideMenu.classList.remove("show");
+            overlay.classList.remove("show");
+
+        });
+
+        overlay.addEventListener("click", () => {
+
+            sideMenu.classList.remove("show");
+            overlay.classList.remove("show");
+
+        });
+
+    }
 
 });
 
 
+console.log("MI7 Main JS Loaded");
 
-/* ==========================
-      Tool Search (Coming Soon)
-========================== */
-
-const searchBox = document.querySelector(".hero input");
-
-if (searchBox) {
-
-    searchBox.addEventListener("focus", function () {
-
-        console.log("Search Activated");
-
-    });
-
-}
-
-
-
-/* ==========================
-      Future Features
-========================== */
-
-// Dark Mode
-// Mobile Menu
-// Live Search
-// Tool Filter
-// Share Button
-// Download Manager
-// Recently Used Tools
-
-console.log("MI7 Loaded Successfully");
-
-const menuBtn = document.getElementById("menuBtn");
-const closeMenu = document.getElementById("closeMenu");
-const sideMenu = document.getElementById("sideMenu");
-const overlay = document.getElementById("overlay");
-
-menuBtn.onclick = () => {
-    sideMenu.classList.add("show");
-    overlay.classList.add("show");
-};
-
-closeMenu.onclick = () => {
-    sideMenu.classList.remove("show");
-    overlay.classList.remove("show");
-};
-
-overlay.onclick = () => {
-    sideMenu.classList.remove("show");
-    overlay.classList.remove("show");
-};
