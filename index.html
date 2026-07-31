@@ -1,27 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>MI7 - Maurya Image Tools</title>
 
+<meta name="description" content="Free Online Image Tools - Resize, Compress, Crop, Convert Image to PDF and more.">
+
+<meta name="theme-color" content="#1565d8">
+
+<link rel="manifest" href="manifest.json">
+
+<link rel="icon" href="192-logo.png">
+
+<link rel="apple-touch-icon" href="192-logo.png">
+
 <link rel="stylesheet" href="style.css">
 
-  <link rel="icon" href="logo.png">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1565d8">
-
-  <link rel="manifest" href="manifest.json">
-<link rel="icon" href="logo-192.png">
-<link rel="apple-touch-icon" href="logo-192.png">
-<meta name="theme-color" content="#1565d8">
-  
 </head>
 
 <body>
 
-<!-- Welcome Loader -->
+<!-- =========================
+WELCOME LOADER
+========================= -->
 
 <div id="loader">
 
@@ -31,19 +36,31 @@
 
 <h1>Welcome to</h1>
 
-<h2>Maurya Image Tools</h2>
+<h2>MI7 Image Tools</h2>
 
 <p>Fast • Free • Secure</p>
 
+<div class="loader-bar">
+<div class="loader-fill"></div>
 </div>
 
-<!-- Home Page -->
+</div>
 
-<div id="home">
+<!-- =========================
+MAIN WEBSITE
+========================= -->
 
-<header>
+<div id="mainContent">
 
-<div class="brand">
+<!-- HEADER -->
+
+<header class="header">
+
+<button id="menuBtn">
+☰
+</button>
+
+<div class="headerLogo">
 
 <div class="logo-circle small">
 <span>MI7</span>
@@ -51,7 +68,7 @@
 
 <div>
 
-<h2>Maurya Image Tools</h2>
+<h2>MI7 Image Tools</h2>
 
 <p>Fast • Free • Secure</p>
 
@@ -59,89 +76,85 @@
 
 </div>
 
-<nav>
+</header>
 
-<a href="#">Home</a>
+<!-- SIDE MENU -->
 
-<a href="#">All Tools</a>
+<nav id="sideMenu">
 
-<a href="#">Image</a>
+<button id="closeMenu">
+✕
+</button>
 
-<a href="#">PDF</a>
+<h2>Menu</h2>
 
-<a href="#">About</a>
+<a href="index.html">🏠 Home</a>
 
-<a href="#">Contact</a>
+<a href="#">🧰 All Tools</a>
+
+<a href="#">⭐ Popular Tools</a>
+
+<a href="#">🆕 Latest Tools</a>
+
+<a href="pages/about.html">📖 About</a>
+
+<a href="pages/contact.html">📞 Contact</a>
+
+<a href="pages/privacy-policy.html">🔒 Privacy Policy</a>
+
+<a href="pages/terms.html">📄 Terms & Conditions</a>
+
+<a href="pages/disclaimer.html">⚠ Disclaimer</a>
+
+<a href="pages/feedback.html">💬 Feedback</a>
 
 </nav>
 
-</header>
+<div id="overlay"></div>
 
-<section class="hero">
+  <!-- =========================
+SEARCH
+========================= -->
 
-<h1>100% Browser Based Image Tools</h1>
-
-<p>
-Resize, Compress, Convert and Edit your Images
-Fast, Free & Secure.
-</p>
+<section class="searchSection">
 
 <input
 type="text"
-placeholder="Search Tool..."
->
+id="searchBox"
+placeholder="🔍 Search Image Tools...">
 
 </section>
 
-  <!-- ===========================
-     Popular Image Tools
-=========================== -->
 
-<section class="tools-section">
+<!-- =========================
+POPULAR TOOLS
+========================= -->
 
-<h2>🖼 Popular Image Tools</h2>
+<section class="toolSection">
 
-<div class="tool-grid">
+<h2>⭐ Popular Tools</h2>
 
-<a href="compress-image.html" class="tool-card">📦 Image size reduce in KB</a>
+<div class="toolGrid">
 
-<a href="passport-photo-maker.html" class="tool-card">🪪 Passport Photo Maker</a>
+<a href="compress-image.html" class="toolCard">
+<h3>Compress Image</h3>
+<p>Reduce Image Size in KB / MB</p>
+</a>
 
-<a href="signature-resizer.html" class="tool-card">✍ Signature Resizer</a>
+<a href="resize-image.html" class="toolCard">
+<h3>Resize Image</h3>
+<p>Resize Width × Height (PX)</p>
+</a>
 
-<a href="passport-size-crop.html" class="tool-card">📸 Passport Size Crop</a>
+<a href="#" class="toolCard">
+<h3>Image to PDF</h3>
+<p>Convert Images into PDF</p>
+</a>
 
-<a href="image-to-pdf.html" class="tool-card">🖼 Image to PDF</a>
-
-<a href="pdf-to-image.html" class="tool-card">📄 PDF to Image</a>
-
-<a href="jpg-to-pdf.html" class="tool-card">📑 JPG to PDF</a>
-
-<a href="merge-pdf.html" class="tool-card">📚 Merge PDF</a>
-
-<a href="pdf-to-qr.html" class="tool-card">🔳 PDF to QR Code</a>
-
-<a href="watermark-image.html" class="tool-card">💧 Watermark on Image</a>
-
-<a href="add-text-image.html" class="tool-card">📝 Add Text on Image</a>
-
-<a href="background-color.html" class="tool-card">🎨 Background Color Changer</a>
-
-<a href="black-white.html" class="tool-card">⚫ Black & White Image</a>
-
-<a href="youtube-thumbnail.html" class="tool-card">▶ YouTube Thumbnail Resize</a>
-
-<a href="youtube-banner.html" class="tool-card">🖥 YouTube Banner Resize</a>
-
-<a href="whatsapp-dp.html" class="tool-card">💬 WhatsApp DP Resize</a>
-
-<a href="image-to-qr.html" class="tool-card">🖼 Image to QR Code</a>
-
-<a href="metadata-viewer.html" class="tool-card">ℹ Image Metadata Viewer</a>
-
-<a href="remove-exif.html" class="tool-card">🛡 Remove EXIF Metadata</a>
-
-<a href="image-collage.html" class="tool-card">🖼 Image Collage Maker</a>
+<a href="#" class="toolCard">
+<h3>JPG to PDF</h3>
+<p>Create PDF from JPG</p>
+</a>
 
 </div>
 
@@ -149,28 +162,217 @@ placeholder="Search Tool..."
 
 
 
-<!-- ===========================
-     Privacy Section
-=========================== -->
+<!-- =========================
+LATEST TOOLS
+========================= -->
 
-<section class="privacy">
+<section class="toolSection">
 
-<h2>🔒 Privacy & Security</h2>
+<h2>🆕 Latest Tools</h2>
 
-<p>
-Your privacy is our priority.
-Supported tools process your files directly inside your browser whenever possible.
-We do not upload, store or share your images on our servers.
-Your files remain temporarily on your own device during processing and are removed from your browser's temporary memory after you refresh or close the page.
+<div class="toolGrid">
+
+<a href="compress-image.html" class="toolCard">
+<h3>Reduce Image KB</h3>
+<p>Latest Tool</p>
+</a>
+
+<a href="resize-image.html" class="toolCard">
+<h3>Resize Image</h3>
+<p>Latest Tool</p>
+</a>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+ALL TOOLS
+========================= -->
+
+<section class="toolSection">
+
+<h2>🧰 All Tools</h2>
+
+<div class="toolGrid">
+
+<a href="compress-image.html" class="toolCard">
+Compress Image
+</a>
+
+<a href="resize-image.html" class="toolCard">
+Resize Image
+</a>
+
+<a href="#" class="toolCard">
+Crop Image
+</a>
+
+<a href="#" class="toolCard">
+Rotate Image
+</a>
+
+<a href="#" class="toolCard">
+Image to PDF
+</a>
+
+<a href="#" class="toolCard">
+JPG to PDF
+</a>
+
+<a href="#" class="toolCard">
+PDF to JPG
+</a>
+
+<a href="#" class="toolCard">
+PNG to JPG
+</a>
+
+<a href="#" class="toolCard">
+JPG to PNG
+</a>
+
+<a href="#" class="toolCard">
+Image Converter
+</a>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+ADVERTISEMENT
+========================= -->
+
+<section class="adsBox">
+
+<p>Advertisement Space</p>
+
+</section>
+
+  <!-- =========================
+HOW TO USE
+========================= -->
+
+<section class="howToSection">
+
+<h2>📖 How to Use MI7 Image Tools</h2>
+
+<div class="howToBox">
+
+<p id="howShort">
+
+1. Select your required tool.
+
+<br>
+
+2. Upload your image or PDF.
+
+<br>
+
+3. Process and download your file instantly.
+
 </p>
 
-<a href="privacy-policy.html">Read Full Privacy Policy →</a>
+<div id="moreHowTo" style="display:none;">
 
-  </section>
+<p>
+
+4. Most tools support up to 4 files.
+
+<br><br>
+
+5. Choose output format if available.
+
+<br><br>
+
+6. Download your processed file.
+
+<br><br>
+
+7. All processing happens locally in your browser.
+
+<br><br>
+
+8. No registration required.
+
+</p>
 
 </div>
+
+<button id="readMoreBtn">
+
+Read More ▼
+
+</button>
+
+</div>
+
+</section>
+
+
+
+<!-- =========================
+SHORT PRIVACY
+========================= -->
+
+<section class="privacySection">
+
+<h2>🔒 Privacy Protected</h2>
+
+<p>
+
+Your images and files are processed locally in your browser.
+
+They are never uploaded or stored on any server.
+
+All files are automatically removed after processing or when you close or refresh the page.
+
+</p>
+
+</section>
+
+
+
+<!-- =========================
+FOOTER
+========================= -->
+
+<footer class="footer">
+
+<div class="footerLinks">
+
+<a href="pages/about.html">About</a>
+
+<a href="pages/contact.html">Contact</a>
+
+<a href="pages/privacy-policy.html">Privacy Policy</a>
+
+<a href="pages/terms.html">Terms & Conditions</a>
+
+<a href="pages/disclaimer.html">Disclaimer</a>
+
+<a href="pages/feedback.html">Feedback</a>
+
+</div>
+
+<p>
+
+© 2026 MI7 Image Tools. All Rights Reserved.
+
+</p>
+
+</footer>
+
+</div>
+
 
 <script src="main.js"></script>
 
 </body>
-  </html>
+
+</html>
