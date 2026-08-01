@@ -5,146 +5,312 @@
 
 <meta charset="UTF-8">
 
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>MI7 image reduce size in KB</title>
+<title>Compress Image - MI7 Image Tools</title>
+
+<link rel="icon" type="image/png" href="assets/logo/192-logo.png">
+
+<link rel="manifest" href="manifest.json">
 
 <link rel="stylesheet" href="tool.css">
-    <link rel="icon" href="logo.png">
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1565d8">
+
+<meta name="theme-color" content="#0d6efd">
 
 </head>
 
-
-    
 <body>
 
-    
-    
+<!-- Overlay -->
+
+<div class="overlay" id="overlay"></div>
+
+<!-- =========================
+HEADER
+========================= -->
+
+<header>
+
+<div class="logo">
+
+<button id="menuBtn">☰</button>
+
+<img src="assets/logo/192-logo.png" alt="MI7 Logo">
+
+<div>
+
+<h1>MI7 Image Tools</h1>
+
+<p>Compress Image</p>
+
+</div>
+
+</div>
+
+</header>
+
+<!-- =========================
+SIDE MENU
+========================= -->
+
+<nav class="sideMenu" id="sideMenu">
+
+<ul>
+
+<li><a href="index.html">🏠 Home</a></li>
+
+<li><a href="compress-image.html">🗜 Compress Image</a></li>
+
+<li><a href="resize-image.html">📏 Resize Image</a></li>
+
+<li><a href="image-to-pdf.html">📄 Image to PDF</a></li>
+
+<li><a href="jpg-to-pdf.html">📑 JPG to PDF</a></li>
+
+<li><a href="about.html">ℹ About</a></li>
+
+<li><a href="contact.html">📞 Contact</a></li>
+
+<li><a href="privacy-policy.html">🔒 Privacy Policy</a></li>
+
+<li><a href="terms.html">📜 Terms & Conditions</a></li>
+
+<li><a href="feedback.html">⭐ Feedback</a></li>
+
+</ul>
+
+</nav>
+
+<!-- =========================
+MAIN CONTAINER
+========================= -->
+
+<div class="container">
+
 <div class="backHome">
 
 <a href="index.html">🏠 Back to Home</a>
 
 </div>
-    
-    
-<div class="container">
 
-<h1>MI7 Image Reduce in KB</h1>
+<div class="toolCard">
 
-<p>Reduce Image in KB</p>
+<h2 class="toolTitle">
 
-<label for="imageInput" class="uploadBox">
+🗜 Compress Image
 
-📤 Click Here To Select Image
+</h2>
 
-    <input
-    type="file"
-    id="imageInput"
-    accept="image/jpeg,image/png,image/webp"
-    multiple>
+<p class="toolSubtitle">
 
-hidden>
+Reduce Image Size without Losing Quality
 
-</label>
+        </p>
 
-<img id="preview">
+    <!-- =========================
+TOOL INFORMATION
+========================= -->
 
+<div class="toolInfo">
+
+<h2 class="sectionTitle">ℹ Tool Information</h2>
+
+<div class="infoGrid">
+
+<div class="infoCard">
+<h3>Supported</h3>
+<p>JPG, JPEG, PNG, WEBP, BMP, GIF, TIFF, AVIF</p>
+</div>
+
+<div class="infoCard">
+<h3>Output</h3>
+<p>JPG, PNG, WEBP</p>
+</div>
+
+<div class="infoCard">
+<h3>Maximum Images</h3>
+<p>20 Images</p>
+</div>
+
+<div class="infoCard">
+<h3>Maximum Size</h3>
+<p>25 MB / Image</p>
+</div>
+
+</div>
+
+</div>
+
+<!-- =========================
+UPLOAD BOX
+========================= -->
+
+<div class="uploadBox">
+
+<h2>Select Image(s)</h2>
+
+<p>Choose one or multiple images to compress.</p>
+
+<input
+type="file"
+id="imageInput"
+accept="image/*"
+multiple>
+
+</div>
+
+<!-- =========================
+TARGET SIZE
+========================= -->
+
+<label>Target Size</label>
+
+<input
+type="number"
+id="targetSize"
+placeholder="Enter Size">
+
+<select id="unit">
+
+<option value="KB">KB</option>
+
+<option value="MB">MB</option>
+
+</select>
+
+<!-- =========================
+BUTTONS
+========================= -->
+
+<div class="btnGroup">
+
+<button
+id="compressBtn"
+class="btn btnPrimary">
+
+🗜 Compress
+
+</button>
+
+<button
+id="downloadBtn"
+class="btn btnSuccess">
+
+⬇ Download
+
+</button>
+
+<button
+id="shareBtn"
+class="btn btnWarning">
+
+📤 Share
+
+</button>
+
+<button
+id="resetBtn"
+class="btn btnDanger">
+
+🗑 Reset
+
+</button>
+
+</div>
+
+<!-- =========================
+PROGRESS BAR
+========================= -->
+
+<div class="progressBox">
+
+<div
+class="progressBar"
+id="progressBar">
+
+</div>
+
+</div>
+
+<!-- =========================
+IMAGE PREVIEW
+========================= -->
 
 <div id="previewContainer"></div>
 
-<div class="size-input">
-    <input type="number" id="targetSize" placeholder ="100">
-    <span class="unit">KB</span>
-</div>
-  
+<!-- =========================
+RESULT
+========================= -->
 
-<button id="compressBtn">
+<div id="resultInfo"></div>
 
-Compress Image
+    <!-- =========================
+ADVERTISEMENT
+========================= -->
 
-</button>
+<div class="adsBox">
 
-  <p id="resultInfo"></p>
+<h2>Advertisement</h2>
 
-<button id="downloadBtn">
-
-Download
-
-</button>
-
-<button id="shareBtn">
-
-Share
-
-</button>
-
-<button id="resetBtn">
-
-Reset
-
-</button>
-
-<script src="compress.js"></script>
+<p>
+Google AdSense Responsive Ad
+</p>
 
 </div>
 
-  <section class="toolFeatures">
+<!-- =========================
+FEATURES
+========================= -->
 
-<h2>✨ Features</h2>
+<section class="toolFeatures">
+
+<h2 class="sectionTitle">✨ Features</h2>
 
 <ul>
 
-<li>✔ Compress JPG, PNG & WEBP</li>
+<li>✔ Compress JPG, JPEG, PNG, WEBP</li>
 
-<li>✔ Multiple Images</li>
+<li>✔ Multiple Image Support</li>
 
-<li>✔ Fast Processing</li>
+<li>✔ Fast Compression</li>
 
 <li>✔ High Quality Output</li>
 
+<li>✔ Mobile Friendly</li>
+
+<li>✔ Secure Browser Processing</li>
+
 <li>✔ No Server Upload</li>
 
-<li>✔ Mobile Friendly</li>
+<li>✔ Free Forever</li>
 
 </ul>
 
-<section class="adsBox">
-
-<h3>Advertisement</h3>
-
-<p>
-
-Your advertisement will appear here.
-
-</p>
-
 </section>
-     
-      
-  </section>
-    <!-- =========================
+
+<!-- =========================
 HOW TO USE
 ========================= -->
 
 <section class="howToSection">
 
-<h2>📖 How to Compress Image</h2>
-
-<div class="howToBox">
+<h2>📖 How to Use</h2>
 
 <p>
 
-1️⃣ Click <b>Select Images</b>.
+1️⃣ Click <b>Select Image(s)</b>.
 
 <br><br>
 
-2️⃣ Choose one or multiple images.
+2️⃣ Select one or multiple images.
 
 <br><br>
 
-3️⃣ Select your required compression level.
+3️⃣ Enter Target Size (KB or MB).
+
+<br><br>
+
+4️⃣ Click <b>Compress</b>.
 
 </p>
 
@@ -152,23 +318,23 @@ HOW TO USE
 
 <p>
 
-4️⃣ Wait a few seconds while MI7 processes your images.
+5️⃣ Wait for compression to complete.
 
 <br><br>
 
-5️⃣ Preview the compressed image.
+6️⃣ Preview compressed image(s).
 
 <br><br>
 
-6️⃣ Click <b>Download</b> to save it.
+7️⃣ Click Download.
 
 <br><br>
 
-7️⃣ All processing happens locally in your browser.
+8️⃣ Download single image or ZIP.
 
 <br><br>
 
-8️⃣ Your images are never uploaded to any server.
+9️⃣ All processing happens inside your browser.
 
 </p>
 
@@ -180,59 +346,74 @@ Read More ▼
 
 </button>
 
-</div>
+</section>
 
-        </section>
+<!-- =========================
+PRIVACY
+========================= -->
 
-    <section class="privacySection">
+<section class="privacySection">
 
-<h2>🔒 100% Privacy Protected</h2>
+<h2>🔒 Privacy Protected</h2>
 
 <p>
 
-Your images are processed completely inside your browser.
+Your images are processed locally inside your browser.
 
-Nothing is uploaded or stored on any server.
+No image is uploaded or stored on any server.
 
-All selected images are automatically removed after processing or when you refresh or close the page.
+All files are automatically removed after refresh or closing the browser.
 
 </p>
 
-      </section>
+</section>
 
-    <footer class="footer">
+<!-- =========================
+FOOTER
+========================= -->
+
+<footer class="footer">
 
 <div class="footerLinks">
 
-<a href="pages/about.html">About</a>
+<a href="about.html">About</a>
 
-<a href="pages/contact.html">Contact</a>
+<a href="contact.html">Contact</a>
 
-<a href="pages/privacy-policy.html">Privacy</a>
+<a href="privacy-policy.html">Privacy</a>
 
-<a href="pages/terms.html">Terms</a>
+<a href="terms.html">Terms</a>
 
-<a href="pages/disclaimer.html">Disclaimer</a>
+<a href="disclaimer.html">Disclaimer</a>
 
-<a href="pages/feedback.html">Feedback</a>
+<a href="feedback.html">Feedback</a>
 
 </div>
 
 <p>
 
-© 2026 MI7 Image Tools
+© 2026 MI7 Image Tools. All Rights Reserved.
 
 </p>
 
-    </footer>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+</footer>
 
-    <script src="main.js"></script>
+</div>
+<!-- toolCard End -->
+
+</div>
+<!-- container End -->
+
+<!-- JSZip -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<!-- JS -->
+
+<script src="main.js"></script>
+
 <script src="compress.js"></script>
-    
-    
-</body>
 
-   
-    
-</html>
+</body>
+        </html>
+        
