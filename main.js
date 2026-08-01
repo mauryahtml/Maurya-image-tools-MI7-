@@ -1,228 +1,112 @@
-/* ==================================================
+/* ======================================
    MI7 IMAGE TOOLS
    main.js
-   PART - 1
-   Loader + Side Menu
-================================================== */
+====================================== */
 
-// Wait until page loads
-window.addEventListener("load", () => {
+document.addEventListener("DOMContentLoaded", () => {
 
-    const loader = document.getElementById("loader");
-    const mainContent = document.getElementById("mainContent");
+    // =========================
+    // MENU
+    // =========================
 
-    // Welcome Screen (2 Seconds)
-    setTimeout(() => {
+    const menuBtn = document.getElementById("menuBtn");
+    const sideMenu = document.getElementById("sideMenu");
+    const overlay = document.getElementById("overlay");
 
-        loader.style.opacity = "0";
+    if (menuBtn && sideMenu && overlay) {
 
-        setTimeout(() => {
+        menuBtn.addEventListener("click", () => {
 
-            loader.style.display = "none";
+            sideMenu.classList.toggle("active");
+            overlay.classList.toggle("active");
 
-            mainContent.style.display = "block";
+        });
 
-            mainContent.style.opacity = "0";
+        overlay.addEventListener("click", () => {
 
-            setTimeout(() => {
+            sideMenu.classList.remove("active");
+            overlay.classList.remove("active");
 
-                mainContent.style.transition = "opacity .5s";
+        });
 
-                mainContent.style.opacity = "1";
+    }
 
-            },50);
+    // =========================
+    // READ MORE
+    // =========================
 
-        },500);
+    const readMoreBtn = document.getElementById("readMoreBtn");
+    const moreHowTo = document.getElementById("moreHowTo");
 
-    },2000);
+    if (readMoreBtn && moreHowTo) {
 
-});
+        readMoreBtn.addEventListener("click", () => {
 
+            if (moreHowTo.style.display === "none" || moreHowTo.style.display === "") {
 
-/* ==================================================
-   SIDE MENU
-================================================== */
-
-const menuBtn = document.getElementById("menuBtn");
-const closeMenu = document.getElementById("closeMenu");
-const sideMenu = document.getElementById("sideMenu");
-const overlay = document.getElementById("overlay");
-
-if(menuBtn){
-
-    menuBtn.addEventListener("click",()=>{
-
-        sideMenu.classList.add("show");
-
-        overlay.classList.add("show");
-
-    });
-
-}
-
-if(closeMenu){
-
-    closeMenu.addEventListener("click",closeMenuBar);
-
-}
-
-if(overlay){
-
-    overlay.addEventListener("click",closeMenuBar);
-
-}
-
-function closeMenuBar(){
-
-    sideMenu.classList.remove("show");
-
-    overlay.classList.remove("show");
-
-               }
-
-/* ==================================================
-   PART - 2
-   READ MORE + SEARCH FILTER
-================================================== */
-
-/* ---------- READ MORE ---------- */
-
-const readMoreBtn = document.getElementById("readMoreBtn");
-const moreHowTo = document.getElementById("moreHowTo");
-
-if (readMoreBtn && moreHowTo) {
-
-    readMoreBtn.addEventListener("click", () => {
-
-        if (moreHowTo.style.display === "block") {
-
-            moreHowTo.style.display = "none";
-            readMoreBtn.innerHTML = "Read More ▼";
-
-        } else {
-
-            moreHowTo.style.display = "block";
-            readMoreBtn.innerHTML = "Show Less ▲";
-
-        }
-
-    });
-
-}
-
-
-/* ==================================================
-   SEARCH TOOL FILTER
-================================================== */
-
-const searchInput = document.getElementById("searchBox");
-const toolCards = document.querySelectorAll(".toolCard");
-
-if (searchInput) {
-
-    searchInput.addEventListener("keyup", () => {
-
-        const value = searchInput.value.toLowerCase();
-
-        toolCards.forEach(card => {
-
-            const text = card.innerText.toLowerCase();
-
-            if (text.includes(value)) {
-
-                card.style.display = "flex";
+                moreHowTo.style.display = "block";
+                readMoreBtn.innerText = "Read Less ▲";
 
             } else {
 
-                card.style.display = "none";
+                moreHowTo.style.display = "none";
+                readMoreBtn.innerText = "Read More ▼";
 
             }
 
         });
 
-    });
-
-               }
-
-/* ==================================================
-   PART - 3
-   MENU AUTO CLOSE + SMOOTH SCROLL + FUTURE READY
-================================================== */
-
-/* ---------- AUTO CLOSE MENU ---------- */
-
-const menuLinks = document.querySelectorAll("#sideMenu a");
-
-menuLinks.forEach(link => {
-
-    link.addEventListener("click", () => {
-
-        sideMenu.classList.remove("show");
-        overlay.classList.remove("show");
-
-    });
+    }
 
 });
 
+/* =========================
+   LOADING
+========================= */
 
-/* ==================================================
-   SMOOTH SCROLL
-================================================== */
+function showLoading() {
 
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    const loading = document.getElementById("loadingOverlay");
 
-    anchor.addEventListener("click", function (e) {
+    if (loading) {
 
-        const target = document.querySelector(this.getAttribute("href"));
+        loading.style.display = "flex";
 
-        if(target){
+    }
 
-            e.preventDefault();
+}
 
-            target.scrollIntoView({
+function hideLoading() {
 
-                behavior:"smooth"
+    const loading = document.getElementById("loadingOverlay");
 
-            });
+    if (loading) {
 
-        }
+        loading.style.display = "none";
 
-    });
+    }
 
-});
+}
 
+/* =========================
+   TOAST MESSAGE
+========================= */
 
-/* ==================================================
-   FUTURE READY
-================================================== */
+function showToast(message) {
 
-console.log("✅ MI7 Image Tools Loaded Successfully");
+    const toast = document.getElementById("toast");
 
-/*
-Future Features
+    if (!toast) return;
 
-✓ Dark Mode
+    toast.innerText = message;
 
-✓ Firebase Visitor Counter
+    toast.classList.add("show");
 
-✓ Tool Categories
+    setTimeout(() => {
 
-✓ Favorite Tools
+        toast.classList.remove("show");
 
-✓ Recently Used Tools
+    }, 2500);
 
-✓ Multi Language
-
-✓ PWA Install
-
-✓ Theme Switcher
-
-✓ Update Checker
-
-✓ Offline Mode
-
-*/
-
-
-
+           }
 
