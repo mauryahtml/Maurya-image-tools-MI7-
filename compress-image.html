@@ -7,15 +7,15 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Compress Image - MI7 Image Tools</title>
+<title>Compress Image | MI7 Image Tools</title>
 
-<link rel="icon" type="image/png" href="assets/logo/192-logo.png">
+<meta name="theme-color" content="#0d6efd">
+
+<link rel="icon" href="assets/logo/logo.png">
 
 <link rel="manifest" href="manifest.json">
 
 <link rel="stylesheet" href="tool.css">
-
-<meta name="theme-color" content="#0d6efd">
 
 </head>
 
@@ -23,25 +23,35 @@
 
 <!-- Overlay -->
 
-<div class="overlay" id="overlay"></div>
+<div id="overlay" class="overlay"></div>
 
-<!-- =========================
+<!-- ==========================
 HEADER
-========================= -->
+=========================== -->
 
-<header>
+<header class="header">
 
-<div class="logo">
+<button
+id="menuBtn"
+class="menuBtn"
+type="button">
 
-<button id="menuBtn">☰</button>
+☰
 
-<img src="assets/logo/192-logo.png" alt="MI7 Logo">
+</button>
+
+<div class="logoBox">
+
+<img
+src="assets/logo/logo.png"
+alt="MI7 Logo"
+class="logo">
 
 <div>
 
 <h1>MI7 Image Tools</h1>
 
-<p>Compress Image</p>
+<p>Fast • Secure • Free</p>
 
 </div>
 
@@ -49,371 +59,62 @@ HEADER
 
 </header>
 
-<!-- =========================
+<!-- ==========================
 SIDE MENU
-========================= -->
+=========================== -->
 
-<nav class="sideMenu" id="sideMenu">
+<nav
+id="sideMenu"
+class="sideMenu">
 
-<ul>
+<a href="index.html">🏠 Home</a>
 
-<li><a href="index.html">🏠 Home</a></li>
+<a href="compress-image.html">🗜 Compress Image</a>
 
-<li><a href="compress-image.html">🗜 Compress Image</a></li>
+<a href="resize-image.html">📏 Resize Image</a>
 
-<li><a href="resize-image.html">📏 Resize Image</a></li>
+<a href="image-to-pdf.html">📄 Image to PDF</a>
 
-<li><a href="image-to-pdf.html">📄 Image to PDF</a></li>
+<a href="jpg-to-pdf.html">📑 JPG to PDF</a>
 
-<li><a href="jpg-to-pdf.html">📑 JPG to PDF</a></li>
-
-<li><a href="about.html">ℹ About</a></li>
-
-<li><a href="contact.html">📞 Contact</a></li>
-
-<li><a href="privacy-policy.html">🔒 Privacy Policy</a></li>
-
-<li><a href="terms.html">📜 Terms & Conditions</a></li>
-
-<li><a href="feedback.html">⭐ Feedback</a></li>
-
-</ul>
-
-</nav>
-
-<!-- =========================
-MAIN CONTAINER
-========================= -->
-
-<div class="container">
-
-<div class="backHome">
-
-<a href="index.html">🏠 Back to Home</a>
-
-</div>
-
-<div class="toolCard">
-
-<h2 class="toolTitle">
-
-🗜 Compress Image
-
-</h2>
-
-<p class="toolSubtitle">
-
-Reduce Image Size without Losing Quality
-
-        </p>
-
-    <!-- =========================
-TOOL INFORMATION
-========================= -->
-
-<div class="toolInfo">
-
-<h2 class="sectionTitle">ℹ Tool Information</h2>
-
-<div class="infoGrid">
-
-<div class="infoCard">
-<h3>Supported</h3>
-<p>JPG, JPEG, PNG, WEBP, BMP, GIF, TIFF, AVIF</p>
-</div>
-
-<div class="infoCard">
-<h3>Output</h3>
-<p>JPG, PNG, WEBP</p>
-</div>
-
-<div class="infoCard">
-<h3>Maximum Images</h3>
-<p>20 Images</p>
-</div>
-
-<div class="infoCard">
-<h3>Maximum Size</h3>
-<p>25 MB / Image</p>
-</div>
-
-</div>
-
-</div>
-
-<!-- =========================
-UPLOAD BOX
-========================= -->
-
-<div class="uploadBox">
-
-<h2>Select Image(s)</h2>
-
-<p>Choose one or multiple images to compress.</p>
-
-<input
-type="file"
-id="imageInput"
-accept="image/*"
-multiple>
-
-</div>
-
-<!-- =========================
-TARGET SIZE
-========================= -->
-
-<label>Target Size</label>
-
-<input
-type="number"
-id="targetSize"
-placeholder="Enter Size">
-
-<select id="unit">
-
-<option value="KB">KB</option>
-
-<option value="MB">MB</option>
-
-</select>
-
-<!-- =========================
-BUTTONS
-========================= -->
-
-<div class="btnGroup">
-
-<button
-id="compressBtn"
-class="btn btnPrimary">
-
-🗜 Compress
-
-</button>
-
-<button
-id="downloadBtn"
-class="btn btnSuccess">
-
-⬇ Download
-
-</button>
-
-<button
-id="shareBtn"
-class="btn btnWarning">
-
-📤 Share
-
-</button>
-
-<button
-id="resetBtn"
-class="btn btnDanger">
-
-🗑 Reset
-
-</button>
-
-</div>
-
-<!-- =========================
-PROGRESS BAR
-========================= -->
-
-<div class="progressBox">
-
-<div
-class="progressBar"
-id="progressBar">
-
-</div>
-
-</div>
-
-<!-- =========================
-IMAGE PREVIEW
-========================= -->
-
-<div id="previewContainer"></div>
-
-<!-- =========================
-RESULT
-========================= -->
-
-<div id="resultInfo"></div>
-
-    <!-- =========================
-ADVERTISEMENT
-========================= -->
-
-<div class="adsBox">
-
-<h2>Advertisement</h2>
-
-<p>
-Google AdSense Responsive Ad
-</p>
-
-</div>
-
-<!-- =========================
-FEATURES
-========================= -->
-
-<section class="toolFeatures">
-
-<h2 class="sectionTitle">✨ Features</h2>
-
-<ul>
-
-<li>✔ Compress JPG, JPEG, PNG, WEBP</li>
-
-<li>✔ Multiple Image Support</li>
-
-<li>✔ Fast Compression</li>
-
-<li>✔ High Quality Output</li>
-
-<li>✔ Mobile Friendly</li>
-
-<li>✔ Secure Browser Processing</li>
-
-<li>✔ No Server Upload</li>
-
-<li>✔ Free Forever</li>
-
-</ul>
-
-</section>
-
-<!-- =========================
-HOW TO USE
-========================= -->
-
-<section class="howToSection">
-
-<h2>📖 How to Use</h2>
-
-<p>
-
-1️⃣ Click <b>Select Image(s)</b>.
-
-<br><br>
-
-2️⃣ Select one or multiple images.
-
-<br><br>
-
-3️⃣ Enter Target Size (KB or MB).
-
-<br><br>
-
-4️⃣ Click <b>Compress</b>.
-
-</p>
-
-<div id="moreHowTo" style="display:none;">
-
-<p>
-
-5️⃣ Wait for compression to complete.
-
-<br><br>
-
-6️⃣ Preview compressed image(s).
-
-<br><br>
-
-7️⃣ Click Download.
-
-<br><br>
-
-8️⃣ Download single image or ZIP.
-
-<br><br>
-
-9️⃣ All processing happens inside your browser.
-
-</p>
-
-</div>
-
-<button id="readMoreBtn">
-
-Read More ▼
-
-</button>
-
-</section>
-
-<!-- =========================
-PRIVACY
-========================= -->
-
-<section class="privacySection">
-
-<h2>🔒 Privacy Protected</h2>
-
-<p>
-
-Your images are processed locally inside your browser.
-
-No image is uploaded or stored on any server.
-
-All files are automatically removed after refresh or closing the browser.
-
-</p>
-
-</section>
-
-<!-- =========================
-FOOTER
-========================= -->
-
-<footer class="footer">
-
-<div class="footerLinks">
+<hr>
 
 <a href="about.html">About</a>
 
 <a href="contact.html">Contact</a>
 
-<a href="privacy-policy.html">Privacy</a>
+<a href="privacy-policy.html">Privacy Policy</a>
 
-<a href="terms.html">Terms</a>
-
-<a href="disclaimer.html">Disclaimer</a>
+<a href="terms.html">Terms & Conditions</a>
 
 <a href="feedback.html">Feedback</a>
 
-</div>
+</nav>
 
-<p>
+<!-- ==========================
+MAIN
+=========================== -->
 
-© 2026 MI7 Image Tools. All Rights Reserved.
+<main class="container">
+
+<div class="toolCard">
+
+<a
+href="index.html"
+class="backHome">
+
+← Back to Home
+
+</a>
+
+<h2 class="toolTitle">
+
+Compress Image
+
+</h2>
+
+<p class="toolSubtitle">
+
+Reduce image size without losing quality.
 
 </p>
-
-</footer>
-
-</div>
-<!-- toolCard End -->
-
-</div>
-<!-- container End -->
-
-<!-- JSZip -->
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
-<!-- JS -->
-
-<script src="main.js"></script>
-
-<script src="compress.js"></script>
-
-</body>
-        </html>
-        
