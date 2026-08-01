@@ -117,4 +117,415 @@ Compress Image
 
 Reduce image size without losing quality.
 
+  </p>
+<!-- ==========================
+UPLOAD SECTION
+=========================== -->
+
+<section class="toolCard">
+
+<h3 class="sectionTitle">
+
+Select Image
+
+</h3>
+
+<div class="uploadBox">
+
+<input
+type="file"
+id="imageInput"
+accept="image/*"
+multiple>
+
+<p>
+
+Select one or multiple images.
+
 </p>
+
+</div>
+
+<!-- Preview (Upload Box ke niche hi rahega) -->
+
+<div id="previewContainer"></div>
+
+</section>
+
+<!-- ==========================
+COMPRESSION SETTINGS
+=========================== -->
+
+<section class="toolCard">
+
+<h3 class="sectionTitle">
+
+Compression Settings
+
+</h3>
+
+<label>
+
+Target Size
+
+</label>
+
+<div class="settingRow">
+
+<input
+type="number"
+id="targetSize"
+placeholder="Enter Size">
+
+<select id="unit">
+
+<option value="KB">KB</option>
+
+<option value="MB">MB</option>
+
+</select>
+
+</div>
+
+<label>
+
+Output Format
+
+</label>
+
+<select id="outputFormat">
+
+<option value="jpeg">JPG</option>
+
+<option value="png">PNG</option>
+
+<option value="webp">WEBP</option>
+
+</select>
+
+<label>
+
+Compression Quality
+
+</label>
+
+<input
+type="range"
+id="qualitySlider"
+min="10"
+max="100"
+value="80">
+
+<p>
+
+Quality :
+<span id="qualityValue">80%</span>
+
+</p>
+
+</section>
+
+<!-- ==========================
+ACTION BUTTONS
+=========================== -->
+
+<section class="toolCard">
+
+<div class="btnGroup">
+
+<button
+id="compressBtn"
+class="btn btnPrimary">
+
+🗜 Compress
+
+</button>
+
+<button
+id="downloadBtn"
+class="btn btnSuccess">
+
+⬇ Download
+
+</button>
+
+<button
+id="shareBtn"
+class="btn btnWarning">
+
+📤 Share
+
+</button>
+
+<button
+id="resetBtn"
+class="btn btnDanger">
+
+🗑 Reset
+
+</button>
+
+</div>
+
+</section>
+
+<!-- ==========================
+PROGRESS
+=========================== -->
+
+<section class="toolCard">
+
+<div class="progressBox">
+
+<div
+id="progressBar"
+class="progressBar">
+
+</div>
+
+</div>
+
+<div id="resultInfo"></div>
+
+  </section>
+<!-- ==========================
+ADVERTISEMENT
+=========================== -->
+
+<section class="toolCard">
+
+<div class="adsBox">
+
+<h2>Advertisement</h2>
+
+<p>
+
+Responsive Google AdSense Area
+
+</p>
+
+</div>
+
+</section>
+
+<!-- ==========================
+FEATURES
+=========================== -->
+
+<section class="toolCard">
+
+<h2 class="sectionTitle">
+
+✨ Features
+
+</h2>
+
+<ul class="featureList">
+
+<li>✔ Compress JPG, JPEG, PNG, WEBP</li>
+
+<li>✔ Multiple Images Supported</li>
+
+<li>✔ Download One or All Images</li>
+
+<li>✔ High Quality Compression</li>
+
+<li>✔ Mobile Friendly</li>
+
+<li>✔ No Watermark</li>
+
+<li>✔ Fast Processing</li>
+
+<li>✔ Secure Browser Processing</li>
+
+</ul>
+
+</section>
+
+<!-- ==========================
+HOW TO USE
+=========================== -->
+
+<section class="toolCard">
+
+<h2 class="sectionTitle">
+
+📖 How To Use
+
+</h2>
+
+<div class="howToContent">
+
+<p>
+
+1. Click <b>Select Image</b>.
+
+</p>
+
+<p>
+
+2. Choose one or multiple images.
+
+</p>
+
+<p>
+
+3. Enter Target Size.
+
+</p>
+
+<div id="moreHowTo" style="display:none;">
+
+<p>
+
+4. Select Output Format.
+
+</p>
+
+<p>
+
+5. Click Compress.
+
+</p>
+
+<p>
+
+6. Preview your compressed image.
+
+</p>
+
+<p>
+
+7. Download or Share.
+
+</p>
+
+<p>
+
+8. Files never leave your device.
+
+</p>
+
+</div>
+
+<button
+id="readMoreBtn"
+class="btn btnPrimary">
+
+Read More
+
+</button>
+
+</div>
+
+</section>
+
+<!-- ==========================
+PRIVACY
+=========================== -->
+
+<section class="toolCard">
+
+<div class="privacySection">
+
+<h2>
+
+🔒 Privacy Protection
+
+</h2>
+
+<p>
+
+Your images are processed completely inside your browser.
+
+No image is uploaded to any server.
+
+Files are automatically removed after refresh or when you close the browser.
+
+</p>
+
+</div>
+
+  </section>
+<!-- ==========================
+FOOTER
+=========================== -->
+
+<footer class="footer">
+
+<div class="footerLinks">
+
+<a href="about.html">About</a>
+
+<a href="contact.html">Contact</a>
+
+<a href="privacy-policy.html">Privacy Policy</a>
+
+<a href="terms.html">Terms & Conditions</a>
+
+<a href="disclaimer.html">Disclaimer</a>
+
+<a href="feedback.html">Feedback</a>
+
+</div>
+
+<p>
+
+© 2026 MI7 Image Tools
+
+</p>
+
+<p>
+
+Fast • Secure • Free
+
+</p>
+
+</footer>
+
+</div>
+<!-- toolCard End -->
+
+</main>
+
+<!-- ==========================
+LOADING
+=========================== -->
+
+<div id="loadingOverlay" class="loadingOverlay" style="display:none;">
+
+<div class="loader"></div>
+
+<p>Compressing Image...</p>
+
+</div>
+
+<!-- ==========================
+TOAST MESSAGE
+=========================== -->
+
+<div id="toast" class="toast"></div>
+
+<!-- ==========================
+JAVASCRIPT
+=========================== -->
+
+<!-- JSZip -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<!-- Common JS -->
+
+<script src="main.js"></script>
+
+<!-- Compress Tool JS -->
+
+<script src="compress.js"></script>
+
+</body>
+
+</html>
+
+
+
+
