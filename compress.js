@@ -279,3 +279,8 @@ originalFile=null;
 compressedBlob=null;
 
 });
+
+<script src="main.js"></script>
+<script src="compress.js"></script>
+
+
