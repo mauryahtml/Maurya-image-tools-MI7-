@@ -10,40 +10,41 @@ document.addEventListener("DOMContentLoaded", () => {
     // =========================
 
 
-   const closeMenu = document.getElementById("closeMenu");
+   // =========================
+// MENU
+// =========================
 
-if (closeMenu) {
+const menuBtn = document.getElementById("menuBtn");
+const sideMenu = document.getElementById("sideMenu");
+const overlay = document.getElementById("overlay");
+const closeMenu = document.getElementById("closeMenu");
 
-    closeMenu.addEventListener("click", () => {
+if (menuBtn && sideMenu && overlay) {
+
+    menuBtn.addEventListener("click", () => {
+
+        sideMenu.classList.add("show");
+        overlay.classList.add("show");
+
+    });
+
+    function closeSideMenu() {
 
         sideMenu.classList.remove("show");
         overlay.classList.remove("show");
 
-    });
+    }
 
-}
-   
-    const menuBtn = document.getElementById("menuBtn");
-    const sideMenu = document.getElementById("sideMenu");
-    const overlay = document.getElementById("overlay");
+    overlay.addEventListener("click", closeSideMenu);
 
-    if (menuBtn && sideMenu && overlay) {
+    if (closeMenu) {
 
-        menuBtn.addEventListener("click", () => {
-
-            sideMenu.classList.toggle("show");
-            overlay.classList.toggle("show");
-
-        });
-
-        overlay.addEventListener("click", () => {
-
-            sideMenu.classList.remove("show");
-            overlay.classList.remove("show");
-
-        });
+        closeMenu.addEventListener("click", closeSideMenu);
 
     }
+
+}
+
 
     // =========================
     // READ MORE
