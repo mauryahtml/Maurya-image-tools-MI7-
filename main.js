@@ -9,6 +9,20 @@ document.addEventListener("DOMContentLoaded", () => {
     // MENU
     // =========================
 
+
+   const closeMenu = document.getElementById("closeMenu");
+
+if (closeMenu) {
+
+    closeMenu.addEventListener("click", () => {
+
+        sideMenu.classList.remove("show");
+        overlay.classList.remove("show");
+
+    });
+
+}
+   
     const menuBtn = document.getElementById("menuBtn");
     const sideMenu = document.getElementById("sideMenu");
     const overlay = document.getElementById("overlay");
@@ -17,15 +31,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
         menuBtn.addEventListener("click", () => {
 
-            sideMenu.classList.toggle("active");
-            overlay.classList.toggle("active");
+            sideMenu.classList.toggle("show");
+            overlay.classList.toggle("show");
 
         });
 
         overlay.addEventListener("click", () => {
 
-            sideMenu.classList.remove("active");
-            overlay.classList.remove("active");
+            sideMenu.classList.remove("show");
+            overlay.classList.remove("show");
 
         });
 
