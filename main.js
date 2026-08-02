@@ -1,71 +1,88 @@
-/* ======================================
+/* ==========================================
    MI7 IMAGE TOOLS
-   main.js
-====================================== */
+   main.js FINAL V1
+========================================== */
 
-document.addEventListener("DOMContentLoaded", () => {
+"use strict";
 
-    // =========================
-    // MENU
-    // =========================
+/* ==========================================
+   DOM LOADED
+========================================== */
 
+document.addEventListener("DOMContentLoaded", function () {
 
-   // =========================
-// MENU
-// =========================
+    /* -------------------------
+       MENU
+    -------------------------- */
 
-const menuBtn = document.getElementById("menuBtn");
-const sideMenu = document.getElementById("sideMenu");
-const overlay = document.getElementById("overlay");
-const closeMenu = document.getElementById("closeMenu");
+    const menuBtn = document.getElementById("menuBtn");
 
-if (menuBtn && sideMenu && overlay) {
+    const sideMenu = document.getElementById("sideMenu");
 
-    menuBtn.addEventListener("click", () => {
+    const overlay = document.getElementById("overlay");
+
+    const closeMenu = document.getElementById("closeMenu");
+
+    function openMenu() {
 
         sideMenu.classList.add("show");
+
         overlay.classList.add("show");
 
-    });
+    }
 
-    function closeSideMenu() {
+    function closeMenuNow() {
 
         sideMenu.classList.remove("show");
+
         overlay.classList.remove("show");
 
     }
 
-    overlay.addEventListener("click", closeSideMenu);
+    if (menuBtn) {
 
-    if (closeMenu) {
-
-        closeMenu.addEventListener("click", closeSideMenu);
+        menuBtn.addEventListener("click", openMenu);
 
     }
 
-}
+    if (closeMenu) {
 
+        closeMenu.addEventListener("click", closeMenuNow);
 
-    // =========================
-    // READ MORE
-    // =========================
+    }
+
+    if (overlay) {
+
+        overlay.addEventListener("click", closeMenuNow);
+
+    }
+
+    /* -------------------------
+       READ MORE
+    -------------------------- */
 
     const readMoreBtn = document.getElementById("readMoreBtn");
+
     const moreHowTo = document.getElementById("moreHowTo");
 
     if (readMoreBtn && moreHowTo) {
 
-        readMoreBtn.addEventListener("click", () => {
+        readMoreBtn.addEventListener("click", function () {
 
-            if (moreHowTo.style.display === "none" || moreHowTo.style.display === "") {
+            if (
+                moreHowTo.style.display === "" ||
+                moreHowTo.style.display === "none"
+            ) {
 
                 moreHowTo.style.display = "block";
-                readMoreBtn.innerText = "Read Less ▲";
+
+                readMoreBtn.innerHTML = "Read Less ▲";
 
             } else {
 
                 moreHowTo.style.display = "none";
-                readMoreBtn.innerText = "Read More ▼";
+
+                readMoreBtn.innerHTML = "Read More ▼";
 
             }
 
@@ -75,9 +92,40 @@ if (menuBtn && sideMenu && overlay) {
 
 });
 
-/* =========================
-   LOADING
-========================= */
+/* ==========================================
+   LOADER
+========================================== */
+
+window.addEventListener("load", function () {
+
+    const loader = document.getElementById("loader");
+
+    const mainContent = document.getElementById("mainContent");
+
+    if (!loader || !mainContent) return;
+
+    mainContent.style.display = "none";
+
+    setTimeout(function () {
+
+        loader.style.opacity = "0";
+
+        setTimeout(function () {
+
+            loader.style.display = "none";
+
+            mainContent.style.display = "block";
+
+        }, 500);
+
+    }, 1500);
+
+});
+
+
+/* ==========================================
+   LOADING OVERLAY
+========================================== */
 
 function showLoading() {
 
@@ -103,9 +151,10 @@ function hideLoading() {
 
 }
 
-/* =========================
+
+/* ==========================================
    TOAST MESSAGE
-========================= */
+========================================== */
 
 function showToast(message) {
 
@@ -117,38 +166,21 @@ function showToast(message) {
 
     toast.classList.add("show");
 
-    setTimeout(() => {
+    setTimeout(function () {
 
         toast.classList.remove("show");
 
     }, 2500);
 
-           }
+}
 
-/* =========================
-   HOME PAGE LOADER
-========================= */
 
-window.addEventListener("load", () => {
+/* ==========================================
+   DEBUG
+========================================== */
 
-    const loader = document.getElementById("loader");
-    const mainContent = document.getElementById("mainContent");
+console.log("✅ MI7 main.js loaded successfully");
 
-    if (!loader || !mainContent) return;
 
-    mainContent.style.display = "none";
 
-    setTimeout(() => {
 
-        loader.style.opacity = "0";
-
-        setTimeout(() => {
-
-            loader.style.display = "none";
-            mainContent.style.display = "block";
-
-        },500);
-
-    },1500);
-
-});
