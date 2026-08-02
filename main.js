@@ -110,3 +110,30 @@ function showToast(message) {
 
            }
 
+/* =========================
+   HOME PAGE LOADER
+========================= */
+
+window.addEventListener("load", () => {
+
+    const loader = document.getElementById("loader");
+    const mainContent = document.getElementById("mainContent");
+
+    if (!loader || !mainContent) return;
+
+    mainContent.style.display = "none";
+
+    setTimeout(() => {
+
+        loader.style.opacity = "0";
+
+        setTimeout(() => {
+
+            loader.style.display = "none";
+            mainContent.style.display = "block";
+
+        },500);
+
+    },1500);
+
+});
