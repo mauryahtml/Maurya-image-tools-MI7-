@@ -1,138 +1,96 @@
-/* =======================================
+/* ==========================================
    MI7 IMAGE TOOLS
-   Compress Image Tool
-   compress.js V3 Final
-======================================= */
-
-"use strict";
-
-/* ==========================
-GLOBAL VARIABLES
-========================== */
+   compress.js FINAL
+========================================== */
 
 const imageInput = document.getElementById("imageInput");
 
-const previewContainer = document.getElementById("previewContainer");
+const previewCard = document.getElementById("previewCard");
+const previewImage = document.getElementById("previewImage");
 
-const imageInfo = document.getElementById("imageInfo");
-
-const resultInfo = document.getElementById("resultInfo");
-
-const progressBar = document.getElementById("progressBar");
+const fileName = document.getElementById("fileName");
+const fileFormat = document.getElementById("fileFormat");
+const originalSize = document.getElementById("originalSize");
+const imageDimensions = document.getElementById("imageDimensions");
 
 const targetSize = document.getElementById("targetSize");
 
-const unit = document.getElementById("unit");
-
-const outputFormat = document.getElementById("outputFormat");
-
-const qualitySlider = document.getElementById("qualitySlider");
-
-const qualityValue = document.getElementById("qualityValue");
-
 const compressBtn = document.getElementById("compressBtn");
-
 const downloadBtn = document.getElementById("downloadBtn");
-
 const shareBtn = document.getElementById("shareBtn");
-
 const resetBtn = document.getElementById("resetBtn");
 
-/* ==========================
-DATA
-========================== */
+const resultCard = document.getElementById("resultCard");
+
+const resultOriginal = document.getElementById("resultOriginal");
+const resultCompressed = document.getElementById("resultCompressed");
+const savedPercent = document.getElementById("savedPercent");
 
 let selectedFiles = [];
-
 let compressedFiles = [];
 
-/* ==========================
-QUALITY TEXT
-========================== */
+/* ==========================================
+   SELECT IMAGE
+========================================== */
 
-qualitySlider.addEventListener("input", () => {
+imageInput.addEventListener("change", function () {
 
-    qualityValue.textContent = qualitySlider.value + "%";
-
-});
-
-/* ==========================
-SELECT IMAGE
-========================== */
-
-imageInput.addEventListener("change", () => {
-
-    selectedFiles = [...imageInput.files];
+    selectedFiles = [...this.files];
 
     compressedFiles = [];
 
-    previewContainer.innerHTML = "";
+    if (selectedFiles.length === 0) return;
 
-    resultInfo.innerHTML = "";
-
-    progressBar.style.width = "0%";
-
-    if (selectedFiles.length === 0) {
-
-        imageInfo.innerHTML = "<p>No image selected.</p>";
-
-        return;
-
-    }
-
-    imageInfo.innerHTML = `
-        <p><b>Total Images :</b> ${selectedFiles.length}</p>
-    `;
-
-    previewImages();
+    showPreview(selectedFiles[0]);
 
 });
 
-/* ==========================
-IMAGE PREVIEW
-========================== */
+/* ==========================================
+   PREVIEW
+========================================== */
 
-function previewImages() {
+function showPreview(file) {
 
-    previewContainer.innerHTML = "";
+    previewCard.style.display = "block";
 
-    selectedFiles.forEach(file => {
+    fileName.textContent = file.name;
 
-        const reader = new FileReader();
+    fileFormat.textContent = file.type || "Unknown";
 
-        reader.onload = function(e){
+    originalSize.textContent =
+        (file.size / 1024).toFixed(1) + " KB";
 
-            const card = document.createElement("div");
+    const reader = new FileReader();
 
-            card.className = "previewCard";
+    reader.onload = function (e) {
 
-            card.innerHTML = `
-                <img src="${e.target.result}">
-                <p>${file.name}</p>
-                <small>${(file.size/1024).toFixed(1)} KB</small>
-            `;
+        previewImage.src = e.target.result;
 
-            previewContainer.appendChild(card);
+        const img = new Image();
+
+        img.onload = function () {
+
+            imageDimensions.textContent =
+                img.width + " × " + img.height + " px";
 
         };
 
-        reader.readAsDataURL(file);
+        img.src = e.target.result;
 
-    });
+    };
 
-       }
+    reader.readAsDataURL(file);
 
-/* ==========================
-COMPRESS BUTTON
-========================== */
+}
+/* ==========================================
+   COMPRESS IMAGES
+========================================== */
 
-compressBtn.addEventListener("click", compressImages);
-
-async function compressImages() {
+compressBtn.addEventListener("click", async function () {
 
     if (selectedFiles.length === 0) {
 
-        showToast("Please select image first.");
+        showToast("Please select image.");
 
         return;
 
@@ -142,51 +100,38 @@ async function compressImages() {
 
     compressedFiles = [];
 
-    resultInfo.innerHTML = "";
+    const targetKB = parseInt(targetSize.value) || 100;
 
-    progressBar.style.width = "0%";
+    for (const file of selectedFiles) {
 
-    for (let i = 0; i < selectedFiles.length; i++) {
-
-        const file = selectedFiles[i];
-
-        const compressed = await compressSingleImage(file);
+        const compressed = await compressImage(file, targetKB);
 
         compressedFiles.push(compressed);
-
-        progressBar.style.width =
-            ((i + 1) / selectedFiles.length) * 100 + "%";
 
     }
 
     hideLoading();
 
-    resultInfo.innerHTML = `
-        <div class="resultCard">
-            <b>Compression Completed</b><br>
-            Total Images : ${compressedFiles.length}
-        </div>
-    `;
+    showResult();
 
-    showToast("Compression Completed");
+});
 
-}
 
-/* ==========================
-COMPRESS SINGLE IMAGE
-========================== */
+/* ==========================================
+   IMAGE COMPRESS FUNCTION
+========================================== */
 
-function compressSingleImage(file){
+async function compressImage(file, targetKB) {
 
-    return new Promise((resolve)=>{
+    return new Promise((resolve) => {
 
         const reader = new FileReader();
 
-        reader.onload = function(e){
+        reader.onload = function (event) {
 
             const img = new Image();
 
-            img.onload = function(){
+            img.onload = function () {
 
                 const canvas = document.createElement("canvas");
 
@@ -196,50 +141,52 @@ function compressSingleImage(file){
 
                 canvas.height = img.height;
 
-                ctx.drawImage(img,0,0);
+                ctx.drawImage(img, 0, 0);
 
-                let quality =
-                    Number(qualitySlider.value) / 100;
+                let quality = 0.9;
 
-                let mimeType =
-                    "image/" + outputFormat.value;
+                let output;
 
-                canvas.toBlob(function(blob){
+                do {
 
-                    let finalBlob = blob;
+                    output = canvas.toDataURL(
+                        "image/jpeg",
+                        quality
+                    );
 
-                    let targetBytes =
-                        Number(targetSize.value);
+                    quality -= 0.05;
 
-                    if(unit.value==="KB"){
+                } while (
 
-                        targetBytes *= 1024;
+                    output.length / 1024 > targetKB * 1.37 &&
 
-                    }else{
+                    quality > 0.05
 
-                        targetBytes *= 1024 * 1024;
+                );
 
-                    }
+                fetch(output)
 
-                    resolve({
+                    .then(res => res.blob())
 
-                        name:file.name,
+                    .then(blob => {
 
-                        blob:finalBlob,
+                        resolve({
 
-                        url:URL.createObjectURL(finalBlob),
+                            name: file.name.replace(/\.[^/.]+$/, "") + ".jpg",
 
-                        originalSize:file.size,
+                            blob: blob,
 
-                        compressedSize:finalBlob.size
+                            original: file.size,
+
+                            compressed: blob.size
+
+                        });
 
                     });
 
-                },mimeType,quality);
-
             };
 
-            img.src = e.target.result;
+            img.src = event.target.result;
 
         };
 
@@ -247,126 +194,160 @@ function compressSingleImage(file){
 
     });
 
-                   }
+}
 
-/* ==========================
-DOWNLOAD
-========================== */
 
-downloadBtn.addEventListener("click", async () => {
+/* ==========================================
+   RESULT
+========================================== */
+
+function showResult() {
+
+    resultCard.style.display = "block";
+
+    downloadBtn.style.display = "block";
+
+    shareBtn.style.display = "block";
+
+    const totalOriginal =
+        compressedFiles.reduce((a, b) => a + b.original, 0);
+
+    const totalCompressed =
+        compressedFiles.reduce((a, b) => a + b.compressed, 0);
+
+    resultOriginal.textContent =
+        (totalOriginal / 1024).toFixed(1) + " KB";
+
+    resultCompressed.textContent =
+        (totalCompressed / 1024).toFixed(1) + " KB";
+
+    savedPercent.textContent =
+
+        (
+            ((totalOriginal - totalCompressed) / totalOriginal) * 100
+        ).toFixed(1) + "%";
+
+            }
+
+/* ==========================================
+   DOWNLOAD
+========================================== */
+
+downloadBtn.addEventListener("click", function () {
 
     if (compressedFiles.length === 0) {
 
-        showToast("Compress image first.");
+        showToast("Nothing to download.");
+
         return;
 
     }
 
-    /* Single Image */
+    compressedFiles.forEach((file, index) => {
 
-    if (compressedFiles.length === 1) {
-
-        const file = compressedFiles[0];
+        const url = URL.createObjectURL(file.blob);
 
         const a = document.createElement("a");
 
-        a.href = file.url;
+        a.href = url;
 
         a.download = file.name;
 
+        document.body.appendChild(a);
+
         a.click();
 
-        return;
+        document.body.removeChild(a);
 
-    }
-
-    /* Multiple Images ZIP */
-
-    const zip = new JSZip();
-
-    compressedFiles.forEach(file => {
-
-        zip.file(file.name, file.blob);
+        URL.revokeObjectURL(url);
 
     });
-
-    const content = await zip.generateAsync({
-
-        type: "blob"
-
-    });
-
-    const link = document.createElement("a");
-
-    link.href = URL.createObjectURL(content);
-
-    link.download = "MI7_Compressed_Images.zip";
-
-    link.click();
 
 });
 
 
-/* ==========================
-SHARE
-========================== */
+/* ==========================================
+   SHARE
+========================================== */
 
-shareBtn.addEventListener("click", async () => {
+shareBtn.addEventListener("click", async function () {
 
     if (compressedFiles.length === 0) {
 
-        showToast("Compress image first.");
+        showToast("Nothing to share.");
 
         return;
 
     }
 
-    /* One Image */
+    try {
 
-    if (compressedFiles.length === 1) {
+        const files = compressedFiles.map(file =>
 
-        const file = compressedFiles[0];
+            new File(
 
-        try {
+                [file.blob],
+
+                file.name,
+
+                {
+
+                    type: "image/jpeg"
+
+                }
+
+            )
+
+        );
+
+        if (
+
+            navigator.canShare &&
+
+            navigator.canShare({
+
+                files
+
+            })
+
+        ) {
 
             await navigator.share({
 
-                files: [
+                title: "Compressed Images",
 
-                    new File(
-                        [file.blob],
-                        file.name,
-                        { type: file.blob.type }
-                    )
+                text: "Compressed using MI7 Image Tools",
 
-                ],
-
-                title: "MI7 Image Tools"
+                files
 
             });
 
-        } catch (e) {
+        } else {
 
-            showToast("Share cancelled.");
+            showToast(
+
+                "Your browser doesn't support sharing multiple images."
+
+            );
 
         }
 
-        return;
-
     }
 
-    /* Multiple Images */
+    catch (err) {
 
-    showToast("For multiple images use Download ZIP.");
+        console.log(err);
+
+    }
 
 });
 
 
-/* ==========================
-RESET
-========================== */
+/* ==========================================
+   RESET
+========================================== */
 
-resetBtn.addEventListener("click", () => {
+resetBtn.addEventListener("click", function () {
 
     imageInput.value = "";
 
@@ -374,43 +355,126 @@ resetBtn.addEventListener("click", () => {
 
     compressedFiles = [];
 
-    previewContainer.innerHTML = "";
+    previewCard.style.display = "none";
 
-    resultInfo.innerHTML = "";
+    resultCard.style.display = "none";
 
-    imageInfo.innerHTML = "<p>No image selected.</p>";
+    downloadBtn.style.display = "none";
 
-    progressBar.style.width = "0%";
+    shareBtn.style.display = "none";
 
-    targetSize.value = "";
+    previewImage.src = "";
 
-    qualitySlider.value = 80;
+    fileName.textContent = "-";
 
-    qualityValue.textContent = "80%";
+    fileFormat.textContent = "-";
+
+    originalSize.textContent = "-";
+
+    imageDimensions.textContent = "-";
+
+    resultOriginal.textContent = "-";
+
+    resultCompressed.textContent = "-";
+
+    savedPercent.textContent = "-";
+
+    targetSize.value = "100";
 
     showToast("Reset Successfully");
 
 });
 
+/* ==========================================
+   EXTRA FEATURES
+========================================== */
 
-/* ==========================
-TARGET SIZE VALIDATION
-========================== */
+/* Progress Message */
 
-targetSize.addEventListener("input", () => {
+function updateProgress(current, total) {
 
-    if (Number(targetSize.value) <= 0) {
+    showToast(
 
-        targetSize.value = "";
+        "Compressing " + current + " of " + total + "..."
+
+    );
+
+}
+
+
+/* Better Compression */
+
+async function compressAllImages() {
+
+    compressedFiles = [];
+
+    const targetKB = parseInt(targetSize.value) || 100;
+
+    for (let i = 0; i < selectedFiles.length; i++) {
+
+        updateProgress(i + 1, selectedFiles.length);
+
+        const compressed = await compressImage(
+
+            selectedFiles[i],
+
+            targetKB
+
+        );
+
+        compressedFiles.push(compressed);
+
+    }
+
+    showResult();
+
+}
+
+
+/* Preview First Image */
+
+if (selectedFiles.length > 0) {
+
+    showPreview(selectedFiles[0]);
+
+}
+
+
+/* Download Success */
+
+downloadBtn.addEventListener("click", function () {
+
+    showToast(
+
+        compressedFiles.length +
+
+        " image(s) downloaded."
+
+    );
+
+});
+
+
+/* Share Success */
+
+shareBtn.addEventListener("click", function () {
+
+    if (compressedFiles.length > 0) {
+
+        showToast("Preparing images...");
 
     }
 
 });
 
 
-/* ==========================
-READY
-========================== */
+/* ==========================================
+   FINISHED
+========================================== */
 
-console.log("MI7 Compress Tool Loaded Successfully");
+console.log(
+
+    "✅ MI7 Compress Tool Loaded Successfully"
+
+);
 
