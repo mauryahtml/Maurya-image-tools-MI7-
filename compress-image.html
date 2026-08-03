@@ -9,7 +9,9 @@
 content="width=device-width, initial-scale=1.0">
 
 <title>
+
 Reduce Image Size in KB | MI7 Image Tools
+
 </title>
 
 <link rel="stylesheet" href="tool.css">
@@ -28,29 +30,38 @@ HEADER
 
 <header class="header">
 
-<div class="header-left">
-
-<button id="menuBtn">
+<button id="menuBtn" class="menu-btn">
 
 ☰
 
 </button>
 
+<div class="logo-area">
+
 <img
 src="assets/logo.png"
 class="logo"
-alt="MI7 Logo">
+alt="MI7">
 
-<span class="site-title">
+<div>
+
+<h2>
 
 MI7 Image Tools
 
-</span>
+</h2>
+
+<p>
+
+Reduce Image Size in KB
+
+</p>
 
 </div>
 
-<a
-href="index.html"
+</div>
+
+<a href="index.html"
 class="home-btn">
 
 🏠 Home
@@ -59,11 +70,26 @@ class="home-btn">
 
 </header>
 
+
 <!-- =========================
-SIDE MENU
+SLIDE MENU
 ========================= -->
 
+<div id="overlay"></div>
+
 <nav id="sideMenu">
+
+<div class="menu-header">
+
+<img
+src="assets/logo.png"
+class="menu-logo">
+
+<h3>
+
+MI7 Image Tools
+
+</h3>
 
 <button id="closeMenu">
 
@@ -71,47 +97,91 @@ SIDE MENU
 
 </button>
 
-<ul>
+</div>
 
-<li><a href="index.html">🏠 Home</a></li>
+<a href="index.html">
 
-<li><a href="#">🗜 Compress Image</a></li>
+🏠 Home
 
-<li><a href="#">📏 Resize Image</a></li>
+</a>
 
-<li><a href="#">🪪 Passport Photo</a></li>
+<a href="compress-image.html">
 
-<li><a href="#">📄 Image To PDF</a></li>
+🗜 Compress Image
 
-<li><a href="#">📞 Contact</a></li>
+</a>
 
-</ul>
+<a href="resize-image.html">
+
+📏 Resize Image
+
+</a>
+
+<a href="passport-photo.html">
+
+🪪 Passport Photo
+
+</a>
+
+<a href="image-to-pdf.html">
+
+📄 Image to PDF
+
+</a>
+
+<a href="about.html">
+
+ℹ About
+
+</a>
+
+<a href="contact.html">
+
+📞 Contact
+
+</a>
 
 </nav>
 
-<div id="overlay"></div>
 
 <!-- =========================
-MAIN
+MAIN TOOL
 ========================= -->
 
-<div class="tool-container">
+<main class="tool-container">
 
 <div class="tool-card">
 
-<h1 class="tool-title">
+<h1>
 
 Reduce Image Size in KB
 
 </h1>
 
-<div class="upload-box">
+<p class="tool-desc">
 
-<label for="imageInput">
+Compress one or multiple images without losing much quality.
 
-<img
-src="assets/upload.png"
-alt="Upload">
+</p>
+
+<label
+class="upload-box">
+
+<input
+
+type="file"
+
+id="imageInput"
+
+accept="image/*"
+
+multiple>
+
+<div>
+
+📂
+
+</div>
 
 <h3>
 
@@ -127,156 +197,124 @@ JPG • PNG • WEBP
 
 </label>
 
-<input
 
-type="file"
+<!-- ALL IMAGES WILL COME HERE -->
 
-id="imageInput"
-
-accept="image/*"
-
-multiple>
+<div id="imageContainer">
 
 </div>
 
-<!-- =========================
-IMAGE PREVIEW
-========================= -->
+  </div>
 
-<div class="preview-card" id="previewCard">
+<!-- ==========================================
+IMAGE CARDS CONTAINER
+========================================== -->
 
-<img
-id="previewImage"
-src=""
-alt="Preview">
+<div id="imageContainer" class="image-container">
 
-<div class="image-info">
-
-<p>
-
-<b>File Name :</b>
-
-<span id="fileName">
-
--
-
-</span>
-
-</p>
-
-<p>
-
-<b>Format :</b>
-
-<span id="fileFormat">
-
--
-
-</span>
-
-</p>
-
-<p>
-
-<b>Original Size :</b>
-
-<span id="originalSize">
-
--
-
-</span>
-
-</p>
-
-<p>
-
-<b>Dimensions :</b>
-
-<span id="imageDimensions">
-
--
-
-</span>
-
-</p>
+<!-- JS yaha image cards banayega -->
 
 </div>
 
+<!-- ==========================================
+IMAGE CARD TEMPLATE
+========================================== -->
+
+<template id="imageCardTemplate">
+
+<div class="image-card">
+
+<div class="image-preview">
+
+<img class="previewImage" src="" alt="Preview">
+
 </div>
 
+<div class="image-details">
 
-<!-- =========================
-TARGET SIZE
-========================= -->
+<p><strong>Name :</strong> <span class="fileName"></span></p>
 
-<div class="target-box">
+<p><strong>Format :</strong> <span class="fileFormat"></span></p>
 
-<label>
+<p><strong>Original :</strong> <span class="originalSize"></span></p>
 
-Target Size (KB)
+<p><strong>Dimensions :</strong> <span class="dimensions"></span></p>
 
-</label>
+</div>
+
+<div class="compress-section">
+
+<label>Target Size (KB)</label>
 
 <input
-
 type="number"
-
-id="targetSize"
-
-placeholder="Example : 100"
-
+class="targetKB"
 value="100"
-
 min="5">
 
-</div>
-
-
-<!-- =========================
-BUTTONS
-========================= -->
-
-<div class="button-group">
-
-<button
-
-class="btn btn-compress"
-
-id="compressBtn">
+<button class="compressBtn">
 
 🗜 Compress
 
 </button>
 
-<button
+</div>
 
-class="btn btn-download"
+<div class="resultBox">
 
-id="downloadBtn"
+<h3>Compression Result</h3>
 
-style="display:none;">
+<p>
+
+Original :
+
+<span class="resultOriginal">
+
+-
+
+</span>
+
+</p>
+
+<p>
+
+Compressed :
+
+<span class="resultCompressed">
+
+-
+
+</span>
+
+</p>
+
+<p>
+
+Saved :
+
+<span class="savedPercent">
+
+-
+
+</span>
+
+</p>
+
+<div class="button-group">
+
+<button class="downloadBtn">
 
 ⬇ Download
 
 </button>
 
-<button
-
-class="btn btn-share"
-
-id="shareBtn"
-
-style="display:none;">
+<button class="shareBtn">
 
 📤 Share
 
 </button>
 
-<button
-
-class="btn btn-reset"
-
-id="resetBtn">
+<button class="resetBtn">
 
 🔄 Reset
 
@@ -284,101 +322,29 @@ id="resetBtn">
 
 </div>
 
-
-<!-- =========================
-RESULT
-========================= -->
-
-<div
-
-class="result-card"
-
-id="resultCard">
-
-<h3>
-
-Compression Result
-
-</h3>
-
-<div class="result-item">
-
-<span>
-
-Original Size
-
-</span>
-
-<span id="resultOriginal">
-
--
-
-</span>
-
-</div>
-
-<div class="result-item">
-
-<span>
-
-Compressed Size
-
-</span>
-
-<span id="resultCompressed">
-
--
-
-</span>
-
-</div>
-
-<div class="result-item">
-
-<span>
-
-Saved
-
-</span>
-
-<span id="savedPercent">
-
--
-
-</span>
-
 </div>
 
 </div>
 
-</div>
-
-<!-- Tool Card Close -->
-
-  </div>
+</template>
 
 <!-- ==========================================
-ADS SECTION
+ADS
 ========================================== -->
 
 <div class="ads-box">
 
-    Google AdSense Area
+Google AdSense Area
 
-</div>
-
+  </div>
 
 <!-- ==========================================
 FEATURES
 ========================================== -->
 
-<div class="info-card">
+<section class="info-card">
 
-<h2>
-
-⭐ Features
-
-</h2>
+<h2>⭐ Features</h2>
 
 <ul>
 
@@ -388,73 +354,69 @@ FEATURES
 
 <li>Supports JPG, PNG & WEBP</li>
 
-<li>Preview Before Download</li>
+<li>Separate Preview for Every Image</li>
 
-<li>Shows Original & Compressed Size</li>
+<li>Separate Result for Every Image</li>
 
-<li>Shows Image Dimensions (px)</li>
+<li>Download Every Image Individually</li>
+
+<li>Share Every Image Individually</li>
 
 <li>Fast Processing</li>
 
-<li>Secure - Images are not stored</li>
+<li>Secure - Images Never Leave Your Device</li>
 
 </ul>
 
-</div>
+</section>
 
 
 <!-- ==========================================
 HOW TO USE
 ========================================== -->
 
-<div class="info-card">
+<section class="info-card">
 
-<h2>
-
-📖 How To Use
-
-</h2>
+<h2>📖 How To Use</h2>
 
 <ol>
 
 <li>Select one or multiple images.</li>
 
-<li>Check image preview and details.</li>
+<li>Every image will appear in its own card.</li>
 
-<li>Enter target size in KB.</li>
+<li>Enter the target size (KB).</li>
 
-<li>Click Compress.</li>
+<li>Click the Compress button for that image.</li>
 
-<li>Download or Share the compressed image.</li>
+<li>Wait until "Compression Completed" appears.</li>
+
+<li>Download or Share that compressed image.</li>
 
 </ol>
 
-</div>
+</section>
 
 
 <!-- ==========================================
 PRIVACY
 ========================================== -->
 
-<div class="info-card">
+<section class="info-card">
 
-<h2>
-
-🔒 Privacy
-
-</h2>
+<h2>🔒 Privacy Policy</h2>
 
 <p>
 
-Your images are processed inside your browser.
+All image processing happens directly in your browser.
 
-No image is uploaded or stored on our server.
+Your images are never uploaded to our server.
 
-Your files remain private and secure.
+We do not save, store, or share your files.
 
 </p>
 
-</div>
+</section>
 
 
 <!-- ==========================================
@@ -465,15 +427,15 @@ FOOTER
 
 <div class="footer-links">
 
-<a href="index.html">Home</a>
+<a href="index.html">🏠 Home</a>
 
-<a href="#">About</a>
+<a href="about.html">About</a>
 
-<a href="#">Privacy</a>
+<a href="privacy.html">Privacy</a>
 
-<a href="#">Terms</a>
+<a href="terms.html">Terms</a>
 
-<a href="#">Contact</a>
+<a href="contact.html">Contact</a>
 
 </div>
 
@@ -487,6 +449,29 @@ All Rights Reserved.
 
 </footer>
 
+</main>
+
+<!-- ==========================================
+LOADING
+========================================== -->
+
+<div id="loadingOverlay">
+
+<div class="loader"></div>
+
+<p>
+
+Compressing Image...
+
+</p>
+
+</div>
+
+<!-- ==========================================
+TOAST
+========================================== -->
+
+<div id="toast"></div>
 
 <!-- ==========================================
 SCRIPTS
@@ -499,5 +484,6 @@ SCRIPTS
 </body>
 
 </html>
+
 
 
