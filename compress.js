@@ -1,57 +1,96 @@
 /* ==========================================
-   MI7 IMAGE TOOLS
-   compress.js FINAL
+   MI7 IMAGE TOOLS V3
+   compress.js - Part 1
 ========================================== */
 
 const imageInput = document.getElementById("imageInput");
+const imageContainer = document.getElementById("imageContainer");
 
-const previewCard = document.getElementById("previewCard");
-const previewImage = document.getElementById("previewImage");
+const loadingOverlay = document.getElementById("loadingOverlay");
+const toast = document.getElementById("toast");
 
-const fileName = document.getElementById("fileName");
-const fileFormat = document.getElementById("fileFormat");
-const originalSize = document.getElementById("originalSize");
-const imageDimensions = document.getElementById("imageDimensions");
-
-const targetSize = document.getElementById("targetSize");
-
-const compressBtn = document.getElementById("compressBtn");
-const downloadBtn = document.getElementById("downloadBtn");
-const shareBtn = document.getElementById("shareBtn");
-const resetBtn = document.getElementById("resetBtn");
-
-const resultCard = document.getElementById("resultCard");
-
-const resultOriginal = document.getElementById("resultOriginal");
-const resultCompressed = document.getElementById("resultCompressed");
-const savedPercent = document.getElementById("savedPercent");
-
-let selectedFiles = [];
-let compressedFiles = [];
+let imageList = [];
 
 /* ==========================================
-   SELECT IMAGE
+   TOAST
 ========================================== */
 
-imageInput.addEventListener("change", function () {
+function showToast(message) {
 
-    selectedFiles = [...this.files];
+    toast.textContent = message;
 
-    compressedFiles = [];
+    toast.style.display = "block";
 
-    if (selectedFiles.length === 0) return;
+    setTimeout(() => {
 
-    showPreview(selectedFiles[0]);
+        toast.style.display = "none";
+
+    }, 2500);
+
+}
+
+/* ==========================================
+   LOADING
+========================================== */
+
+function showLoading(text = "Compressing Image...") {
+
+    loadingOverlay.style.display = "flex";
+
+    loadingOverlay.querySelector("p").textContent = text;
+
+}
+
+function hideLoading() {
+
+    loadingOverlay.style.display = "none";
+
+}
+
+/* ==========================================
+   IMAGE SELECT
+========================================== */
+
+imageInput.addEventListener("change", () => {
+
+    const files = [...imageInput.files];
+
+    if (!files.length) return;
+
+    imageList = [];
+
+    imageContainer.innerHTML = "";
+
+    files.forEach((file, index) => {
+
+        createImageCard(file, index);
+
+    });
 
 });
 
 /* ==========================================
-   PREVIEW
+   CREATE IMAGE CARD
 ========================================== */
 
-function showPreview(file) {
+function createImageCard(file, index) {
 
-    previewCard.style.display = "block";
+    const template = document
+        .getElementById("imageCardTemplate")
+        .content
+        .cloneNode(true);
+
+    const card = template.querySelector(".image-card");
+
+    const previewImage = card.querySelector(".previewImage");
+
+    const fileName = card.querySelector(".fileName");
+
+    const fileFormat = card.querySelector(".fileFormat");
+
+    const originalSize = card.querySelector(".originalSize");
+
+    const dimensions = card.querySelector(".dimensions");
 
     fileName.textContent = file.name;
 
@@ -62,15 +101,15 @@ function showPreview(file) {
 
     const reader = new FileReader();
 
-    reader.onload = function (e) {
+    reader.onload = e => {
 
         previewImage.src = e.target.result;
 
         const img = new Image();
 
-        img.onload = function () {
+        img.onload = () => {
 
-            imageDimensions.textContent =
+            dimensions.textContent =
                 img.width + " × " + img.height + " px";
 
         };
@@ -81,400 +120,378 @@ function showPreview(file) {
 
     reader.readAsDataURL(file);
 
-}
-/* ==========================================
-   COMPRESS IMAGES
-========================================== */
+    imageContainer.appendChild(card);
 
-compressBtn.addEventListener("click", async function () {
+    imageList.push({
 
-    if (selectedFiles.length === 0) {
+        file,
 
-        showToast("Please select image.");
-
-        return;
-
-    }
-
-    showLoading();
-
-    compressedFiles = [];
-
-    const targetKB = parseInt(targetSize.value) || 100;
-
-    for (const file of selectedFiles) {
-
-        const compressed = await compressImage(file, targetKB);
-
-        compressedFiles.push(compressed);
-
-    }
-
-    hideLoading();
-
-    showResult();
-
-});
-
-
-/* ==========================================
-   IMAGE COMPRESS FUNCTION
-========================================== */
-
-async function compressImage(file, targetKB) {
-
-    return new Promise((resolve) => {
-
-        const reader = new FileReader();
-
-        reader.onload = function (event) {
-
-            const img = new Image();
-
-            img.onload = function () {
-
-                const canvas = document.createElement("canvas");
-
-                const ctx = canvas.getContext("2d");
-
-                canvas.width = img.width;
-
-                canvas.height = img.height;
-
-                ctx.drawImage(img, 0, 0);
-
-                let quality = 0.9;
-
-                let output;
-
-                do {
-
-                    output = canvas.toDataURL(
-                        "image/jpeg",
-                        quality
-                    );
-
-                    quality -= 0.05;
-
-                } while (
-
-                    output.length / 1024 > targetKB * 1.37 &&
-
-                    quality > 0.05
-
-                );
-
-                fetch(output)
-
-                    .then(res => res.blob())
-
-                    .then(blob => {
-
-                        resolve({
-
-                            name: file.name.replace(/\.[^/.]+$/, "") + ".jpg",
-
-                            blob: blob,
-
-                            original: file.size,
-
-                            compressed: blob.size
-
-                        });
-
-                    });
-
-            };
-
-            img.src = event.target.result;
-
-        };
-
-        reader.readAsDataURL(file);
+        card
 
     });
 
-}
-
-
-/* ==========================================
-   RESULT
-========================================== */
-
-function showResult() {
-
-    resultCard.style.display = "block";
-
-    downloadBtn.style.display = "block";
-
-    shareBtn.style.display = "block";
-
-    const totalOriginal =
-        compressedFiles.reduce((a, b) => a + b.original, 0);
-
-    const totalCompressed =
-        compressedFiles.reduce((a, b) => a + b.compressed, 0);
-
-    resultOriginal.textContent =
-        (totalOriginal / 1024).toFixed(1) + " KB";
-
-    resultCompressed.textContent =
-        (totalCompressed / 1024).toFixed(1) + " KB";
-
-    savedPercent.textContent =
-
-        (
-            ((totalOriginal - totalCompressed) / totalOriginal) * 100
-        ).toFixed(1) + "%";
-
-            }
+               }
 
 /* ==========================================
-   DOWNLOAD
+   COMPRESS BUTTON
 ========================================== */
 
-downloadBtn.addEventListener("click", function () {
+imageList.forEach((item) => {
 
-    if (compressedFiles.length === 0) {
+    const card = item.card;
 
-        showToast("Nothing to download.");
+    const compressBtn = card.querySelector(".compressBtn");
 
-        return;
+    compressBtn.addEventListener("click", async () => {
 
-    }
+        const targetKB = parseInt(
 
-    compressedFiles.forEach((file, index) => {
+            card.querySelector(".targetKB").value
 
-        const url = URL.createObjectURL(file.blob);
+        ) || 100;
 
-        const a = document.createElement("a");
+        showLoading("Compressing...");
 
-        a.href = url;
+        const result = await compressImage(
 
-        a.download = file.name;
-
-        document.body.appendChild(a);
-
-        a.click();
-
-        document.body.removeChild(a);
-
-        URL.revokeObjectURL(url);
-
-    });
-
-});
-
-
-/* ==========================================
-   SHARE
-========================================== */
-
-shareBtn.addEventListener("click", async function () {
-
-    if (compressedFiles.length === 0) {
-
-        showToast("Nothing to share.");
-
-        return;
-
-    }
-
-    try {
-
-        const files = compressedFiles.map(file =>
-
-            new File(
-
-                [file.blob],
-
-                file.name,
-
-                {
-
-                    type: "image/jpeg"
-
-                }
-
-            )
-
-        );
-
-        if (
-
-            navigator.canShare &&
-
-            navigator.canShare({
-
-                files
-
-            })
-
-        ) {
-
-            await navigator.share({
-
-                title: "Compressed Images",
-
-                text: "Compressed using MI7 Image Tools",
-
-                files
-
-            });
-
-        } else {
-
-            showToast(
-
-                "Your browser doesn't support sharing multiple images."
-
-            );
-
-        }
-
-    }
-
-    catch (err) {
-
-        console.log(err);
-
-    }
-
-});
-
-
-/* ==========================================
-   RESET
-========================================== */
-
-resetBtn.addEventListener("click", function () {
-
-    imageInput.value = "";
-
-    selectedFiles = [];
-
-    compressedFiles = [];
-
-    previewCard.style.display = "none";
-
-    resultCard.style.display = "none";
-
-    downloadBtn.style.display = "none";
-
-    shareBtn.style.display = "none";
-
-    previewImage.src = "";
-
-    fileName.textContent = "-";
-
-    fileFormat.textContent = "-";
-
-    originalSize.textContent = "-";
-
-    imageDimensions.textContent = "-";
-
-    resultOriginal.textContent = "-";
-
-    resultCompressed.textContent = "-";
-
-    savedPercent.textContent = "-";
-
-    targetSize.value = "100";
-
-    showToast("Reset Successfully");
-
-});
-
-/* ==========================================
-   EXTRA FEATURES
-========================================== */
-
-/* Progress Message */
-
-function updateProgress(current, total) {
-
-    showToast(
-
-        "Compressing " + current + " of " + total + "..."
-
-    );
-
-}
-
-
-/* Better Compression */
-
-async function compressAllImages() {
-
-    compressedFiles = [];
-
-    const targetKB = parseInt(targetSize.value) || 100;
-
-    for (let i = 0; i < selectedFiles.length; i++) {
-
-        updateProgress(i + 1, selectedFiles.length);
-
-        const compressed = await compressImage(
-
-            selectedFiles[i],
+            item.file,
 
             targetKB
 
         );
 
-        compressedFiles.push(compressed);
+        hideLoading();
 
-    }
+        item.result = result;
 
-    showResult();
+        showResult(card, item);
 
-}
+        showToast("✅ Image Compressed Successfully");
 
-
-/* Preview First Image */
-
-if (selectedFiles.length > 0) {
-
-    showPreview(selectedFiles[0]);
-
-}
-
-
-/* Download Success */
-
-downloadBtn.addEventListener("click", function () {
-
-    showToast(
-
-        compressedFiles.length +
-
-        " image(s) downloaded."
-
-    );
-
-});
-
-
-/* Share Success */
-
-shareBtn.addEventListener("click", function () {
-
-    if (compressedFiles.length > 0) {
-
-        showToast("Preparing images...");
-
-    }
+    });
 
 });
 
 
 /* ==========================================
-   FINISHED
+   COMPRESS IMAGE
 ========================================== */
 
-console.log(
+async function compressImage(file, targetKB){
 
-    "✅ MI7 Compress Tool Loaded Successfully"
+return new Promise((resolve)=>{
+
+const reader=new FileReader();
+
+reader.onload=(e)=>{
+
+const img=new Image();
+
+img.onload=()=>{
+
+const canvas=document.createElement("canvas");
+
+const ctx=canvas.getContext("2d");
+
+canvas.width=img.width;
+
+canvas.height=img.height;
+
+ctx.drawImage(img,0,0);
+
+let quality=0.90;
+
+let blob;
+
+const compress=()=>{
+
+canvas.toBlob((b)=>{
+
+blob=b;
+
+if(blob.size/1024>targetKB && quality>0.05){
+
+quality-=0.05;
+
+compress();
+
+}else{
+
+resolve(blob);
+
+}
+
+},"image/jpeg",quality);
+
+};
+
+compress();
+
+};
+
+img.src=e.target.result;
+
+};
+
+reader.readAsDataURL(file);
+
+});
+
+}
+
+
+/* ==========================================
+   SHOW RESULT
+========================================== */
+
+function showResult(card,item){
+
+const resultBox=card.querySelector(".resultBox");
+
+resultBox.style.display="block";
+
+card.querySelector(".resultOriginal").textContent=
+
+(item.file.size/1024).toFixed(1)+" KB";
+
+card.querySelector(".resultCompressed").textContent=
+
+(item.result.size/1024).toFixed(1)+" KB";
+
+const saved=((item.file.size-item.result.size)
+
+/item.file.size*100).toFixed(1);
+
+card.querySelector(".savedPercent").textContent=
+
+saved+" %";
+
+}
+
+
+/* ==========================================
+   DOWNLOAD / SHARE / RESET
+========================================== */
+
+imageList.forEach((item) => {
+
+const card=item.card;
+
+const downloadBtn=card.querySelector(".downloadBtn");
+
+const shareBtn=card.querySelector(".shareBtn");
+
+const resetBtn=card.querySelector(".resetBtn");
+
+/* ==========================
+DOWNLOAD
+========================== */
+
+downloadBtn.addEventListener("click",()=>{
+
+if(!item.result){
+
+showToast("Please compress image first.");
+
+return;
+
+}
+
+const url=URL.createObjectURL(item.result);
+
+const a=document.createElement("a");
+
+a.href=url;
+
+a.download=item.file.name.replace(/\.[^/.]+$/,"")+"_MI7.jpg";
+
+document.body.appendChild(a);
+
+a.click();
+
+document.body.removeChild(a);
+
+URL.revokeObjectURL(url);
+
+showToast("✅ Download Completed");
+
+});
+
+
+/* ==========================
+SHARE
+========================== */
+
+shareBtn.addEventListener("click",async()=>{
+
+if(!item.result){
+
+showToast("Please compress image first.");
+
+return;
+
+}
+
+try{
+
+const file=new File(
+
+[item.result],
+
+item.file.name.replace(/\.[^/.]+$/,"")+"_MI7.jpg",
+
+{
+
+type:"image/jpeg"
+
+}
 
 );
 
+if(
+
+navigator.canShare &&
+
+navigator.canShare({files:[file]})
+
+){
+
+await navigator.share({
+
+title:"MI7 Image Tools",
+
+text:"Compressed using MI7 Image Tools",
+
+files:[file]
+
+});
+
+}else{
+
+showToast("Sharing not supported.");
+
+}
+
+}catch(err){
+
+console.log(err);
+
+}
+
+});
+
+
+/* ==========================
+RESET
+========================== */
+
+resetBtn.addEventListener("click",()=>{
+
+card.remove();
+
+imageList=imageList.filter(i=>i!==item);
+
+showToast("Image Removed");
+
+});
+
+});
+
+/* ==========================================
+   MENU
+========================================== */
+
+const menuBtn = document.getElementById("menuBtn");
+const sideMenu = document.getElementById("sideMenu");
+const closeMenu = document.getElementById("closeMenu");
+const overlay = document.getElementById("overlay");
+
+if (menuBtn) {
+
+menuBtn.addEventListener("click", () => {
+
+sideMenu.classList.add("active");
+
+overlay.style.display = "block";
+
+});
+
+}
+
+if (closeMenu) {
+
+closeMenu.addEventListener("click", closeMenuNow);
+
+}
+
+if (overlay) {
+
+overlay.addEventListener("click", closeMenuNow);
+
+}
+
+function closeMenuNow() {
+
+sideMenu.classList.remove("active");
+
+overlay.style.display = "none";
+
+}
+
+/* ==========================================
+   TOAST
+========================================== */
+
+function showToast(message){
+
+const toast=document.getElementById("toast");
+
+toast.textContent=message;
+
+toast.style.display="block";
+
+toast.style.opacity="1";
+
+setTimeout(()=>{
+
+toast.style.opacity="0";
+
+setTimeout(()=>{
+
+toast.style.display="none";
+
+},300);
+
+},2200);
+
+}
+
+/* ==========================================
+   LOADING
+========================================== */
+
+function showLoading(text="Compressing Image..."){
+
+const loading=document.getElementById("loadingOverlay");
+
+loading.style.display="flex";
+
+loading.querySelector("p").textContent=text;
+
+}
+
+function hideLoading(){
+
+document.getElementById("loadingOverlay").style.display="none";
+
+}
+
+/* ==========================================
+   PAGE READY
+========================================== */
+
+window.addEventListener("load",()=>{
+
+console.log("✅ MI7 Compress Tool Ready");
+
+});
