@@ -148,8 +148,7 @@ MI7 Image Tools
 
 </nav>
 
-
-<!-- =========================
+  <!-- =========================
 MAIN TOOL
 ========================= -->
 
@@ -331,8 +330,500 @@ Saved :
 
 </div>
 
+  </template><!-- =========================
+MAIN TOOL
+========================= -->
+
+<main class="tool-container">
+
+<div class="tool-card">
+
+<h1>
+
+Reduce Image Size in KB
+
+</h1>
+
+<p class="tool-desc">
+
+Compress one or multiple images without losing much quality.
+
+</p>
+
+<label
+class="upload-box">
+
+<input
+
+type="file"
+
+id="imageInput"
+
+accept="image/*"
+
+multiple>
+
+<div>
+
+📂
+
+</div>
+
+<h3>
+
+Select Multiple Images
+
+</h3>
+
+<p>
+
+JPG • PNG • WEBP
+
+</p>
+
+</label>
+
+
+<!-- ALL IMAGES WILL COME HERE -->
+
+<div id="imageContainer">
+
+</div>
+
+  </div>
+
+<!-- ==========================================
+IMAGE CARDS CONTAINER
+========================================== -->
+
+<div id="imageContainer" class="image-container">
+
+<!-- JS yaha image cards banayega -->
+
+</div>
+
+<!-- ==========================================
+IMAGE CARD TEMPLATE
+========================================== -->
+
+<template id="imageCardTemplate">
+
+<div class="image-card">
+
+<div class="image-preview">
+
+<img class="previewImage" src="" alt="Preview">
+
+</div>
+
+<div class="image-details">
+
+<p><strong>Name :</strong> <span class="fileName"></span></p>
+
+<p><strong>Format :</strong> <span class="fileFormat"></span></p>
+
+<p><strong>Original :</strong> <span class="originalSize"></span></p>
+
+<p><strong>Dimensions :</strong> <span class="dimensions"></span></p>
+
+</div>
+
+<div class="compress-section">
+
+<label>Target Size (KB)</label>
+
+<input
+type="number"
+class="targetKB"
+value="100"
+min="5">
+
+<button class="compressBtn">
+
+🗜 Compress
+
+</button>
+
+</div>
+
+<div class="resultBox">
+
+<h3>Compression Result</h3>
+
+<p>
+
+Original :
+
+<span class="resultOriginal">
+
+-
+
+</span>
+
+</p>
+
+<p>
+
+Compressed :
+
+<span class="resultCompressed">
+
+-
+
+</span>
+
+</p>
+
+<p>
+
+Saved :
+
+<span class="savedPercent">
+
+-
+
+</span>
+
+</p>
+
+<div class="button-group">
+
+<button class="downloadBtn">
+
+⬇ Download
+
+</button>
+
+<button class="shareBtn">
+
+📤 Share
+
+</button>
+
+<button class="resetBtn">
+
+🔄 Reset
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+  </template>
+
+  <!-- ==========================================
+     V5 TOOL SECTION END
+========================================== -->
+
+</section>
+
+
+<!-- ==========================================
+     V5 COMPRESSION TOAST
+========================================== -->
+
+<div
+    id="v5Toast"
+    class="v5-toast"
+    role="status"
+    aria-live="polite"
+>
+</div>
+
+
+<!-- ==========================================
+     V5 LOADING OVERLAY
+========================================== -->
+
+<div
+    id="v5Loading"
+    class="v5-loading"
+    aria-hidden="true"
+>
+
+    <div class="v5-loader"></div>
+
+    <p id="v5LoadingText">
+        Compressing image...
+    </p>
+
+</div>
+
+
+<!-- ==========================================
+     IMPORTANT
+==========================================
+
+     Tumhara existing:
+     - Ads
+     - How to Use
+     - Features
+     - Privacy
+     - Footer
+
+     isi ke baad waise hi rahenge.
+
+========================================== -->
+<!-- ==========================================
+     V5 IMAGE CARD TEMPLATE
+========================================== -->
+
+<template id="compressCardTemplate">
+
+    <article class="compress-image-card">
+
+        <!-- IMAGE PREVIEW -->
+
+        <div class="compress-preview">
+
+            <img
+                class="compress-preview-image"
+                src=""
+                alt="Selected Image"
+            >
+
+        </div>
+
+
+        <!-- IMAGE INFORMATION -->
+
+        <div class="compress-image-info">
+
+            <h3 class="compress-file-name">
+                Image
+            </h3>
+
+            <div class="image-info-grid">
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Original Size
+                    </span>
+
+                    <strong class="original-size">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Dimensions
+                    </span>
+
+                    <strong class="image-dimensions">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <span class="info-label">
+                        Format
+                    </span>
+
+                    <strong class="image-format">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- COMPRESSION SETTINGS -->
+
+        <div class="compression-settings">
+
+            <label>
+                Target Size
+            </label>
+
+            <div class="target-size-row">
+
+                <input
+                    type="number"
+                    class="target-size-input"
+                    value="100"
+                    min="5"
+                    max="50000"
+                    inputmode="numeric"
+                >
+
+                <span class="target-size-unit">
+                    KB
+                </span>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="v5-compress-button"
+            >
+
+                🗜️ Compress Image
+
+            </button>
+
+        </div>
+
+
+        <!-- STATUS -->
+
+        <div
+            class="compression-status"
+            aria-live="polite"
+        >
+
+            <span class="status-icon">
+                ⏳
+            </span>
+
+            <span class="status-text">
+                Ready to compress
+            </span>
+
+        </div>
+
+
+        <!-- RESULT -->
+
+        <div class="compression-result">
+
+            <div class="result-title">
+
+                <span>
+                    ✅ Compression Result
+                </span>
+
+            </div>
+
+
+            <div class="result-image-area">
+
+                <img
+                    class="result-preview-image"
+                    src=""
+                    alt="Compressed Image"
+                >
+
+            </div>
+
+
+            <div class="result-details">
+
+                <div class="result-item">
+
+                    <span>
+                        Original
+                    </span>
+
+                    <strong class="result-original-size">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <span>
+                        Compressed
+                    </span>
+
+                    <strong class="result-compressed-size">
+                        -
+                    </strong>
+
+                </div>
+
+
+                <div class="result-item">
+
+                    <span>
+                        Saved
+                    </span>
+
+                    <strong class="result-saved-percent">
+                        -
+                    </strong>
+
+                </div>
+
+            </div>
+
+
+            <!-- RESULT ACTIONS -->
+
+            <div class="result-actions">
+
+                <button
+                    type="button"
+                    class="v5-download-button"
+                >
+
+                    ⬇️ Download
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="v5-share-button"
+                >
+
+                    📤 Share
+
+                </button>
+
+
+                <button
+                    type="button"
+                    class="v5-reset-button"
+                >
+
+                    🔄 Remove
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </article>
+
 </template>
 
+
+<!-- ==========================================
+     COMPRESSION MESSAGE
+========================================== -->
+
+<div
+    id="compressionMessage"
+    class="v5-compression-message"
+    aria-live="polite"
+>
+
+</div>
+
+
+<!-- ==========================================
+     V5 TOOL SECTION CONTINUATION
+========================================== -->
+  
+  
 <!-- ==========================================
 ADS
 ========================================== -->
