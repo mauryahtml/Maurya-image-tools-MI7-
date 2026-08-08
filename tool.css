@@ -268,432 +268,1138 @@ padding-left:28px;
 }
 
 /* ==========================================
-   TOOL AREA
+   MI7 COMPRESS TOOL V5
+   PART 1 — GALLERY + TOOL AREA
 ========================================== */
 
-.tool-container{
 
-max-width:1100px;
+/* ==========================================
+   MAIN COMPRESS TOOL
+========================================== */
 
-margin:25px auto;
+.compress-tool-v5{
 
-padding:15px;
+    width:100%;
+    max-width:1000px;
 
-}
-
-.tool-card{
-
-background:#fff;
-
-padding:20px;
-
-border-radius:16px;
-
-box-shadow:var(--shadow);
+    margin:20px auto;
+    padding:0 15px;
 
 }
 
-.tool-title{
 
-font-size:28px;
+/* ==========================================
+   TOOL HEADER
+========================================== */
 
-margin-bottom:10px;
+.compress-tool-header{
 
-text-align:center;
+    text-align:center;
+
+    margin-bottom:20px;
+
+}
+
+.compress-tool-header h1{
+
+    margin:0 0 8px;
+
+    font-size:28px;
+
+    color:var(--text);
 
 }
 
-.tool-desc{
+.compress-tool-header p{
 
-text-align:center;
+    margin:0;
 
-color:#666;
+    color:#666;
 
-margin-bottom:25px;
+    line-height:1.6;
 
 }
+
 
 /* ==========================================
    UPLOAD BOX
 ========================================== */
 
-.upload-box{
+.v5-upload-box{
 
-display:flex;
+    display:flex;
 
-flex-direction:column;
+    flex-direction:column;
 
-align-items:center;
+    align-items:center;
+    justify-content:center;
 
-justify-content:center;
+    width:100%;
 
-padding:35px;
+    min-height:170px;
 
-border:2px dashed var(--primary);
+    padding:25px 15px;
 
-border-radius:16px;
+    border:2px dashed var(--primary);
 
-cursor:pointer;
+    border-radius:16px;
 
-background:#f9fbff;
+    background:#f8fbff;
 
-transition:.3s;
+    cursor:pointer;
 
-}
+    text-align:center;
 
-.upload-box:hover{
-
-background:#eef5ff;
-
-}
-
-.upload-box input{
-
-display:none;
+    transition:.25s;
 
 }
 
-.upload-box h3{
+.v5-upload-box:hover{
 
-margin-top:10px;
+    background:#eef5ff;
+
+}
+
+.v5-upload-box input{
+
+    display:none;
 
 }
 
-.upload-box p{
+.upload-icon{
 
-margin-top:6px;
+    font-size:38px;
 
-color:#666;
+    line-height:1;
+
+    margin-bottom:10px;
 
 }
+
+.v5-upload-box h3{
+
+    margin:5px 0;
+
+    font-size:18px;
+
+}
+
+.v5-upload-box p{
+
+    margin:5px 0;
+
+    color:#666;
+
+}
+
+.v5-upload-box span{
+
+    font-size:12px;
+
+    color:#888;
+
+}
+
 
 /* ==========================================
-   IMAGE CARD
+   SELECTED IMAGE GALLERY
 ========================================== */
 
-.image-container{
+.selected-image-gallery{
 
-display:grid;
+    display:grid;
 
-grid-template-columns:repeat(auto-fit,minmax(330px,1fr));
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
 
-gap:20px;
+    gap:12px;
 
-margin-top:25px;
+    width:100%;
 
-}
-
-.image-card{
-
-background:#fff;
-
-border:1px solid #e5e5e5;
-
-border-radius:15px;
-
-padding:18px;
-
-box-shadow:0 4px 12px rgba(0,0,0,.05);
+    margin-top:18px;
 
 }
 
-.image-preview{
 
-display:flex;
+/* ==========================================
+   THUMBNAIL BOX
+========================================== */
 
-justify-content:center;
+.v5-thumbnail{
 
-align-items:center;
+    position:relative;
 
-margin-bottom:15px;
+    width:100%;
+
+    aspect-ratio:1 / 1;
+
+    overflow:hidden;
+
+    border-radius:12px;
+
+    background:#eef1f5;
+
+    border:1px solid #ddd;
+
+    cursor:pointer;
 
 }
 
-.image-preview img{
+.v5-thumbnail img{
 
-max-width:100%;
+    width:100%;
 
-max-height:220px;
+    height:100%;
 
-border-radius:10px;
+    display:block;
 
-object-fit:contain;
+    object-fit:cover;
 
 }
 
-.image-details p{
 
-margin:8px 0;
+/* ==========================================
+   THUMBNAIL NUMBER
+========================================== */
 
-font-size:15px;
+.v5-thumbnail-number{
+
+    position:absolute;
+
+    top:6px;
+
+    left:6px;
+
+    min-width:24px;
+
+    height:24px;
+
+    padding:0 6px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border-radius:50%;
+
+    background:rgba(0,0,0,.65);
+
+    color:#fff;
+
+    font-size:12px;
+
+    font-weight:bold;
+
+}
+
+
+/* ==========================================
+   EMPTY MESSAGE
+========================================== */
+
+.v5-empty-message{
+
+    width:100%;
+
+    margin-top:15px;
+
+    padding:14px;
+
+    text-align:center;
+
+    color:#777;
+
+    background:#f8fafc;
+
+    border-radius:10px;
+
+    border:1px solid #e5e7eb;
 
    }
-
 /* ==========================================
-   COMPRESS SECTION
+   MOBILE GALLERY
 ========================================== */
 
-.compress-section{
+@media(max-width:600px){
 
-margin-top:18px;
+    .compress-tool-v5{
 
-}
+        padding:0 10px;
 
-.compress-section label{
+    }
 
-display:block;
+    .compress-tool-header h1{
 
-font-weight:bold;
+        font-size:23px;
 
-margin-bottom:8px;
+    }
 
-}
+    .selected-image-gallery{
 
-.targetKB{
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
 
-width:100%;
+        gap:8px;
 
-padding:12px;
+    }
 
-border:1px solid #dcdcdc;
+    .v5-upload-box{
 
-border-radius:10px;
+        min-height:150px;
 
-font-size:16px;
-
-margin-bottom:12px;
-
-outline:none;
+    }
 
 }
-
-.targetKB:focus{
-
-border-color:var(--primary);
-
-}
-
 /* ==========================================
-   BUTTONS
+   MI7 COMPRESS TOOL V5
+   PART 2 — IMAGE CARD + COMPRESSION UI
 ========================================== */
 
-.button-group{
 
-display:flex;
+/* ==========================================
+   RESULT / IMAGE WORK AREA
+========================================== */
 
-gap:10px;
+.compress-results{
 
-flex-wrap:wrap;
+    width:100%;
 
-margin-top:15px;
+    display:flex;
 
-}
+    flex-direction:column;
 
-.button-group button,
+    gap:18px;
 
-.compressBtn{
-
-flex:1;
-
-padding:12px;
-
-border:none;
-
-border-radius:10px;
-
-font-size:15px;
-
-font-weight:bold;
-
-cursor:pointer;
-
-transition:.3s;
-
-color:#fff;
+    margin-top:20px;
 
 }
 
-.compressBtn{
 
-background:#2563eb;
+/* ==========================================
+   INDIVIDUAL IMAGE CARD
+========================================== */
+
+.compress-image-card{
+
+    width:100%;
+
+    background:#fff;
+
+    border:1px solid #e1e5ea;
+
+    border-radius:16px;
+
+    padding:16px;
+
+    box-shadow:0 5px 18px rgba(0,0,0,.06);
+
+    overflow:hidden;
+
+}
+
+
+/* ==========================================
+   IMAGE PREVIEW
+========================================== */
+
+.compress-preview{
+
+    width:100%;
+
+    height:230px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    overflow:hidden;
+
+    background:#f4f6f8;
+
+    border-radius:12px;
+
+    margin-bottom:15px;
 
 }
 
-.downloadBtn{
+.compress-preview-image{
 
-background:#16a34a;
+    display:block;
+
+    max-width:100%;
+
+    max-height:100%;
+
+    width:auto;
+
+    height:auto;
+
+    object-fit:contain;
+
+    border-radius:8px;
+
+}
+
+
+/* ==========================================
+   IMAGE INFORMATION
+========================================== */
+
+.compress-image-info{
+
+    width:100%;
 
 }
 
-.shareBtn{
+.compress-file-name{
 
-background:#ea580c;
+    margin:0 0 12px;
 
-}
+    font-size:17px;
 
-.resetBtn{
-
-background:#dc2626;
+    word-break:break-word;
 
 }
 
-.button-group button:hover,
 
-.compressBtn:hover{
+.image-info-grid{
 
-transform:translateY(-2px);
+    display:grid;
 
-opacity:.95;
+    grid-template-columns:
+        repeat(3, minmax(0,1fr));
+
+    gap:8px;
 
 }
+
+
+.info-item{
+
+    padding:10px;
+
+    background:#f8fafc;
+
+    border-radius:9px;
+
+    min-width:0;
+
+}
+
+
+.info-label{
+
+    display:block;
+
+    font-size:11px;
+
+    color:#777;
+
+    margin-bottom:4px;
+
+}
+
+
+.info-item strong{
+
+    display:block;
+
+    font-size:13px;
+
+    word-break:break-word;
+
+}
+
+
+/* ==========================================
+   COMPRESSION SETTINGS
+========================================== */
+
+.compression-settings{
+
+    margin-top:16px;
+
+}
+
+
+.compression-settings > label{
+
+    display:block;
+
+    font-size:14px;
+
+    font-weight:bold;
+
+    margin-bottom:7px;
+
+}
+
+
+.target-size-row{
+
+    display:flex;
+
+    align-items:center;
+
+    width:100%;
+
+    margin-bottom:10px;
+
+}
+
+
+.target-size-input{
+
+    flex:1;
+
+    min-width:0;
+
+    padding:11px 12px;
+
+    border:1px solid #d5d9df;
+
+    border-radius:9px 0 0 9px;
+
+    outline:none;
+
+    font-size:15px;
+
+}
+
+
+.target-size-input:focus{
+
+    border-color:var(--primary);
+
+}
+
+
+.target-size-unit{
+
+    padding:11px 14px;
+
+    background:#eef2f7;
+
+    border:1px solid #d5d9df;
+
+    border-left:0;
+
+    border-radius:0 9px 9px 0;
+
+    font-weight:bold;
+
+    color:#555;
+
+}
+
+
+/* ==========================================
+   COMPRESS BUTTON
+========================================== */
+
+.v5-compress-button{
+
+    width:100%;
+
+    padding:12px 15px;
+
+    border:0;
+
+    border-radius:10px;
+
+    background:var(--primary);
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.v5-compress-button:hover{
+
+    background:var(--primary-dark);
+
+    transform:translateY(-1px);
+
+}
+
+
+.v5-compress-button:disabled{
+
+    opacity:.6;
+
+    cursor:not-allowed;
+
+    transform:none;
+
+}
+
+
+/* ==========================================
+   COMPRESSION STATUS
+========================================== */
+
+.compression-status{
+
+    display:none;
+
+    align-items:center;
+
+    gap:8px;
+
+    margin-top:12px;
+
+    padding:10px 12px;
+
+    border-radius:9px;
+
+    background:#eff6ff;
+
+    color:#1d4ed8;
+
+    font-size:13px;
+
+}
+
+
+.status-icon{
+
+    flex-shrink:0;
+
+}
+
 
 /* ==========================================
    RESULT BOX
 ========================================== */
 
-.resultBox{
+.compression-result{
 
-display:none;
+    display:none;
 
-margin-top:18px;
+    width:100%;
 
-padding:15px;
+    margin-top:16px;
 
-background:#f8fafc;
+    padding:14px;
 
-border:1px solid #dbeafe;
+    border:1px solid #bbf7d0;
 
-border-radius:12px;
+    border-radius:12px;
 
-}
+    background:#f0fdf4;
 
-.resultBox h3{
-
-margin-bottom:10px;
-
-color:#2563eb;
+    overflow:hidden;
 
 }
 
-.resultBox p{
 
-margin:8px 0;
+.result-title{
 
-font-size:15px;
+    font-size:15px;
+
+    font-weight:bold;
+
+    color:#15803d;
+
+    margin-bottom:12px;
 
 }
+
 
 /* ==========================================
-   LOADING
+   RESULT PREVIEW
 ========================================== */
 
-#loadingOverlay{
+.result-image-area{
 
-display:none;
+    width:100%;
 
-position:fixed;
+    height:190px;
 
-top:0;
+    display:flex;
 
-left:0;
+    align-items:center;
 
-width:100%;
+    justify-content:center;
 
-height:100%;
+    overflow:hidden;
 
-background:rgba(0,0,0,.55);
+    background:#fff;
 
-z-index:9999;
+    border-radius:10px;
 
-justify-content:center;
+    border:1px solid #dcfce7;
 
-align-items:center;
-
-flex-direction:column;
-
-color:#fff;
+    margin-bottom:12px;
 
 }
 
-.loader{
 
-width:50px;
+.result-preview-image{
 
-height:50px;
+    max-width:100%;
 
-border:5px solid #ddd;
+    max-height:100%;
 
-border-top:5px solid #2563eb;
+    width:auto;
 
-border-radius:50%;
+    height:auto;
 
-animation:spin 1s linear infinite;
-
-margin-bottom:15px;
+    object-fit:contain;
 
 }
 
-@keyframes spin{
 
-100%{
+/* ==========================================
+   RESULT DETAILS
+========================================== */
 
-transform:rotate(360deg);
+.result-details{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,minmax(0,1fr));
+
+    gap:8px;
 
 }
 
+
+.result-item{
+
+    padding:9px;
+
+    border-radius:8px;
+
+    background:#fff;
+
+    border:1px solid #dcfce7;
+
+    text-align:center;
+
 }
+
+
+.result-item span{
+
+    display:block;
+
+    font-size:11px;
+
+    color:#777;
+
+    margin-bottom:4px;
+
+}
+
+
+.result-item strong{
+
+    font-size:13px;
+
+    color:#166534;
+
+}
+
+
+/* ==========================================
+   RESULT BUTTONS
+========================================== */
+
+.result-actions{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,minmax(0,1fr));
+
+    gap:8px;
+
+    margin-top:12px;
+
+}
+
+
+.result-actions button{
+
+    border:0;
+
+    border-radius:8px;
+
+    padding:10px 7px;
+
+    color:#fff;
+
+    font-size:13px;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+
+.v5-download-button{
+
+    background:#16a34a;
+
+}
+
+
+.v5-share-button{
+
+    background:#ea580c;
+
+}
+
+
+.v5-reset-button{
+
+    background:#dc2626;
+
+}
+
+
+.result-actions button:hover{
+
+    opacity:.9;
+
+    transform:translateY(-1px);
+
+   }
+/* ==========================================
+   V5 MOBILE IMAGE CARD
+========================================== */
+
+@media(max-width:600px){
+
+    .compress-image-card{
+
+        padding:12px;
+
+        border-radius:13px;
+
+    }
+
+
+    .compress-preview{
+
+        height:180px;
+
+    }
+
+
+    .image-info-grid{
+
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+
+    }
+
+
+    .result-details{
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .result-actions{
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .result-actions button{
+
+        width:100%;
+
+    }
+
+       }
+
+/* ==========================================
+   MI7 COMPRESS TOOL V5
+   PART 3 — STATUS + TOAST + LOADING
+========================================== */
+
+
+/* ==========================================
+   COMPRESSION MESSAGE
+========================================== */
+
+.v5-compression-message{
+
+    display:none;
+
+    width:100%;
+
+    margin-top:15px;
+
+    padding:12px 14px;
+
+    border-radius:10px;
+
+    text-align:center;
+
+    font-size:14px;
+
+    font-weight:600;
+
+}
+
 
 /* ==========================================
    TOAST
 ========================================== */
 
-#toast{
+.v5-toast{
 
-position:fixed;
+    position:fixed;
 
-bottom:25px;
+    left:50%;
 
-left:50%;
+    bottom:25px;
 
-transform:translateX(-50%);
+    transform:translateX(-50%) translateY(20px);
 
-background:#111827;
+    z-index:9999;
 
-color:#fff;
+    display:none;
 
-padding:12px 20px;
+    max-width:90%;
 
-border-radius:8px;
+    padding:12px 18px;
 
-display:none;
+    border-radius:10px;
 
-z-index:99999;
+    background:#222;
+
+    color:#fff;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    text-align:center;
+
+    box-shadow:0 5px 20px rgba(0,0,0,.2);
+
+    opacity:0;
+
+    transition:
+        opacity .25s ease,
+        transform .25s ease;
 
 }
+
 
 /* ==========================================
-   ADS
+   LOADING OVERLAY
 ========================================== */
 
-.ads-box{
+.v5-loading{
 
-margin:25px 0;
+    position:fixed;
 
-min-height:120px;
+    inset:0;
 
-border:2px dashed #cbd5e1;
+    z-index:10000;
 
-display:flex;
+    display:none;
 
-justify-content:center;
+    align-items:center;
 
-align-items:center;
+    justify-content:center;
 
-border-radius:12px;
+    flex-direction:column;
 
-background:#f8fafc;
+    gap:12px;
+
+    background:rgba(0,0,0,.55);
+
+    backdrop-filter:blur(3px);
 
 }
+
+
+.v5-loader{
+
+    width:42px;
+
+    height:42px;
+
+    border:4px solid rgba(255,255,255,.35);
+
+    border-top-color:#fff;
+
+    border-radius:50%;
+
+    animation:v5Spin .8s linear infinite;
+
+}
+
+
+.v5-loading p{
+
+    margin:0;
+
+    color:#fff;
+
+    font-size:15px;
+
+    font-weight:600;
+
+    text-align:center;
+
+}
+
+
+/* ==========================================
+   LOADER ANIMATION
+========================================== */
+
+@keyframes v5Spin{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+
+/* ==========================================
+   DISABLED IMAGE CARD
+========================================== */
+
+.compress-image-card.is-compressing{
+
+    opacity:.75;
+
+    pointer-events:none;
+
+}
+
+
+/* ==========================================
+   SUCCESS STATE
+========================================== */
+
+.compress-image-card.is-compressed{
+
+    border-color:#86efac;
+
+}
+
+
+/* ==========================================
+   ERROR STATE
+========================================== */
+
+.compress-image-card.has-error{
+
+    border-color:#fca5a5;
+
+}
+
+
+/* ==========================================
+   SMALL SCREEN FINAL FIX
+========================================== */
+
+@media(max-width:600px){
+
+    .v5-toast{
+
+        bottom:15px;
+
+        padding:11px 14px;
+
+        font-size:13px;
+
+    }
+
+
+    .v5-loading p{
+
+        font-size:14px;
+
+        padding:0 20px;
+
+    }
+
+
+    .compress-tool-header{
+
+        margin-bottom:15px;
+
+    }
+
+}
+
+
+/* ==========================================
+   VERY SMALL PHONE
+========================================== */
+
+@media(max-width:380px){
+
+    .selected-image-gallery{
+
+        gap:6px;
+
+    }
+
+
+    .v5-thumbnail{
+
+        border-radius:8px;
+
+    }
+
+
+    .compress-preview{
+
+        height:160px;
+
+    }
+
+
+    .result-image-area{
+
+        height:160px;
+
+    }
+
+}
+
+
 
 /* ==========================================
    INFO CARD
