@@ -1,1539 +1,1955 @@
-/* ==========================================
-   MI7 IMAGE TOOLS V3
-========================================== */
+/* =========================================================
+   MI7 REDUCE IMAGE SIZE IN KB
+   TOOL.CSS — V6 FINAL
+   PART 1
+========================================================= */
 
-:root{
 
---primary:#2563eb;
---primary-dark:#1d4ed8;
+/* =========================================================
+   GLOBAL RESET
+========================================================= */
 
---success:#16a34a;
---danger:#dc2626;
---warning:#ea580c;
-
---bg:#f5f7fb;
---card:#ffffff;
---text:#222;
-
---border:#d9d9d9;
-
---radius:14px;
-
---shadow:0 8px 25px rgba(0,0,0,.08);
-
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-*{
 
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
-
+html {
+    scroll-behavior: smooth;
 }
 
-body{
 
-background:var(--bg);
-color:var(--text);
+body {
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
 
+    background: #f4f7fb;
+
+    color: #202124;
+
+    line-height: 1.5;
+
+    min-height: 100vh;
+
+    overflow-x: hidden;
 }
 
-/* ==========================================
-HEADER
-========================================== */
 
-.header{
-
-position:sticky;
-top:0;
-
-display:flex;
-align-items:center;
-justify-content:space-between;
-
-padding:12px 18px;
-
-background:#fff;
-
-box-shadow:0 2px 10px rgba(0,0,0,.08);
-
-z-index:1000;
-
+button,
+input {
+    font: inherit;
 }
 
-.logo-area{
 
-display:flex;
-align-items:center;
-gap:12px;
-
+button {
+    cursor: pointer;
 }
 
-.logo{
 
-width:45px;
-height:45px;
-
-border-radius:50%;
-
-object-fit:cover;
-
+a {
+    text-decoration: none;
+    color: inherit;
 }
 
-.logo-area h2{
 
-font-size:20px;
+/* =========================================================
+   MI7 HEADER
+========================================================= */
 
+.mi7-header {
+
+    width: 100%;
+
+    min-height: 92px;
+
+    background: #ffffff;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 12px 18px;
+
+    border-bottom:
+        1px solid #e2e7ef;
+
+    box-shadow:
+        0 2px 10px rgba(0, 0, 0, 0.08);
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 1000;
 }
 
-.logo-area p{
 
-font-size:13px;
+/* =========================================================
+   MENU BUTTON
+========================================================= */
 
-color:#666;
+.mi7-menu-btn {
 
+    width: 58px;
+
+    height: 58px;
+
+    flex: 0 0 58px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    font-size: 30px;
+
+    line-height: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
 }
 
-/* ==========================================
-BUTTONS
-========================================== */
 
-.menu-btn{
+.mi7-menu-btn:active {
 
-width:42px;
-height:42px;
-
-border:none;
-
-background:var(--primary);
-
-color:#fff;
-
-border-radius:10px;
-
-font-size:22px;
-
-cursor:pointer;
-
-margin-right:12px;
-
-}
-
-.home-btn{
-
-text-decoration:none;
-
-background:var(--primary);
-
-color:#fff;
-
-padding:10px 18px;
-
-border-radius:10px;
-
-font-weight:bold;
-
-}
-
-.home-btn:hover{
-
-background:var(--primary-dark);
-
-   }
-
-/* ==========================================
-   SLIDE MENU
-========================================== */
-
-#overlay{
-
-position:fixed;
-
-top:0;
-left:0;
-
-width:100%;
-height:100%;
-
-background:rgba(0,0,0,.45);
-
-display:none;
-
-z-index:998;
-
-}
-
-#sideMenu{
-
-position:fixed;
-
-top:0;
-left:-300px;
-
-width:280px;
-
-height:100%;
-
-background:#fff;
-
-box-shadow:4px 0 20px rgba(0,0,0,.15);
-
-transition:.35s;
-
-z-index:999;
-
-overflow-y:auto;
-
-}
-
-#sideMenu.active{
-
-left:0;
-
-}
-
-.menu-header{
-
-display:flex;
-
-align-items:center;
-
-justify-content:space-between;
-
-padding:18px;
-
-background:var(--primary);
-
-color:#fff;
-
-}
-
-.menu-logo{
-
-width:50px;
-
-height:50px;
-
-border-radius:50%;
-
-background:#fff;
-
-padding:3px;
-
-}
-
-#closeMenu{
-
-background:none;
-
-border:none;
-
-font-size:28px;
-
-color:#fff;
-
-cursor:pointer;
-
-}
-
-#sideMenu a{
-
-display:block;
-
-padding:15px 20px;
-
-text-decoration:none;
-
-font-size:16px;
-
-font-weight:600;
-
-color:#333;
-
-border-bottom:1px solid #eee;
-
-transition:.25s;
-
-}
-
-#sideMenu a:hover{
-
-background:#eef4ff;
-
-color:var(--primary);
-
-padding-left:28px;
-
-}
-
-/* ==========================================
-   MI7 COMPRESS TOOL V5
-   PART 1 — GALLERY + TOOL AREA
-========================================== */
-
-
-/* ==========================================
-   MAIN COMPRESS TOOL
-========================================== */
-
-.compress-tool-v5{
-
-    width:100%;
-    max-width:1000px;
-
-    margin:20px auto;
-    padding:0 15px;
+    transform: scale(0.94);
 
 }
 
 
-/* ==========================================
-   TOOL HEADER
-========================================== */
+.mi7-menu-btn:hover {
 
-.compress-tool-header{
-
-    text-align:center;
-
-    margin-bottom:20px;
-
-}
-
-.compress-tool-header h1{
-
-    margin:0 0 8px;
-
-    font-size:28px;
-
-    color:var(--text);
-
-}
-
-.compress-tool-header p{
-
-    margin:0;
-
-    color:#666;
-
-    line-height:1.6;
+    background: #1d4ed8;
 
 }
 
 
-/* ==========================================
+/* =========================================================
+   BRAND
+========================================================= */
+
+.mi7-brand {
+
+    min-width: 0;
+
+    flex: 1;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.mi7-brand-logo {
+
+    width: 56px;
+
+    height: 56px;
+
+    flex: 0 0 56px;
+
+    object-fit: contain;
+
+    border-radius: 50%;
+
+    display: block;
+}
+
+
+.mi7-brand-text {
+
+    min-width: 0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+}
+
+
+.mi7-brand-text strong {
+
+    font-size: 22px;
+
+    line-height: 1.15;
+
+    color: #202124;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+.mi7-brand-text span {
+
+    margin-top: 4px;
+
+    font-size: 15px;
+
+    line-height: 1.2;
+
+    color: #667085;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   HOME BUTTON
+========================================================= */
+
+.mi7-home-btn {
+
+    min-width: 118px;
+
+    min-height: 58px;
+
+    padding: 8px 16px;
+
+    border-radius: 14px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    transition:
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+
+.mi7-home-btn:hover {
+
+    background: #1d4ed8;
+
+}
+
+
+.mi7-home-btn:active {
+
+    transform: scale(0.96);
+
+}
+
+
+/* =========================================================
+   SIDE MENU
+========================================================= */
+
+.mi7-side-menu {
+
+    position: fixed;
+
+    top: 0;
+
+    left: 0;
+
+    width: min(320px, 86vw);
+
+    height: 100vh;
+
+    background: #ffffff;
+
+    box-shadow:
+        6px 0 25px rgba(0, 0, 0, 0.18);
+
+    z-index: 1200;
+
+    transform: translateX(-105%);
+
+    transition:
+        transform 0.28s ease;
+
+    overflow-y: auto;
+
+    padding-bottom: 25px;
+}
+
+
+.mi7-side-menu.active {
+
+    transform: translateX(0);
+
+}
+
+
+/* =========================================================
+   MENU TOP
+========================================================= */
+
+.mi7-menu-top {
+
+    min-height: 78px;
+
+    padding: 16px 18px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 2;
+}
+
+
+.mi7-menu-top strong {
+
+    font-size: 21px;
+}
+
+
+.mi7-menu-top button {
+
+    width: 42px;
+
+    height: 42px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.18);
+
+    color: #ffffff;
+
+    font-size: 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+/* =========================================================
+   MENU LINKS
+========================================================= */
+
+.mi7-side-menu > a {
+
+    display: flex;
+
+    align-items: center;
+
+    min-height: 52px;
+
+    margin: 7px 12px;
+
+    padding: 12px 14px;
+
+    border-radius: 10px;
+
+    background: #f5f7fa;
+
+    color: #202124;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease;
+}
+
+
+.mi7-side-menu > a:hover {
+
+    background: #e8f0fe;
+
+    color: #1557b0;
+
+}
+
+
+.mi7-side-menu hr {
+
+    border: 0;
+
+    border-top:
+        1px solid #e5e7eb;
+
+    margin: 15px 16px;
+}
+
+
+/* =========================================================
+   MENU OVERLAY
+========================================================= */
+
+.mi7-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(0, 0, 0, 0.45);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transition:
+        opacity 0.25s ease;
+
+    z-index: 1100;
+}
+
+
+.mi7-overlay.active {
+
+    opacity: 1;
+
+    visibility: visible;
+}
+
+
+/* =========================================================
+   MAIN PAGE
+========================================================= */
+
+.mi7-main {
+
+    width: 100%;
+
+    max-width: 1100px;
+
+    margin: 0 auto;
+
+    padding: 28px 16px 50px;
+}
+
+
+/* =========================================================
+   ONE MAIN TOOL BOX
+========================================================= */
+
+.mi7-tool-box {
+
+    width: 100%;
+
+    background: #ffffff;
+
+    border-radius: 22px;
+
+    padding: 24px;
+
+    box-shadow:
+        0 5px 24px rgba(15, 23, 42, 0.08);
+
+    border:
+        1px solid #e5eaf1;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.mi7-back {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-bottom: 15px;
+
+    padding: 8px 13px;
+
+    border-radius: 9px;
+
+    background: #eef4ff;
+
+    color: #1557b0;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+.mi7-back:hover {
+
+    background: #dce9ff;
+
+}
+
+
+/* =========================================================
+   TOOL TITLE
+========================================================= */
+
+.mi7-tool-box h1 {
+
+    font-size: clamp(
+        30px,
+        5vw,
+        46px
+    );
+
+    line-height: 1.15;
+
+    text-align: center;
+
+    color: #17191c;
+
+    margin-bottom: 10px;
+}
+
+
+.mi7-subtitle {
+
+    max-width: 680px;
+
+    margin: 0 auto 24px;
+
+    text-align: center;
+
+    color: #667085;
+
+    font-size: 18px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
    UPLOAD BOX
-========================================== */
+========================================================= */
 
-.v5-upload-box{
+.mi7-upload {
 
-    display:flex;
+    width: 100%;
 
-    flex-direction:column;
+    min-height: 190px;
 
-    align-items:center;
-    justify-content:center;
+    border:
+        3px dashed #3474df;
 
-    width:100%;
+    border-radius: 20px;
 
-    min-height:170px;
+    background: #f7faff;
 
-    padding:25px 15px;
+    display: flex;
 
-    border:2px dashed var(--primary);
+    flex-direction: column;
 
-    border-radius:16px;
+    align-items: center;
 
-    background:#f8fbff;
+    justify-content: center;
 
-    cursor:pointer;
+    gap: 7px;
 
-    text-align:center;
+    padding: 24px;
 
-    transition:.25s;
+    text-align: center;
 
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
 }
 
-.v5-upload-box:hover{
 
-    background:#eef5ff;
+.mi7-upload:hover {
 
-}
+    background: #eef5ff;
 
-.v5-upload-box input{
-
-    display:none;
-
-}
-
-.upload-icon{
-
-    font-size:38px;
-
-    line-height:1;
-
-    margin-bottom:10px;
-
-}
-
-.v5-upload-box h3{
-
-    margin:5px 0;
-
-    font-size:18px;
-
-}
-
-.v5-upload-box p{
-
-    margin:5px 0;
-
-    color:#666;
-
-}
-
-.v5-upload-box span{
-
-    font-size:12px;
-
-    color:#888;
+    border-color: #1557b0;
 
 }
 
 
-/* ==========================================
-   SELECTED IMAGE GALLERY
-========================================== */
+.mi7-upload-icon {
 
-.selected-image-gallery{
+    font-size: 48px;
 
-    display:grid;
+    line-height: 1;
+
+    margin-bottom: 5px;
+}
+
+
+.mi7-upload strong {
+
+    font-size: 23px;
+
+    color: #202124;
+}
+
+
+.mi7-upload > span:not(.mi7-upload-icon) {
+
+    color: #5f6368;
+
+    font-size: 16px;
+}
+
+
+.mi7-upload small {
+
+    color: #8a94a6;
+
+    font-size: 13px;
+}
+
+
+/* HIDE REAL FILE INPUT */
+
+.mi7-upload input[type="file"] {
+
+    display: none;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.mi7-empty {
+
+    text-align: center;
+
+    color: #8a94a6;
+
+    font-size: 14px;
+
+    padding: 18px 5px;
+
+}
+
+
+.mi7-empty.hidden {
+
+    display: none;
+}
+
+
+/* =========================================================
+   IMAGE GRID
+========================================================= */
+
+.mi7-image-grid {
+
+    width: 100%;
+
+    display: grid;
 
     grid-template-columns:
         repeat(3, minmax(0, 1fr));
 
-    gap:12px;
+    gap: 12px;
 
-    width:100%;
-
-    margin-top:18px;
-
+    margin-top: 20px;
 }
 
 
-/* ==========================================
-   THUMBNAIL BOX
-========================================== */
+/* =========================================================
+   IMAGE ITEM
+========================================================= */
 
-.v5-thumbnail{
+.mi7-image-item {
 
-    position:relative;
+    min-width: 0;
 
-    width:100%;
+    background: #f8fafc;
 
-    aspect-ratio:1 / 1;
+    border:
+        1px solid #e1e7ef;
 
-    overflow:hidden;
+    border-radius: 14px;
 
-    border-radius:12px;
+    padding: 8px;
 
-    background:#eef1f5;
-
-    border:1px solid #ddd;
-
-    cursor:pointer;
-
-}
-
-.v5-thumbnail img{
-
-    width:100%;
-
-    height:100%;
-
-    display:block;
-
-    object-fit:cover;
-
+    overflow: hidden;
 }
 
 
-/* ==========================================
-   THUMBNAIL NUMBER
-========================================== */
+.mi7-thumb-wrap {
 
-.v5-thumbnail-number{
+    width: 100%;
 
-    position:absolute;
+    aspect-ratio: 1 / 1;
 
-    top:6px;
+    border-radius: 10px;
 
-    left:6px;
+    overflow: hidden;
 
-    min-width:24px;
+    background: #eef1f5;
 
-    height:24px;
+    display: flex;
 
-    padding:0 6px;
+    align-items: center;
 
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    border-radius:50%;
-
-    background:rgba(0,0,0,.65);
-
-    color:#fff;
-
-    font-size:12px;
-
-    font-weight:bold;
-
+    justify-content: center;
 }
 
 
-/* ==========================================
-   EMPTY MESSAGE
-========================================== */
+.mi7-thumb {
 
-.v5-empty-message{
+    width: 100%;
 
-    width:100%;
+    height: 100%;
 
-    margin-top:15px;
+    object-fit: contain;
 
-    padding:14px;
+    display: block;
+}
 
-    text-align:center;
 
-    color:#777;
+.mi7-image-name {
 
-    background:#f8fafc;
+    margin-top: 7px;
 
-    border-radius:10px;
+    font-size: 12px;
 
-    border:1px solid #e5e7eb;
+    font-weight: 700;
+
+    color: #30343b;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   IMAGE DETAILS
+========================================================= */
+
+.mi7-image-details {
+
+    margin-top: 5px;
+
+    font-size: 11px;
+
+    line-height: 1.45;
+
+    color: #667085;
+}
+
+
+.mi7-image-details strong {
+
+    color: #30343b;
+}
+
+
+/* =========================================================
+   IMAGE REMOVE BUTTON
+========================================================= */
+
+.mi7-remove-image {
+
+    width: 100%;
+
+    margin-top: 7px;
+
+    padding: 6px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #fee2e2;
+
+    color: #b42318;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+
+.mi7-remove-image:hover {
+
+    background: #fecaca;
 
    }
-/* ==========================================
-   MOBILE GALLERY
-========================================== */
 
-@media(max-width:600px){
+/* =========================================================
+   MI7 REDUCE IMAGE SIZE IN KB
+   TOOL.CSS — V6 FINAL
+   PART 2
+========================================================= */
 
-    .compress-tool-v5{
 
-        padding:0 10px;
+/* =========================================================
+   TARGET SIZE
+========================================================= */
+
+.mi7-target-row {
+
+    width: 100%;
+
+    margin-top: 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 14px 16px;
+
+    border: 1px solid #e3e8ef;
+
+    border-radius: 13px;
+
+    background: #f8fafc;
+}
+
+
+.mi7-target-row label {
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    color: #30343b;
+}
+
+
+.mi7-target-input {
+
+    display: flex;
+
+    align-items: center;
+
+    overflow: hidden;
+
+    border: 1px solid #cbd5e1;
+
+    border-radius: 9px;
+
+    background: #ffffff;
+}
+
+
+.mi7-target-input input {
+
+    width: 95px;
+
+    height: 42px;
+
+    padding: 8px 10px;
+
+    border: none;
+
+    outline: none;
+
+    text-align: center;
+
+    font-weight: 700;
+
+    color: #202124;
+
+    background: transparent;
+}
+
+
+.mi7-target-input span {
+
+    padding: 0 12px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    background: #eef2f7;
+
+    color: #475467;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   ONE COMPRESS BUTTON
+========================================================= */
+
+.mi7-primary-btn {
+
+    width: 100%;
+
+    min-height: 54px;
+
+    margin-top: 18px;
+
+    padding: 12px 18px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #2563eb;
+
+    color: #ffffff;
+
+    font-size: 17px;
+
+    font-weight: 800;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    box-shadow:
+        0 4px 12px rgba(37, 99, 235, 0.22);
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease;
+}
+
+
+.mi7-primary-btn:hover {
+
+    background: #1d4ed8;
+
+}
+
+
+.mi7-primary-btn:active {
+
+    transform: scale(0.985);
+
+}
+
+
+.mi7-primary-btn:disabled {
+
+    opacity: 0.55;
+
+    cursor: not-allowed;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   STATUS MESSAGE
+========================================================= */
+
+.mi7-status {
+
+    width: 100%;
+
+    min-height: 0;
+
+    margin-top: 12px;
+
+    text-align: center;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #475467;
+}
+
+
+.mi7-status.success {
+
+    padding: 10px 12px;
+
+    border-radius: 10px;
+
+    background: #ecfdf3;
+
+    color: #067647;
+}
+
+
+.mi7-status.error {
+
+    padding: 10px 12px;
+
+    border-radius: 10px;
+
+    background: #fef3f2;
+
+    color: #b42318;
+}
+
+
+.mi7-status.loading {
+
+    padding: 10px 12px;
+
+    border-radius: 10px;
+
+    background: #eff6ff;
+
+    color: #175cd3;
+}
+
+
+/* =========================================================
+   RESULT GRID
+========================================================= */
+
+.mi7-result-grid {
+
+    width: 100%;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 12px;
+
+    margin-top: 18px;
+}
+
+
+/* =========================================================
+   RESULT ITEM
+========================================================= */
+
+.mi7-result-item {
+
+    min-width: 0;
+
+    padding: 9px;
+
+    border:
+        1px solid #dce3ec;
+
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 2px 8px rgba(15, 23, 42, 0.05);
+}
+
+
+/* =========================================================
+   RESULT PREVIEW
+========================================================= */
+
+.mi7-result-preview {
+
+    width: 100%;
+
+    aspect-ratio: 1 / 1;
+
+    overflow: hidden;
+
+    border-radius: 10px;
+
+    background: #f1f3f6;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+.mi7-result-preview img {
+
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* =========================================================
+   RESULT FILE NAME
+========================================================= */
+
+.mi7-result-name {
+
+    margin-top: 7px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    color: #30343b;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+
+/* =========================================================
+   RESULT DETAILS
+========================================================= */
+
+.mi7-result-details {
+
+    margin-top: 6px;
+
+    padding: 7px;
+
+    border-radius: 8px;
+
+    background: #f8fafc;
+
+    font-size: 11px;
+
+    line-height: 1.55;
+
+    color: #667085;
+}
+
+
+.mi7-result-details strong {
+
+    color: #1f2937;
+}
+
+
+/* =========================================================
+   RESULT SAVED BADGE
+========================================================= */
+
+.mi7-saved {
+
+    display: inline-flex;
+
+    margin-top: 7px;
+
+    padding: 4px 7px;
+
+    border-radius: 999px;
+
+    background: #dcfce7;
+
+    color: #166534;
+
+    font-size: 10px;
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   RESULT ACTIONS
+========================================================= */
+
+.mi7-result-actions {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 7px;
+
+    margin-top: 9px;
+}
+
+
+.mi7-download-btn,
+.mi7-share-btn {
+
+    min-height: 38px;
+
+    padding: 7px 5px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 4px;
+}
+
+
+.mi7-download-btn {
+
+    background: #2563eb;
+
+    color: #ffffff;
+}
+
+
+.mi7-download-btn:hover {
+
+    background: #1d4ed8;
+
+}
+
+
+.mi7-share-btn {
+
+    background: #e8f0fe;
+
+    color: #1557b0;
+}
+
+
+.mi7-share-btn:hover {
+
+    background: #d9e6ff;
+
+}
+
+
+/* =========================================================
+   RESET ALL
+========================================================= */
+
+.mi7-reset-btn {
+
+    width: 100%;
+
+    min-height: 48px;
+
+    margin-top: 20px;
+
+    padding: 10px 16px;
+
+    border:
+        1px solid #f0b8b8;
+
+    border-radius: 11px;
+
+    background: #fff5f5;
+
+    color: #b42318;
+
+    font-size: 15px;
+
+    font-weight: 800;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 7px;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease;
+}
+
+
+.mi7-reset-btn:hover {
+
+    background: #fee4e2;
+
+}
+
+
+.mi7-reset-btn:active {
+
+    transform: scale(0.985);
+
+}
+
+
+/* =========================================================
+   ADS SECTION
+========================================================= */
+
+.mi7-ad-section {
+
+    width: 100%;
+
+    margin-top: 24px;
+
+    margin-bottom: 24px;
+}
+
+
+.mi7-ad-box {
+
+    width: 100%;
+
+    min-height: 110px;
+
+    border:
+        1px dashed #c8d0dc;
+
+    border-radius: 14px;
+
+    background: #ffffff;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #98a2b3;
+
+    font-size: 12px;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   INFO BOXES
+========================================================= */
+
+.mi7-info-box {
+
+    width: 100%;
+
+    margin-top: 20px;
+
+    padding: 22px;
+
+    border:
+        1px solid #e1e7ef;
+
+    border-radius: 16px;
+
+    background: #ffffff;
+
+    box-shadow:
+        0 2px 10px rgba(15, 23, 42, 0.04);
+}
+
+
+.mi7-info-box h2 {
+
+    margin-bottom: 14px;
+
+    font-size: 24px;
+
+    line-height: 1.25;
+
+    color: #202124;
+}
+
+
+.mi7-info-box p {
+
+    margin-bottom: 10px;
+
+    color: #59636f;
+
+    font-size: 15px;
+
+    line-height: 1.65;
+}
+
+
+.mi7-info-box ol,
+.mi7-info-box ul {
+
+    padding-left: 22px;
+
+    color: #59636f;
+
+    font-size: 15px;
+
+    line-height: 1.7;
+}
+
+
+.mi7-info-box li {
+
+    margin-bottom: 7px;
+}
+
+
+.mi7-info-box strong {
+
+    color: #30343b;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.mi7-footer {
+
+    width: 100%;
+
+    margin-top: 28px;
+
+    padding: 28px 20px;
+
+    border-radius: 18px;
+
+    background: #172033;
+
+    color: #ffffff;
+
+    text-align: center;
+}
+
+
+/* =========================================================
+   FOOTER BRAND
+========================================================= */
+
+.mi7-footer-brand {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    text-align: left;
+}
+
+
+.mi7-footer-logo {
+
+    width: 52px;
+
+    height: 52px;
+
+    object-fit: contain;
+
+    border-radius: 50%;
+
+    display: block;
+}
+
+
+.mi7-footer-brand strong {
+
+    font-size: 17px;
+}
+
+
+.mi7-footer-brand p {
+
+    margin-top: 3px;
+
+    color: #b8c1cf;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   FOOTER LINKS
+========================================================= */
+
+.mi7-footer-links {
+
+    margin-top: 20px;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+}
+
+
+.mi7-footer-links a {
+
+    padding: 8px 11px;
+
+    border-radius: 8px;
+
+    color: #dbe4f0;
+
+    background: rgba(
+        255,
+        255,
+        255,
+        0.07
+    );
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+
+.mi7-footer-links a:hover {
+
+    background: rgba(
+        255,
+        255,
+        255,
+        0.14
+    );
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   COPYRIGHT
+========================================================= */
+
+.mi7-footer-copy {
+
+    margin-top: 18px;
+
+    padding-top: 15px;
+
+    border-top:
+        1px solid rgba(
+            255,
+            255,
+            255,
+            0.12
+        );
+
+    color: #9da9b8;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.mi7-toast {
+
+    position: fixed;
+
+    left: 50%;
+
+    bottom: 22px;
+
+    z-index: 3000;
+
+    max-width: min(
+        90vw,
+        420px
+    );
+
+    padding: 11px 16px;
+
+    border-radius: 10px;
+
+    background: #172033;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    text-align: center;
+
+    box-shadow:
+        0 8px 25px rgba(
+            0,
+            0,
+            0,
+            0.22
+        );
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform:
+        translate(-50%, 15px);
+
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease,
+        visibility 0.2s ease;
+}
+
+
+.mi7-toast.show {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    transform:
+        translate(-50%, 0);
+
+}
+
+
+/* =========================================================
+   MOBILE — 768px
+========================================================= */
+
+@media (max-width: 768px) {
+
+
+    .mi7-header {
+
+        min-height: 76px;
+
+        padding: 9px 10px;
+
+        gap: 9px;
 
     }
 
-    .compress-tool-header h1{
 
-        font-size:23px;
+    .mi7-menu-btn {
+
+        width: 48px;
+
+        height: 48px;
+
+        flex-basis: 48px;
+
+        border-radius: 11px;
+
+        font-size: 25px;
 
     }
 
-    .selected-image-gallery{
+
+    .mi7-brand {
+
+        gap: 8px;
+
+    }
+
+
+    .mi7-brand-logo {
+
+        width: 44px;
+
+        height: 44px;
+
+        flex-basis: 44px;
+
+    }
+
+
+    .mi7-brand-text strong {
+
+        font-size: 15px;
+
+    }
+
+
+    .mi7-brand-text span {
+
+        font-size: 11px;
+
+    }
+
+
+    .mi7-home-btn {
+
+        min-width: 48px;
+
+        width: 48px;
+
+        min-height: 48px;
+
+        padding: 0;
+
+        border-radius: 11px;
+
+        font-size: 20px;
+
+    }
+
+
+    .mi7-home-btn span {
+
+        display: none;
+
+    }
+
+
+    .mi7-main {
+
+        padding:
+            16px 10px 35px;
+
+    }
+
+
+    .mi7-tool-box {
+
+        padding: 16px;
+
+        border-radius: 17px;
+
+    }
+
+
+    .mi7-tool-box h1 {
+
+        font-size: 28px;
+
+    }
+
+
+    .mi7-subtitle {
+
+        font-size: 14px;
+
+        margin-bottom: 18px;
+
+    }
+
+
+    .mi7-upload {
+
+        min-height: 155px;
+
+        padding: 18px;
+
+    }
+
+
+    .mi7-upload-icon {
+
+        font-size: 38px;
+
+    }
+
+
+    .mi7-upload strong {
+
+        font-size: 18px;
+
+    }
+
+
+    .mi7-image-grid {
+
+        gap: 8px;
+
+    }
+
+
+    .mi7-result-grid {
+
+        gap: 8px;
+
+    }
+
+
+    .mi7-target-row {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+
+    .mi7-target-input {
+
+        width: 100%;
+
+    }
+
+
+    .mi7-target-input input {
+
+        width: 100%;
+
+        flex: 1;
+
+    }
+
+
+    .mi7-info-box {
+
+        padding: 17px;
+
+    }
+
+
+    .mi7-info-box h2 {
+
+        font-size: 21px;
+
+    }
+
+
+    .mi7-footer {
+
+        padding: 23px 14px;
+
+        border-radius: 14px;
+
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE — 480px
+========================================================= */
+
+@media (max-width: 480px) {
+
+
+    .mi7-brand-text span {
+
+        display: none;
+
+    }
+
+
+    .mi7-brand-text strong {
+
+        font-size: 14px;
+
+    }
+
+
+    .mi7-image-grid {
 
         grid-template-columns:
             repeat(3, minmax(0, 1fr));
 
-        gap:8px;
-
-    }
-
-    .v5-upload-box{
-
-        min-height:150px;
-
-    }
-
-}
-/* ==========================================
-   MI7 COMPRESS TOOL V5
-   PART 2 — IMAGE CARD + COMPRESSION UI
-========================================== */
-
-
-/* ==========================================
-   RESULT / IMAGE WORK AREA
-========================================== */
-
-.compress-results{
-
-    width:100%;
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:18px;
-
-    margin-top:20px;
-
-}
-
-
-/* ==========================================
-   INDIVIDUAL IMAGE CARD
-========================================== */
-
-.compress-image-card{
-
-    width:100%;
-
-    background:#fff;
-
-    border:1px solid #e1e5ea;
-
-    border-radius:16px;
-
-    padding:16px;
-
-    box-shadow:0 5px 18px rgba(0,0,0,.06);
-
-    overflow:hidden;
-
-}
-
-
-/* ==========================================
-   IMAGE PREVIEW
-========================================== */
-
-.compress-preview{
-
-    width:100%;
-
-    height:230px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    overflow:hidden;
-
-    background:#f4f6f8;
-
-    border-radius:12px;
-
-    margin-bottom:15px;
-
-}
-
-.compress-preview-image{
-
-    display:block;
-
-    max-width:100%;
-
-    max-height:100%;
-
-    width:auto;
-
-    height:auto;
-
-    object-fit:contain;
-
-    border-radius:8px;
-
-}
-
-
-/* ==========================================
-   IMAGE INFORMATION
-========================================== */
-
-.compress-image-info{
-
-    width:100%;
-
-}
-
-.compress-file-name{
-
-    margin:0 0 12px;
-
-    font-size:17px;
-
-    word-break:break-word;
-
-}
-
-
-.image-info-grid{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(3, minmax(0,1fr));
-
-    gap:8px;
-
-}
-
-
-.info-item{
-
-    padding:10px;
-
-    background:#f8fafc;
-
-    border-radius:9px;
-
-    min-width:0;
-
-}
-
-
-.info-label{
-
-    display:block;
-
-    font-size:11px;
-
-    color:#777;
-
-    margin-bottom:4px;
-
-}
-
-
-.info-item strong{
-
-    display:block;
-
-    font-size:13px;
-
-    word-break:break-word;
-
-}
-
-
-/* ==========================================
-   COMPRESSION SETTINGS
-========================================== */
-
-.compression-settings{
-
-    margin-top:16px;
-
-}
-
-
-.compression-settings > label{
-
-    display:block;
-
-    font-size:14px;
-
-    font-weight:bold;
-
-    margin-bottom:7px;
-
-}
-
-
-.target-size-row{
-
-    display:flex;
-
-    align-items:center;
-
-    width:100%;
-
-    margin-bottom:10px;
-
-}
-
-
-.target-size-input{
-
-    flex:1;
-
-    min-width:0;
-
-    padding:11px 12px;
-
-    border:1px solid #d5d9df;
-
-    border-radius:9px 0 0 9px;
-
-    outline:none;
-
-    font-size:15px;
-
-}
-
-
-.target-size-input:focus{
-
-    border-color:var(--primary);
-
-}
-
-
-.target-size-unit{
-
-    padding:11px 14px;
-
-    background:#eef2f7;
-
-    border:1px solid #d5d9df;
-
-    border-left:0;
-
-    border-radius:0 9px 9px 0;
-
-    font-weight:bold;
-
-    color:#555;
-
-}
-
-
-/* ==========================================
-   COMPRESS BUTTON
-========================================== */
-
-.v5-compress-button{
-
-    width:100%;
-
-    padding:12px 15px;
-
-    border:0;
-
-    border-radius:10px;
-
-    background:var(--primary);
-
-    color:#fff;
-
-    font-size:15px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-    transition:.2s;
-
-}
-
-
-.v5-compress-button:hover{
-
-    background:var(--primary-dark);
-
-    transform:translateY(-1px);
-
-}
-
-
-.v5-compress-button:disabled{
-
-    opacity:.6;
-
-    cursor:not-allowed;
-
-    transform:none;
-
-}
-
-
-/* ==========================================
-   COMPRESSION STATUS
-========================================== */
-
-.compression-status{
-
-    display:none;
-
-    align-items:center;
-
-    gap:8px;
-
-    margin-top:12px;
-
-    padding:10px 12px;
-
-    border-radius:9px;
-
-    background:#eff6ff;
-
-    color:#1d4ed8;
-
-    font-size:13px;
-
-}
-
-
-.status-icon{
-
-    flex-shrink:0;
-
-}
-
-
-/* ==========================================
-   RESULT BOX
-========================================== */
-
-.compression-result{
-
-    display:none;
-
-    width:100%;
-
-    margin-top:16px;
-
-    padding:14px;
-
-    border:1px solid #bbf7d0;
-
-    border-radius:12px;
-
-    background:#f0fdf4;
-
-    overflow:hidden;
-
-}
-
-
-.result-title{
-
-    font-size:15px;
-
-    font-weight:bold;
-
-    color:#15803d;
-
-    margin-bottom:12px;
-
-}
-
-
-/* ==========================================
-   RESULT PREVIEW
-========================================== */
-
-.result-image-area{
-
-    width:100%;
-
-    height:190px;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    overflow:hidden;
-
-    background:#fff;
-
-    border-radius:10px;
-
-    border:1px solid #dcfce7;
-
-    margin-bottom:12px;
-
-}
-
-
-.result-preview-image{
-
-    max-width:100%;
-
-    max-height:100%;
-
-    width:auto;
-
-    height:auto;
-
-    object-fit:contain;
-
-}
-
-
-/* ==========================================
-   RESULT DETAILS
-========================================== */
-
-.result-details{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(3,minmax(0,1fr));
-
-    gap:8px;
-
-}
-
-
-.result-item{
-
-    padding:9px;
-
-    border-radius:8px;
-
-    background:#fff;
-
-    border:1px solid #dcfce7;
-
-    text-align:center;
-
-}
-
-
-.result-item span{
-
-    display:block;
-
-    font-size:11px;
-
-    color:#777;
-
-    margin-bottom:4px;
-
-}
-
-
-.result-item strong{
-
-    font-size:13px;
-
-    color:#166534;
-
-}
-
-
-/* ==========================================
-   RESULT BUTTONS
-========================================== */
-
-.result-actions{
-
-    display:grid;
-
-    grid-template-columns:
-        repeat(3,minmax(0,1fr));
-
-    gap:8px;
-
-    margin-top:12px;
-
-}
-
-
-.result-actions button{
-
-    border:0;
-
-    border-radius:8px;
-
-    padding:10px 7px;
-
-    color:#fff;
-
-    font-size:13px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-    transition:.2s;
-
-}
-
-
-.v5-download-button{
-
-    background:#16a34a;
-
-}
-
-
-.v5-share-button{
-
-    background:#ea580c;
-
-}
-
-
-.v5-reset-button{
-
-    background:#dc2626;
-
-}
-
-
-.result-actions button:hover{
-
-    opacity:.9;
-
-    transform:translateY(-1px);
-
-   }
-/* ==========================================
-   V5 MOBILE IMAGE CARD
-========================================== */
-
-@media(max-width:600px){
-
-    .compress-image-card{
-
-        padding:12px;
-
-        border-radius:13px;
-
     }
 
 
-    .compress-preview{
-
-        height:180px;
-
-    }
-
-
-    .image-info-grid{
+    .mi7-result-grid {
 
         grid-template-columns:
-            repeat(2,minmax(0,1fr));
+            repeat(2, minmax(0, 1fr));
 
     }
 
 
-    .result-details{
+    .mi7-image-name {
 
-        grid-template-columns:
-            1fr;
-
-    }
-
-
-    .result-actions{
-
-        grid-template-columns:
-            1fr;
+        font-size: 10px;
 
     }
 
 
-    .result-actions button{
+    .mi7-image-details {
 
-        width:100%;
+        font-size: 9px;
 
     }
 
-       }
 
-/* ==========================================
-   MI7 COMPRESS TOOL V5
-   PART 3 — STATUS + TOAST + LOADING
-========================================== */
+    .mi7-result-name {
 
-
-/* ==========================================
-   COMPRESSION MESSAGE
-========================================== */
-
-.v5-compression-message{
-
-    display:none;
-
-    width:100%;
-
-    margin-top:15px;
-
-    padding:12px 14px;
-
-    border-radius:10px;
-
-    text-align:center;
-
-    font-size:14px;
-
-    font-weight:600;
-
-}
-
-
-/* ==========================================
-   TOAST
-========================================== */
-
-.v5-toast{
-
-    position:fixed;
-
-    left:50%;
-
-    bottom:25px;
-
-    transform:translateX(-50%) translateY(20px);
-
-    z-index:9999;
-
-    display:none;
-
-    max-width:90%;
-
-    padding:12px 18px;
-
-    border-radius:10px;
-
-    background:#222;
-
-    color:#fff;
-
-    font-size:14px;
-
-    font-weight:600;
-
-    text-align:center;
-
-    box-shadow:0 5px 20px rgba(0,0,0,.2);
-
-    opacity:0;
-
-    transition:
-        opacity .25s ease,
-        transform .25s ease;
-
-}
-
-
-/* ==========================================
-   LOADING OVERLAY
-========================================== */
-
-.v5-loading{
-
-    position:fixed;
-
-    inset:0;
-
-    z-index:10000;
-
-    display:none;
-
-    align-items:center;
-
-    justify-content:center;
-
-    flex-direction:column;
-
-    gap:12px;
-
-    background:rgba(0,0,0,.55);
-
-    backdrop-filter:blur(3px);
-
-}
-
-
-.v5-loader{
-
-    width:42px;
-
-    height:42px;
-
-    border:4px solid rgba(255,255,255,.35);
-
-    border-top-color:#fff;
-
-    border-radius:50%;
-
-    animation:v5Spin .8s linear infinite;
-
-}
-
-
-.v5-loading p{
-
-    margin:0;
-
-    color:#fff;
-
-    font-size:15px;
-
-    font-weight:600;
-
-    text-align:center;
-
-}
-
-
-/* ==========================================
-   LOADER ANIMATION
-========================================== */
-
-@keyframes v5Spin{
-
-    from{
-
-        transform:rotate(0deg);
+        font-size: 10px;
 
     }
 
-    to{
 
-        transform:rotate(360deg);
+    .mi7-result-details {
+
+        font-size: 9px;
+
+    }
+
+
+    .mi7-download-btn,
+    .mi7-share-btn {
+
+        font-size: 10px;
+
+        min-height: 34px;
+
+    }
+
+
+    .mi7-primary-btn {
+
+        font-size: 15px;
 
     }
 
 }
 
 
-/* ==========================================
-   DISABLED IMAGE CARD
-========================================== */
-
-.compress-image-card.is-compressing{
-
-    opacity:.75;
-
-    pointer-events:none;
-
-}
-
-
-/* ==========================================
-   SUCCESS STATE
-========================================== */
-
-.compress-image-card.is-compressed{
-
-    border-color:#86efac;
-
-}
-
-
-/* ==========================================
-   ERROR STATE
-========================================== */
-
-.compress-image-card.has-error{
-
-    border-color:#fca5a5;
-
-}
-
-
-/* ==========================================
-   SMALL SCREEN FINAL FIX
-========================================== */
-
-@media(max-width:600px){
-
-    .v5-toast{
-
-        bottom:15px;
-
-        padding:11px 14px;
-
-        font-size:13px;
-
-    }
-
-
-    .v5-loading p{
-
-        font-size:14px;
-
-        padding:0 20px;
-
-    }
-
-
-    .compress-tool-header{
-
-        margin-bottom:15px;
-
-    }
-
-}
-
-
-/* ==========================================
-   VERY SMALL PHONE
-========================================== */
-
-@media(max-width:380px){
-
-    .selected-image-gallery{
-
-        gap:6px;
-
-    }
-
-
-    .v5-thumbnail{
-
-        border-radius:8px;
-
-    }
-
-
-    .compress-preview{
-
-        height:160px;
-
-    }
-
-
-    .result-image-area{
-
-        height:160px;
-
-    }
-
-}
-
-
-
-/* ==========================================
-   INFO CARD
-========================================== */
-
-.info-card{
-
-background:#fff;
-
-margin:20px 0;
-
-padding:20px;
-
-border-radius:14px;
-
-box-shadow:var(--shadow);
-
-}
-
-.info-card h2{
-
-margin-bottom:12px;
-
-color:#2563eb;
-
-}
-
-.info-card p,
-
-.info-card li{
-
-line-height:1.8;
-
-}
-
-/* ==========================================
-   FOOTER
-========================================== */
-
-.footer{
-
-background:#111827;
-
-color:#fff;
-
-padding:30px 20px;
-
-margin-top:30px;
-
-text-align:center;
-
-}
-
-.footer-links{
-
-display:flex;
-
-justify-content:center;
-
-flex-wrap:wrap;
-
-gap:18px;
-
-margin-bottom:15px;
-
-}
-
-.footer-links a{
-
-color:#fff;
-
-text-decoration:none;
-
-font-weight:bold;
-
-}
-
-.footer-links a:hover{
-
-color:#60a5fa;
-
-}
-
-/* ==========================================
-   MOBILE
-========================================== */
-
-@media(max-width:768px){
-
-.header{
-
-padding:10px;
-
-}
-
-.logo{
-
-width:38px;
-
-height:38px;
-
-}
-
-.logo-area h2{
-
-font-size:18px;
-
-}
-
-.tool-card{
-
-padding:15px;
-
-}
-
-.image-container{
-
-grid-template-columns:1fr;
-
-}
-
-.button-group{
-
-flex-direction:column;
-
-}
-
-.button-group button,
-
-.compressBtn{
-
-width:100%;
-
-}
-
-   }
-
+/* =========================================================
+   END TOOL.CSS PART 2
+========================================================= */
