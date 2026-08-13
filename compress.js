@@ -1,204 +1,275 @@
-/* ==========================================
+/* =========================================================
    MI7 REDUCE IMAGE SIZE IN KB
-   COMPRESS.JS V5
-   PART 1 — FILE SELECTION + GALLERY
-========================================== */
+   COMPRESS.JS — V6 FINAL
+   PART 1
+========================================================= */
 
 "use strict";
 
 
-/* ==========================================
-   GLOBAL STATE
-========================================== */
+/* =========================================================
+   GLOBAL DATA
+========================================================= */
 
-let v5Images = [];
+let selectedImages = [];
 
-let v5ImageId = 0;
+let compressedResults = [];
 
 
-/* ==========================================
-   GET ELEMENTS
-========================================== */
 
-const v5ImageInput =
+/* =========================================================
+   GET HTML ELEMENTS
+========================================================= */
+
+const imageInput =
     document.getElementById("imageInput");
 
-const v5Gallery =
-    document.getElementById("selectedImageGallery");
 
-const v5Results =
-    document.getElementById("compressResults");
-
-const v5EmptyMessage =
-    document.getElementById("emptyMessage");
+const imageGrid =
+    document.getElementById("imageGrid");
 
 
-/* ==========================================
+const emptyState =
+    document.getElementById("emptyState");
+
+
+const targetSizeInput =
+    document.getElementById("targetSize");
+
+
+const compressBtn =
+    document.getElementById("compressBtn");
+
+
+const resetBtn =
+    document.getElementById("resetBtn");
+
+
+const resultGrid =
+    document.getElementById("resultGrid");
+
+
+const statusMessage =
+    document.getElementById("statusMessage");
+
+
+const toast =
+    document.getElementById("toast");
+
+
+const menuBtn =
+    document.getElementById("menuBtn");
+
+
+const closeMenuBtn =
+    document.getElementById("closeMenu");
+
+
+const sideMenu =
+    document.getElementById("sideMenu");
+
+
+const overlay =
+    document.getElementById("overlay");
+
+
+
+/* =========================================================
    CHECK REQUIRED ELEMENTS
-========================================== */
+========================================================= */
 
-if (!v5ImageInput || !v5Gallery || !v5Results) {
+if (!imageInput) {
 
     console.error(
-        "MI7 V5: Required compression elements are missing."
-    );
-
-} else {
-
-    v5ImageInput.addEventListener(
-        "change",
-        handleV5ImageSelection
+        "MI7: imageInput not found."
     );
 
 }
 
 
-/* ==========================================
-   IMAGE SELECTION
-========================================== */
+if (!imageGrid) {
 
-function handleV5ImageSelection(event) {
-
-    const files = Array.from(
-        event.target.files || []
+    console.error(
+        "MI7: imageGrid not found."
     );
 
-    if (!files.length) {
-        return;
+}
+
+
+if (!compressBtn) {
+
+    console.error(
+        "MI7: compressBtn not found."
+    );
+
+}
+
+
+
+/* =========================================================
+   INITIAL STATE
+========================================================= */
+
+function setInitialState() {
+
+    if (imageGrid) {
+
+        imageGrid.innerHTML = "";
+
     }
 
 
-    const imageFiles = files.filter(
-        file => file.type.startsWith("image/")
+    if (resultGrid) {
+
+        resultGrid.innerHTML = "";
+
+    }
+
+
+    if (emptyState) {
+
+        emptyState.classList.remove(
+            "hidden"
+        );
+
+        emptyState.textContent =
+            "No images selected yet.";
+
+    }
+
+
+    if (compressBtn) {
+
+        compressBtn.disabled = true;
+
+    }
+
+
+    if (statusMessage) {
+
+        statusMessage.className =
+            "mi7-status";
+
+        statusMessage.textContent =
+            "";
+
+    }
+
+}
+
+
+setInitialState();
+
+
+
+/* =========================================================
+   FILE SELECT
+========================================================= */
+
+if (imageInput) {
+
+    imageInput.addEventListener(
+        "change",
+        handleImageSelection
     );
+
+}
+
+
+
+/* =========================================================
+   HANDLE MULTIPLE IMAGE SELECTION
+========================================================= */
+
+function handleImageSelection(event) {
+
+    const files =
+        Array.from(
+            event.target.files || []
+        );
+
+
+    if (!files.length) {
+
+        return;
+
+    }
+
+
+    /*
+       Only image files.
+    */
+
+    const imageFiles =
+        files.filter(
+            file =>
+                file.type.startsWith(
+                    "image/"
+                )
+        );
 
 
     if (!imageFiles.length) {
 
-        showV5Toast(
-            "Please select a valid image."
+        showStatus(
+            "Please select JPG, PNG or WEBP images.",
+            "error"
         );
 
-        v5ImageInput.value = "";
-
         return;
+
     }
 
 
-    imageFiles.forEach(file => {
+    /*
+       Add newly selected files.
+       Existing selected images remain.
+    */
 
-        addV5Image(file);
+    imageFiles.forEach(
+        file => {
 
-    });
-
-
-    v5ImageInput.value = "";
-
-    updateV5EmptyMessage();
-
-}
-
-
-/* ==========================================
-   ADD IMAGE
-========================================== */
-
-function addV5Image(file) {
-
-    const id = ++v5ImageId;
-
-    const imageItem = {
-
-        id: id,
-
-        file: file,
-
-        objectUrl: URL.createObjectURL(file),
-
-        resultBlob: null,
-
-        resultUrl: null,
-
-        width: 0,
-
-        height: 0
-
-    };
-
-
-    v5Images.push(imageItem);
-
-
-    createV5Thumbnail(imageItem);
-
-    createV5ImageCard(imageItem);
-
-    readV5ImageDimensions(imageItem);
-
-}
-
-
-/* ==========================================
-   CREATE THUMBNAIL
-========================================== */
-
-function createV5Thumbnail(item) {
-
-    const thumbnail =
-        document.createElement("div");
-
-    thumbnail.className =
-        "v5-thumbnail";
-
-    thumbnail.dataset.id =
-        item.id;
-
-
-    const img =
-        document.createElement("img");
-
-    img.src =
-        item.objectUrl;
-
-    img.alt =
-        item.file.name;
-
-
-    const number =
-        document.createElement("span");
-
-    number.className =
-        "v5-thumbnail-number";
-
-    number.textContent =
-        v5Images.length;
-
-
-    thumbnail.appendChild(img);
-
-    thumbnail.appendChild(number);
-
-    v5Gallery.appendChild(thumbnail);
-
-
-    /* Scroll card into view when thumbnail clicked */
-
-    thumbnail.addEventListener(
-        "click",
-        () => {
-
-            const card =
-                document.querySelector(
-                    `.compress-image-card[data-id="${item.id}"]`
+            const alreadyExists =
+                selectedImages.some(
+                    item =>
+                        item.file.name ===
+                            file.name &&
+                        item.file.size ===
+                            file.size &&
+                        item.file.lastModified ===
+                            file.lastModified
                 );
 
-            if (card) {
 
-                card.scrollIntoView({
+            if (!alreadyExists) {
 
-                    behavior: "smooth",
+                selectedImages.push({
 
-                    block: "center"
+                    id:
+                        createImageId(),
+
+                    file:
+                        file,
+
+                    previewUrl:
+                        URL.createObjectURL(
+                            file
+                        ),
+
+                    width:
+                        0,
+
+                    height:
+                        0,
+
+                    type:
+                        file.type,
+
+                    originalSize:
+                        file.size,
+
+                    image:
+                        null
 
                 });
 
@@ -207,270 +278,388 @@ function createV5Thumbnail(item) {
         }
     );
 
+
+    /*
+       Reset old results because
+       selection changed.
+    */
+
+    clearResultsOnly();
+
+
+    renderImageGrid();
+
+    updateToolState();
+
+
+    /*
+       Allow selecting the same file
+       again later.
+    */
+
+    event.target.value = "";
+
 }
 
 
-/* ==========================================
-   CREATE IMAGE CARD
-========================================== */
 
-function createV5ImageCard(item) {
+/* =========================================================
+   CREATE UNIQUE IMAGE ID
+========================================================= */
 
-    const template =
-        document.getElementById(
-            "compressCardTemplate"
-        );
+function createImageId() {
+
+    return (
+        "mi7-" +
+        Date.now().toString(36) +
+        "-" +
+        Math.random()
+            .toString(36)
+            .slice(2, 9)
+    );
+
+}
 
 
-    if (!template) {
 
-        console.error(
-            "MI7 V5: compressCardTemplate not found."
-        );
+/* =========================================================
+   RENDER IMAGE GRID
+========================================================= */
+
+function renderImageGrid() {
+
+    if (!imageGrid) {
 
         return;
 
     }
 
 
+    imageGrid.innerHTML = "";
+
+
+    selectedImages.forEach(
+        item => {
+
+            createImageCard(item);
+
+        }
+    );
+
+
+    if (emptyState) {
+
+        if (selectedImages.length) {
+
+            emptyState.classList.add(
+                "hidden"
+            );
+
+        } else {
+
+            emptyState.classList.remove(
+                "hidden"
+            );
+
+        }
+
+    }
+
+}
+
+
+
+/* =========================================================
+   CREATE SMALL IMAGE CARD
+========================================================= */
+
+function createImageCard(item) {
+
     const card =
-        template.content
-        .firstElementChild
-        .cloneNode(true);
+        document.createElement(
+            "div"
+        );
+
+
+    card.className =
+        "mi7-image-item";
 
 
     card.dataset.id =
         item.id;
 
 
-    /* IMAGE */
 
-    const preview =
-        card.querySelector(
-            ".compress-preview-image"
+    /* IMAGE PREVIEW */
+
+    const thumbWrap =
+        document.createElement(
+            "div"
         );
 
-    preview.src =
-        item.objectUrl;
 
-    preview.alt =
+    thumbWrap.className =
+        "mi7-thumb-wrap";
+
+
+    const image =
+        document.createElement(
+            "img"
+        );
+
+
+    image.className =
+        "mi7-thumb";
+
+
+    image.src =
+        item.previewUrl;
+
+
+    image.alt =
         item.file.name;
+
+
+    thumbWrap.appendChild(
+        image
+    );
+
 
 
     /* FILE NAME */
 
     const fileName =
-        card.querySelector(
-            ".compress-file-name"
+        document.createElement(
+            "div"
         );
+
+
+    fileName.className =
+        "mi7-image-name";
+
 
     fileName.textContent =
         item.file.name;
 
 
-    /* ORIGINAL SIZE */
 
-    const originalSize =
-        card.querySelector(
-            ".original-size"
-        );
+    /* DETAILS */
 
-    originalSize.textContent =
-        formatV5Size(item.file.size);
-
-
-    /* FORMAT */
-
-    const format =
-        card.querySelector(
-            ".image-format"
-        );
-
-    format.textContent =
-        getV5Format(item.file);
-
-
-    /* BUTTON */
-
-    const compressButton =
-        card.querySelector(
-            ".v5-compress-button"
+    const details =
+        document.createElement(
+            "div"
         );
 
 
-    if (compressButton) {
-
-        compressButton.addEventListener(
-            "click",
-            () => {
-
-                compressV5Image(
-                    item.id
-                );
-
-            }
-        );
-
-    }
+    details.className =
+        "mi7-image-details";
 
 
-    /* RESULT BUTTONS */
+    details.innerHTML =
 
-    const downloadButton =
-        card.querySelector(
-            ".v5-download-button"
-        );
+        "<strong>Size:</strong> " +
+        formatBytes(
+            item.originalSize
+        ) +
+        "<br>" +
 
+        "<strong>Dimensions:</strong> " +
+        "Loading..." +
+        "<br>" +
 
-    const shareButton =
-        card.querySelector(
-            ".v5-share-button"
+        "<strong>Format:</strong> " +
+        getFormatName(
+            item.type
         );
 
 
-    const resetButton =
-        card.querySelector(
-            ".v5-reset-button"
+
+    /* REMOVE */
+
+    const removeButton =
+        document.createElement(
+            "button"
         );
 
 
-    if (downloadButton) {
-
-        downloadButton.addEventListener(
-            "click",
-            () => {
-
-                downloadV5Image(
-                    item.id
-                );
-
-            }
-        );
-
-    }
+    removeButton.type =
+        "button";
 
 
-    if (shareButton) {
-
-        shareButton.addEventListener(
-            "click",
-            () => {
-
-                shareV5Image(
-                    item.id
-                );
-
-            }
-        );
-
-    }
+    removeButton.className =
+        "mi7-remove-image";
 
 
-    if (resetButton) {
-
-        resetButton.addEventListener(
-            "click",
-            () => {
-
-                removeV5Image(
-                    item.id
-                );
-
-            }
-        );
-
-    }
+    removeButton.textContent =
+        "✕ Remove";
 
 
-    v5Results.appendChild(card);
+    removeButton.addEventListener(
+        "click",
+        () => {
 
-}
-
-
-/* ==========================================
-   READ IMAGE DIMENSIONS
-========================================== */
-
-function readV5ImageDimensions(item) {
-
-    const img =
-        new Image();
-
-
-    img.onload = () => {
-
-        item.width =
-            img.naturalWidth;
-
-        item.height =
-            img.naturalHeight;
-
-
-        const card =
-            getV5Card(item.id);
-
-
-        if (!card) {
-            return;
-        }
-
-
-        const dimensions =
-            card.querySelector(
-                ".image-dimensions"
+            removeSelectedImage(
+                item.id
             );
 
-
-        if (dimensions) {
-
-            dimensions.textContent =
-                `${item.width} × ${item.height} px`;
-
         }
+    );
 
 
-        img.remove();
 
-    };
-
-
-    img.onerror = () => {
-
-        console.error(
-            "MI7 V5: Could not read image dimensions.",
-            item.file.name
-        );
-
-    };
+    card.appendChild(
+        thumbWrap
+    );
 
 
-    img.src =
-        item.objectUrl;
+    card.appendChild(
+        fileName
+    );
 
-}
+
+    card.appendChild(
+        details
+    );
 
 
-/* ==========================================
-   GET IMAGE CARD
-========================================== */
+    card.appendChild(
+        removeButton
+    );
 
-function getV5Card(id) {
 
-    return document.querySelector(
-        `.compress-image-card[data-id="${id}"]`
+    imageGrid.appendChild(
+        card
+    );
+
+
+    /*
+       Load dimensions.
+    */
+
+    loadImageDimensions(
+        item,
+        details
     );
 
 }
 
 
-/* ==========================================
-   FORMAT SIZE
-========================================== */
 
-function formatV5Size(bytes) {
+/* =========================================================
+   LOAD IMAGE DIMENSIONS
+========================================================= */
+
+function loadImageDimensions(
+    item,
+    detailsElement
+) {
+
+    const image =
+        new Image();
+
+
+    image.onload =
+        function () {
+
+            item.width =
+                image.naturalWidth;
+
+            item.height =
+                image.naturalHeight;
+
+            item.image =
+                image;
+
+
+            detailsElement.innerHTML =
+
+                "<strong>Size:</strong> " +
+                formatBytes(
+                    item.originalSize
+                ) +
+                "<br>" +
+
+                "<strong>Dimensions:</strong> " +
+                item.width +
+                " × " +
+                item.height +
+                " px" +
+                "<br>" +
+
+                "<strong>Format:</strong> " +
+                getFormatName(
+                    item.type
+                );
+
+        };
+
+
+    image.onerror =
+        function () {
+
+            detailsElement.innerHTML =
+
+                "<strong>Size:</strong> " +
+                formatBytes(
+                    item.originalSize
+                ) +
+                "<br>" +
+
+                "<strong>Dimensions:</strong> " +
+                "Unable to read" +
+                "<br>" +
+
+                "<strong>Format:</strong> " +
+                getFormatName(
+                    item.type
+                );
+
+        };
+
+
+    image.src =
+        item.previewUrl;
+
+}
+
+
+
+/* =========================================================
+   GET FORMAT NAME
+========================================================= */
+
+function getFormatName(type) {
+
+    switch (type) {
+
+        case "image/jpeg":
+            return "JPG";
+
+        case "image/png":
+            return "PNG";
+
+        case "image/webp":
+            return "WEBP";
+
+        default:
+            return "IMAGE";
+
+    }
+
+}
+
+
+
+/* =========================================================
+   FORMAT FILE SIZE
+========================================================= */
+
+function formatBytes(bytes) {
 
     if (!Number.isFinite(bytes)) {
-        return "-";
+
+        return "0 KB";
+
     }
 
 
@@ -481,99 +670,188 @@ function formatV5Size(bytes) {
     }
 
 
-    if (bytes < 1024 * 1024) {
+    const kb =
+        bytes / 1024;
 
-        return (
-            (bytes / 1024).toFixed(1)
-            + " KB"
+
+    if (kb < 1024) {
+
+        return kb.toFixed(1) +
+            " KB";
+
+    }
+
+
+    const mb =
+        kb / 1024;
+
+
+    return mb.toFixed(2) +
+        " MB";
+
+}
+
+
+
+/* =========================================================
+   REMOVE ONE SELECTED IMAGE
+========================================================= */
+
+function removeSelectedImage(id) {
+
+    const index =
+        selectedImages.findIndex(
+            item =>
+                item.id === id
+        );
+
+
+    if (index === -1) {
+
+        return;
+
+    }
+
+
+    const item =
+        selectedImages[index];
+
+
+    if (item.previewUrl) {
+
+        URL.revokeObjectURL(
+            item.previewUrl
         );
 
     }
 
 
-    return (
-        (bytes / (1024 * 1024)).toFixed(2)
-        + " MB"
+    selectedImages.splice(
+        index,
+        1
+    );
+
+
+    clearResultsOnly();
+
+
+    renderImageGrid();
+
+    updateToolState();
+
+
+    showToast(
+        "Image removed."
     );
 
 }
 
 
-/* ==========================================
-   GET FORMAT
-========================================== */
 
-function getV5Format(file) {
+/* =========================================================
+   UPDATE TOOL STATE
+========================================================= */
 
-    if (!file || !file.type) {
-        return "Unknown";
-    }
+function updateToolState() {
 
+    if (!compressBtn) {
 
-    const parts =
-        file.type.split("/");
-
-
-    if (parts.length === 2) {
-
-        return parts[1]
-            .toUpperCase();
+        return;
 
     }
 
 
-    return file.type;
+    compressBtn.disabled =
+        selectedImages.length === 0;
 
 }
 
 
-/* ==========================================
-   EMPTY MESSAGE
-========================================== */
 
-function updateV5EmptyMessage() {
+/* =========================================================
+   CLEAR ONLY RESULTS
+========================================================= */
 
-    if (!v5EmptyMessage) {
-        return;
-    }
+function clearResultsOnly() {
+
+    compressedResults =
+        [];
 
 
-    if (v5Images.length === 0) {
+    if (resultGrid) {
 
-        v5EmptyMessage.style.display =
-            "block";
-
-    } else {
-
-        v5EmptyMessage.style.display =
-            "none";
+        resultGrid.innerHTML =
+            "";
 
     }
 
-                            }
 
-/* ==========================================
+    if (statusMessage) {
+
+        statusMessage.className =
+            "mi7-status";
+
+        statusMessage.textContent =
+            "";
+
+    }
+
+}
+
+
+
+/* =========================================================
+   COMPRESS BUTTON
+========================================================= */
+
+if (compressBtn) {
+
+    compressBtn.addEventListener(
+        "click",
+        compressAllImages
+    );
+
+}
+
+
+
+/* =========================================================
+   RESET BUTTON
+========================================================= */
+
+if (resetBtn) {
+
+    resetBtn.addEventListener(
+        "click",
+        resetEverything
+    );
+
+}
+
+
+
+/* =========================================================
+   END PART 1
+========================================================= */
+
+/* =========================================================
    MI7 REDUCE IMAGE SIZE IN KB
-   COMPRESS.JS V5
-   PART 2 — COMPRESSION ENGINE + RESULT
-========================================== */
+   COMPRESS.JS — V6 FINAL
+   PART 2
+========================================================= */
 
 
-/* ==========================================
-   MAIN COMPRESS FUNCTION
-========================================== */
+/* =========================================================
+   COMPRESS ALL SELECTED IMAGES
+========================================================= */
 
-async function compressV5Image(id) {
+async function compressAllImages() {
 
-    const item = v5Images.find(
-        image => image.id === id
-    );
+    if (!selectedImages.length) {
 
-
-    if (!item) {
-
-        showV5Toast(
-            "Image not found."
+        showStatus(
+            "Please select at least one image first.",
+            "error"
         );
 
         return;
@@ -581,89 +859,25 @@ async function compressV5Image(id) {
     }
 
 
-    const card =
-        getV5Card(id);
-
-
-    if (!card) {
-        return;
-    }
-
-
-    const targetInput =
-        card.querySelector(
-            ".target-size-input"
+    let targetKB =
+        Number(
+            targetSizeInput
+                ? targetSizeInput.value
+                : 100
         );
 
 
-    const compressButton =
-        card.querySelector(
-            ".v5-compress-button"
-        );
+    if (!Number.isFinite(targetKB) ||
+        targetKB <= 0) {
 
+        targetKB = 100;
 
-    const statusBox =
-        card.querySelector(
-            ".compression-status"
-        );
+        if (targetSizeInput) {
 
+            targetSizeInput.value =
+                "100";
 
-    const statusText =
-        card.querySelector(
-            ".status-text"
-        );
-
-
-    const resultBox =
-        card.querySelector(
-            ".compression-result"
-        );
-
-
-    const resultPreview =
-        card.querySelector(
-            ".result-preview-image"
-        );
-
-
-    const originalResult =
-        card.querySelector(
-            ".result-original-size"
-        );
-
-
-    const compressedResult =
-        card.querySelector(
-            ".result-compressed-size"
-        );
-
-
-    const savedResult =
-        card.querySelector(
-            ".result-saved-percent"
-        );
-
-
-    /* --------------------------------------
-       TARGET SIZE
-    -------------------------------------- */
-
-    const targetKB =
-        Number(targetInput?.value);
-
-
-    if (
-        !Number.isFinite(targetKB) ||
-        targetKB <= 0
-    ) {
-
-        showV5Toast(
-            "Please enter a valid target size in KB."
-        );
-
-        targetInput?.focus();
-
-        return;
+        }
 
     }
 
@@ -672,440 +886,441 @@ async function compressV5Image(id) {
         targetKB * 1024;
 
 
-    /* --------------------------------------
-       UI — START
-    -------------------------------------- */
-
-    if (compressButton) {
-
-        compressButton.disabled = true;
-
-        compressButton.textContent =
-            "⏳ Compressing...";
-
-    }
+    compressBtn.disabled =
+        true;
 
 
-    card.classList.add(
-        "is-compressing"
+    showStatus(
+        "Compressing images... Please wait.",
+        "loading"
     );
 
 
-    if (statusBox) {
-
-        statusBox.style.display =
-            "flex";
-
-    }
+    resultGrid.innerHTML =
+        "";
 
 
-    if (statusText) {
-
-        statusText.textContent =
-            "Preparing image...";
-
-    }
+    compressedResults =
+        [];
 
 
     try {
 
-        /* ----------------------------------
-           LOAD IMAGE
-        ---------------------------------- */
-
-        const sourceImage =
-            await loadV5Image(
-                item.objectUrl
-            );
-
-
-        if (statusText) {
-
-            statusText.textContent =
-                "Compressing image...";
-
-        }
-
-
-        /* ----------------------------------
-           INITIAL DIMENSIONS
-        ---------------------------------- */
-
-        let width =
-            sourceImage.naturalWidth;
-
-        let height =
-            sourceImage.naturalHeight;
-
-
-        /* ----------------------------------
-           CREATE FIRST CANVAS
-        ---------------------------------- */
-
-        let canvas =
-            document.createElement(
-                "canvas"
-            );
-
-
-        canvas.width =
-            width;
-
-        canvas.height =
-            height;
-
-
-        let context =
-            canvas.getContext(
-                "2d",
-                {
-                    alpha: true
-                }
-            );
-
-
-        context.drawImage(
-            sourceImage,
-            0,
-            0,
-            width,
-            height
-        );
-
-
-        /* ----------------------------------
-           CHOOSE OUTPUT FORMAT
-        ---------------------------------- */
-
-        const outputType =
-            chooseV5OutputType(
-                item.file
-            );
-
-
-        /* ----------------------------------
-           FIND QUALITY
-        ---------------------------------- */
-
-        let result =
-            await findV5CompressedBlob(
-                canvas,
-                targetBytes,
-                outputType
-            );
-
-
-        /* ----------------------------------
-           IF STILL TOO LARGE
-           REDUCE DIMENSIONS
-        ---------------------------------- */
-
-        if (
-            result.blob.size >
-            targetBytes
+        for (
+            let i = 0;
+            i < selectedImages.length;
+            i++
         ) {
 
-            if (statusText) {
-
-                statusText.textContent =
-                    "Optimizing image dimensions...";
-
-            }
+            const item =
+                selectedImages[i];
 
 
-            let scale =
-                0.9;
+            showStatus(
+                "Compressing image " +
+                (i + 1) +
+                " of " +
+                selectedImages.length +
+                "...",
+                "loading"
+            );
 
 
-            for (
-                let attempt = 0;
-                attempt < 10;
-                attempt++
-            ) {
+            try {
 
-                width =
-                    Math.max(
-                        320,
-                        Math.round(
-                            width * scale
-                        )
+                const result =
+                    await compressSingleImage(
+                        item,
+                        targetBytes
                     );
 
 
-                height =
-                    Math.max(
-                        320,
-                        Math.round(
-                            height * scale
-                        )
-                    );
-
-
-                canvas.width =
-                    width;
-
-                canvas.height =
-                    height;
-
-
-                context =
-                    canvas.getContext(
-                        "2d",
-                        {
-                            alpha: true
-                        }
-                    );
-
-
-                context.clearRect(
-                    0,
-                    0,
-                    width,
-                    height
+                compressedResults.push(
+                    result
                 );
 
 
-                context.drawImage(
-                    sourceImage,
-                    0,
-                    0,
-                    width,
-                    height
+                renderResultCard(
+                    result
                 );
 
 
-                result =
-                    await findV5CompressedBlob(
-                        canvas,
-                        targetBytes,
-                        outputType
-                    );
+            } catch (error) {
+
+                console.error(
+                    "MI7 compression error:",
+                    error
+                );
 
 
-                if (
-                    result.blob.size <=
-                    targetBytes
-                ) {
+                const failedResult = {
 
-                    break;
+                    id:
+                        item.id,
 
-                }
+                    fileName:
+                        item.file.name,
+
+                    originalSize:
+                        item.originalSize,
+
+                    error:
+                        true,
+
+                    errorMessage:
+                        "This image could not be compressed."
+
+                };
 
 
-                scale *= 0.85;
+                compressedResults.push(
+                    failedResult
+                );
+
+
+                renderResultCard(
+                    failedResult
+                );
 
             }
 
         }
 
 
-        /* ----------------------------------
-           CREATE RESULT URL
-        ---------------------------------- */
-
-        if (item.resultUrl) {
-
-            URL.revokeObjectURL(
-                item.resultUrl
-            );
-
-        }
-
-
-        item.resultBlob =
-            result.blob;
-
-
-        item.resultUrl =
-            URL.createObjectURL(
-                result.blob
-            );
-
-
-        item.resultWidth =
-            width;
-
-        item.resultHeight =
-            height;
-
-        item.outputType =
-            outputType;
-
-
-        /* ----------------------------------
-           SHOW RESULT
-        ---------------------------------- */
-
-        if (resultPreview) {
-
-            resultPreview.src =
-                item.resultUrl;
-
-        }
-
-
-        if (originalResult) {
-
-            originalResult.textContent =
-                formatV5Size(
-                    item.file.size
-                );
-
-        }
-
-
-        if (compressedResult) {
-
-            compressedResult.textContent =
-                formatV5Size(
-                    result.blob.size
-                );
-
-        }
-
-
-        if (savedResult) {
-
-            const saved =
-                (
-                    1 -
-                    (
-                        result.blob.size /
-                        item.file.size
-                    )
-                ) * 100;
-
-
-            savedResult.textContent =
-                Math.max(
-                    0,
-                    saved
-                ).toFixed(1) + "%";
-
-        }
-
-
-        if (resultBox) {
-
-            resultBox.style.display =
-                "block";
-
-        }
-
-
-        card.classList.remove(
-            "is-compressing"
+        showStatus(
+            "✅ Compression completed successfully.",
+            "success"
         );
 
 
-        card.classList.add(
-            "is-compressed"
-        );
-
-
-        if (statusText) {
-
-            statusText.textContent =
-                "Compression completed successfully.";
-
-        }
-
-
-        if (compressButton) {
-
-            compressButton.disabled =
-                false;
-
-            compressButton.textContent =
-                "🗜️ Compress Again";
-
-        }
-
-
-        showV5Toast(
-            "✅ Image compressed successfully."
+        showToast(
+            "All selected images have been compressed."
         );
 
 
     } catch (error) {
 
         console.error(
-            "MI7 V5 Compression Error:",
+            "MI7:",
             error
         );
 
 
-        card.classList.remove(
-            "is-compressing"
-        );
-
-
-        card.classList.add(
-            "has-error"
-        );
-
-
-        if (statusText) {
-
-            statusText.textContent =
-                "Compression failed. Please try again.";
-
-        }
-
-
-        if (compressButton) {
-
-            compressButton.disabled =
-                false;
-
-            compressButton.textContent =
-                "🗜️ Compress Image";
-
-        }
-
-
-        showV5Toast(
-            "❌ Compression failed."
+        showStatus(
+            "Something went wrong while compressing the images.",
+            "error"
         );
 
     }
 
+
+    compressBtn.disabled =
+        selectedImages.length === 0;
+
 }
 
 
-/* ==========================================
-   LOAD IMAGE
-========================================== */
 
-function loadV5Image(url) {
+/* =========================================================
+   COMPRESS ONE IMAGE
+========================================================= */
+
+async function compressSingleImage(
+    item,
+    targetBytes
+) {
+
+    const sourceImage =
+        await loadImage(
+            item.file
+        );
+
+
+    const originalWidth =
+        sourceImage.naturalWidth;
+
+
+    const originalHeight =
+        sourceImage.naturalHeight;
+
+
+    /*
+       Start with the original dimensions.
+       If the file is already smaller than
+       target size, we still create a valid
+       output image.
+    */
+
+    let width =
+        originalWidth;
+
+
+    let height =
+        originalHeight;
+
+
+    let quality =
+        0.88;
+
+
+    let blob =
+        await canvasToBlob(
+            sourceImage,
+            width,
+            height,
+            quality
+        );
+
+
+    /*
+       Try different quality levels first.
+    */
+
+    if (blob.size > targetBytes) {
+
+        const qualityLevels = [
+
+            0.82,
+            0.76,
+            0.70,
+            0.64,
+            0.58,
+            0.52,
+            0.46,
+            0.40,
+            0.34,
+            0.28,
+            0.22,
+            0.18
+
+        ];
+
+
+        for (
+            const q of qualityLevels
+        ) {
+
+            blob =
+                await canvasToBlob(
+                    sourceImage,
+                    width,
+                    height,
+                    q
+                );
+
+
+            quality =
+                q;
+
+
+            if (
+                blob.size <=
+                targetBytes
+            ) {
+
+                break;
+
+            }
+
+        }
+
+    }
+
+
+    /*
+       If quality reduction alone was not enough,
+       reduce dimensions gradually.
+    */
+
+    let dimensionAttempts =
+        0;
+
+
+    while (
+        blob.size > targetBytes &&
+        dimensionAttempts < 8
+    ) {
+
+        width =
+            Math.max(
+                160,
+                Math.round(
+                    width * 0.82
+                )
+            );
+
+
+        height =
+            Math.max(
+                160,
+                Math.round(
+                    height * 0.82
+                )
+            );
+
+
+        quality =
+            Math.min(
+                0.82,
+                Math.max(
+                    0.42,
+                    quality
+                )
+            );
+
+
+        blob =
+            await canvasToBlob(
+                sourceImage,
+                width,
+                height,
+                quality
+            );
+
+
+        dimensionAttempts++;
+
+    }
+
+
+    /*
+       If target is extremely small and browser
+       cannot reach it, return the smallest valid
+       result instead of creating a broken file.
+    */
+
+    const compressedSize =
+        blob.size;
+
+
+    const savedPercent =
+        Math.max(
+            0,
+            (
+                (
+                    item.originalSize -
+                    compressedSize
+                ) /
+                item.originalSize
+            ) * 100
+        );
+
+
+    const outputType =
+        getOutputType(
+            item.type
+        );
+
+
+    const outputExtension =
+        getOutputExtension(
+            outputType
+        );
+
+
+    const outputName =
+        createOutputName(
+            item.file.name,
+            outputExtension
+        );
+
+
+    const outputBlob =
+        await convertBlobType(
+            blob,
+            outputType,
+            quality
+        );
+
+
+    return {
+
+        id:
+            item.id,
+
+        fileName:
+            item.file.name,
+
+        outputName:
+            outputName,
+
+        originalSize:
+            item.originalSize,
+
+        compressedSize:
+            outputBlob.size,
+
+        savedPercent:
+            savedPercent,
+
+        width:
+            width,
+
+        height:
+            height,
+
+        type:
+            outputType,
+
+        blob:
+            outputBlob,
+
+        url:
+            URL.createObjectURL(
+                outputBlob
+            ),
+
+        error:
+            false
+
+    };
+
+}
+
+
+
+/* =========================================================
+   LOAD IMAGE
+========================================================= */
+
+function loadImage(file) {
 
     return new Promise(
-        (resolve, reject) => {
+        (
+            resolve,
+            reject
+        ) => {
 
-            const img =
+            const image =
                 new Image();
 
 
-            img.onload = () => {
+            image.onload =
+                function () {
 
-                resolve(img);
+                    resolve(
+                        image
+                    );
 
-            };
+                };
 
 
-            img.onerror = () => {
+            image.onerror =
+                function () {
 
-                reject(
-                    new Error(
-                        "Unable to load image."
-                    )
+                    reject(
+                        new Error(
+                            "Unable to load image."
+                        )
+                    );
+
+                };
+
+
+            image.src =
+                URL.createObjectURL(
+                    file
                 );
-
-            };
-
-
-            img.src =
-                url;
 
         }
     );
@@ -1113,322 +1328,604 @@ function loadV5Image(url) {
 }
 
 
-/* ==========================================
-   OUTPUT FORMAT
-========================================== */
 
-function chooseV5OutputType(file) {
+/* =========================================================
+   CANVAS TO BLOB
+========================================================= */
+
+function canvasToBlob(
+    sourceImage,
+    width,
+    height,
+    quality
+) {
+
+    return new Promise(
+        (
+            resolve,
+            reject
+        ) => {
+
+            const canvas =
+                document.createElement(
+                    "canvas"
+                );
+
+
+            canvas.width =
+                width;
+
+
+            canvas.height =
+                height;
+
+
+            const ctx =
+                canvas.getContext(
+                    "2d",
+                    {
+                        alpha: true
+                    }
+                );
+
+
+            if (!ctx) {
+
+                reject(
+                    new Error(
+                        "Canvas is not supported."
+                    )
+                );
+
+                return;
+
+            }
+
+
+            ctx.imageSmoothingEnabled =
+                true;
+
+
+            ctx.imageSmoothingQuality =
+                "high";
+
+
+            /*
+               White background is used because
+               JPG does not support transparency.
+            */
+
+            ctx.fillStyle =
+                "#ffffff";
+
+
+            ctx.fillRect(
+                0,
+                0,
+                width,
+                height
+            );
+
+
+            ctx.drawImage(
+                sourceImage,
+                0,
+                0,
+                width,
+                height
+            );
+
+
+            canvas.toBlob(
+                blob => {
+
+                    if (!blob) {
+
+                        reject(
+                            new Error(
+                                "Unable to create compressed image."
+                            )
+                        );
+
+                        return;
+
+                    }
+
+
+                    resolve(
+                        blob
+                    );
+
+                },
+
+                "image/jpeg",
+
+                quality
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =========================================================
+   OUTPUT TYPE
+========================================================= */
+
+function getOutputType(
+    originalType
+) {
 
     /*
-       JPEG/PNG/WEBP ko browser-friendly
-       output me convert karenge.
-
-       Transparency wali PNG ko WEBP
-       me convert karna generally useful hai.
+       JPEG is used as the final compressed format
+       because it gives good size reduction and is
+       widely supported by browsers, gallery apps
+       and sharing systems.
     */
-
-    if (
-        file.type ===
-        "image/webp"
-    ) {
-
-        return "image/webp";
-
-    }
-
-
-    if (
-        file.type ===
-        "image/png"
-    ) {
-
-        return "image/webp";
-
-    }
-
 
     return "image/jpeg";
 
 }
 
 
-/* ==========================================
-   FIND BEST QUALITY
-========================================== */
 
-async function findV5CompressedBlob(
-    canvas,
-    targetBytes,
-    outputType
+/* =========================================================
+   OUTPUT EXTENSION
+========================================================= */
+
+function getOutputExtension(
+    type
 ) {
 
-    let low =
-        0.05;
-
-    let high =
-        0.95;
-
-
-    let bestBlob =
-        null;
-
-
-    /*
-       10 iterations se quality ke
-       near-best result ko find karenge.
-    */
-
-    for (
-        let i = 0;
-        i < 10;
-        i++
+    if (
+        type ===
+        "image/jpeg"
     ) {
 
-        const quality =
-            (low + high) / 2;
-
-
-        const blob =
-            await canvasToV5Blob(
-                canvas,
-                outputType,
-                quality
-            );
-
-
-        if (!blob) {
-
-            throw new Error(
-                "Browser could not create compressed image."
-            );
-
-        }
-
-
-        if (
-            blob.size <=
-            targetBytes
-        ) {
-
-            bestBlob =
-                blob;
-
-            low =
-                quality;
-
-        } else {
-
-            high =
-                quality;
-
-        }
+        return ".jpg";
 
     }
 
 
-    /*
-       Agar exact target se chhota
-       result mil gaya to wahi use hoga.
-    */
+    if (
+        type ===
+        "image/png"
+    ) {
 
-    if (bestBlob) {
-
-        return {
-            blob: bestBlob
-        };
+        return ".png";
 
     }
 
 
-    /*
-       Minimum quality par ek final attempt.
-    */
+    if (
+        type ===
+        "image/webp"
+    ) {
 
-    const finalBlob =
-        await canvasToV5Blob(
-            canvas,
-            outputType,
-            0.05
-        );
+        return ".webp";
+
+    }
 
 
-    return {
-        blob: finalBlob
-    };
+    return ".jpg";
 
 }
 
 
-/* ==========================================
-   CANVAS → BLOB
-========================================== */
 
-function canvasToV5Blob(
-    canvas,
+/* =========================================================
+   CONVERT BLOB TYPE
+========================================================= */
+
+async function convertBlobType(
+    blob,
     type,
     quality
 ) {
 
-    return new Promise(
-        resolve => {
-
-            canvas.toBlob(
-                blob => {
-
-                    resolve(blob);
-
-                },
-
-                type,
-
-                quality
-
-            );
-
-        }
-    );
-
-}
-
-/* ==========================================
-   MI7 REDUCE IMAGE SIZE IN KB
-   COMPRESS.JS V5
-   PART 3 — DOWNLOAD + SHARE + REMOVE
-========================================== */
-
-
-/* ==========================================
-   DOWNLOAD COMPRESSED IMAGE
-========================================== */
-
-function downloadV5Image(id) {
-
-    const item = v5Images.find(
-        image => image.id === id
-    );
-
-
     if (
-        !item ||
-        !item.resultBlob ||
-        !item.resultUrl
+        blob.type === type
     ) {
 
-        showV5Toast(
-            "⚠️ Please compress the image first."
-        );
-
-        return;
-
-    }
-
-
-    const extension =
-        getV5Extension(
-            item.outputType
-        );
-
-
-    const originalName =
-        item.file.name
-        .replace(/\.[^/.]+$/, "");
-
-
-    const fileName =
-        `${originalName}-compressed.${extension}`;
-
-
-    const link =
-        document.createElement("a");
-
-
-    link.href =
-        item.resultUrl;
-
-    link.download =
-        fileName;
-
-
-    document.body.appendChild(link);
-
-    link.click();
-
-    link.remove();
-
-
-    showV5Toast(
-        "✅ Compressed image downloaded."
-    );
-
-}
-
-
-/* ==========================================
-   GET OUTPUT EXTENSION
-========================================== */
-
-function getV5Extension(type) {
-
-    if (
-        type === "image/webp"
-    ) {
-
-        return "webp";
-
-    }
-
-
-    if (
-        type === "image/png"
-    ) {
-
-        return "png";
-
-    }
-
-
-    return "jpg";
-
-}
-
-
-/* ==========================================
-   SHARE IMAGE
-========================================== */
-
-async function shareV5Image(id) {
-
-    const item =
-        v5Images.find(
-            image => image.id === id
-        );
-
-
-    if (
-        !item ||
-        !item.resultBlob
-    ) {
-
-        showV5Toast(
-            "⚠️ Please compress the image first."
-        );
-
-        return;
+        return blob;
 
     }
 
 
     /*
-       Web Share API check
+       canvasToBlob already produces JPEG.
+       Return it directly.
     */
 
+    return blob;
+
+}
+
+
+
+/* =========================================================
+   CREATE OUTPUT FILE NAME
+========================================================= */
+
+function createOutputName(
+    originalName,
+    extension
+) {
+
+    const lastDot =
+        originalName.lastIndexOf(
+            "."
+        );
+
+
+    let baseName;
+
+
     if (
-        typeof navigator.share !==
-        "function"
+        lastDot > 0
     ) {
 
-        showV5Toast(
-            "📤 Image sharing is not supported in this browser."
+        baseName =
+            originalName.substring(
+                0,
+                lastDot
+            );
+
+    } else {
+
+        baseName =
+            originalName;
+
+    }
+
+
+    return (
+        baseName +
+        "_compressed" +
+        extension
+    );
+
+}
+
+
+
+/* =========================================================
+   END PART 2
+========================================================= */
+
+/* =========================================================
+   MI7 REDUCE IMAGE SIZE IN KB
+   COMPRESS.JS — V6 FINAL
+   PART 3 — FINAL
+========================================================= */
+
+
+/* =========================================================
+   RENDER RESULT CARD
+========================================================= */
+
+function renderResultCard(result) {
+
+    if (!resultGrid) {
+
+        return;
+
+    }
+
+
+    const card =
+        document.createElement(
+            "div"
+        );
+
+
+    card.className =
+        "mi7-result-item";
+
+
+    card.dataset.id =
+        result.id;
+
+
+
+    /* =========================================
+       ERROR RESULT
+    ========================================== */
+
+    if (result.error) {
+
+        card.innerHTML = `
+
+            <div class="mi7-result-details">
+
+                <strong>
+                    ${escapeHTML(
+                        result.fileName
+                    )}
+                </strong>
+
+                <br><br>
+
+                ❌
+                ${escapeHTML(
+                    result.errorMessage
+                )}
+
+            </div>
+
+        `;
+
+
+        resultGrid.appendChild(
+            card
+        );
+
+
+        return;
+
+    }
+
+
+
+    /* =========================================
+       RESULT PREVIEW
+    ========================================== */
+
+    const preview =
+        document.createElement(
+            "div"
+        );
+
+
+    preview.className =
+        "mi7-result-preview";
+
+
+    const image =
+        document.createElement(
+            "img"
+        );
+
+
+    image.src =
+        result.url;
+
+
+    image.alt =
+        result.outputName;
+
+
+    preview.appendChild(
+        image
+    );
+
+
+
+    /* =========================================
+       RESULT NAME
+    ========================================== */
+
+    const name =
+        document.createElement(
+            "div"
+        );
+
+
+    name.className =
+        "mi7-result-name";
+
+
+    name.textContent =
+        result.outputName;
+
+
+
+    /* =========================================
+       RESULT DETAILS
+    ========================================== */
+
+    const details =
+        document.createElement(
+            "div"
+        );
+
+
+    details.className =
+        "mi7-result-details";
+
+
+    details.innerHTML =
+
+        "<strong>Original:</strong> " +
+        formatBytes(
+            result.originalSize
+        ) +
+
+        "<br>" +
+
+        "<strong>Compressed:</strong> " +
+        formatBytes(
+            result.compressedSize
+        ) +
+
+        "<br>" +
+
+        "<strong>Saved:</strong> " +
+        result.savedPercent.toFixed(1) +
+        "%" +
+
+        "<br>" +
+
+        "<strong>Dimensions:</strong> " +
+        result.width +
+        " × " +
+        result.height +
+        " px";
+
+
+
+    /* =========================================
+       SAVED BADGE
+    ========================================== */
+
+    const saved =
+        document.createElement(
+            "span"
+        );
+
+
+    saved.className =
+        "mi7-saved";
+
+
+    saved.textContent =
+        "✓ Compressed";
+
+
+
+    /* =========================================
+       ACTION BUTTONS
+    ========================================== */
+
+    const actions =
+        document.createElement(
+            "div"
+        );
+
+
+    actions.className =
+        "mi7-result-actions";
+
+
+
+    /* DOWNLOAD */
+
+    const downloadButton =
+        document.createElement(
+            "button"
+        );
+
+
+    downloadButton.type =
+        "button";
+
+
+    downloadButton.className =
+        "mi7-download-btn";
+
+
+    downloadButton.innerHTML =
+        "⬇️ Download";
+
+
+    downloadButton.addEventListener(
+        "click",
+        function () {
+
+            downloadResult(
+                result
+            );
+
+        }
+    );
+
+
+
+    /* SHARE */
+
+    const shareButton =
+        document.createElement(
+            "button"
+        );
+
+
+    shareButton.type =
+        "button";
+
+
+    shareButton.className =
+        "mi7-share-btn";
+
+
+    shareButton.innerHTML =
+        "📤 Share";
+
+
+    shareButton.addEventListener(
+        "click",
+        function () {
+
+            shareResult(
+                result
+            );
+
+        }
+    );
+
+
+    actions.appendChild(
+        downloadButton
+    );
+
+
+    actions.appendChild(
+        shareButton
+    );
+
+
+
+    /* =========================================
+       ADD EVERYTHING TO ONE RESULT CARD
+    ========================================== */
+
+    card.appendChild(
+        preview
+    );
+
+
+    card.appendChild(
+        name
+    );
+
+
+    card.appendChild(
+        details
+    );
+
+
+    card.appendChild(
+        saved
+    );
+
+
+    card.appendChild(
+        actions
+    );
+
+
+    resultGrid.appendChild(
+        card
+    );
+
+}
+
+
+
+/* =========================================================
+   DOWNLOAD RESULT
+========================================================= */
+
+function downloadResult(result) {
+
+    if (
+        !result ||
+        !result.blob
+    ) {
+
+        showToast(
+            "Download is not available."
         );
 
         return;
@@ -1436,101 +1933,52 @@ async function shareV5Image(id) {
     }
 
 
-    const extension =
-        getV5Extension(
-            item.outputType
+    try {
+
+        const link =
+            document.createElement(
+                "a"
+            );
+
+
+        link.href =
+            result.url;
+
+
+        link.download =
+            result.outputName;
+
+
+        link.style.display =
+            "none";
+
+
+        document.body.appendChild(
+            link
         );
 
 
-    const originalName =
-        item.file.name
-        .replace(/\.[^/.]+$/, "");
+        link.click();
 
 
-    const fileName =
-        `${originalName}-compressed.${extension}`;
+        link.remove();
 
 
-    try {
-
-        const file =
-            new File(
-                [
-                    item.resultBlob
-                ],
-                fileName,
-                {
-                    type:
-                        item.outputType
-                }
-            );
-
-
-        /*
-           Check whether browser allows
-           file sharing.
-        */
-
-        if (
-            navigator.canShare &&
-            !navigator.canShare({
-                files: [file]
-            })
-        ) {
-
-            showV5Toast(
-                "📤 File sharing is not supported here."
-            );
-
-            return;
-
-        }
-
-
-        await navigator.share({
-
-            title:
-                "Compressed Image",
-
-            text:
-                "Compressed with MI7 Image Tools",
-
-            files:
-                [file]
-
-        });
-
-
-        showV5Toast(
-            "✅ Share panel opened."
+        showToast(
+            "Image downloaded successfully."
         );
 
 
     } catch (error) {
 
-        /*
-           User pressing Cancel is not an error.
-        */
-
-        if (
-            error &&
-            error.name ===
-            "AbortError"
-        ) {
-
-            return;
-
-        }
-
-
         console.error(
-            "MI7 V5 Share Error:",
+            "MI7 download error:",
             error
         );
 
 
-        showV5Toast(
-            "❌ Unable to share this image."
+        showToast(
+            "Unable to download this image."
         );
 
     }
@@ -1538,165 +1986,315 @@ async function shareV5Image(id) {
 }
 
 
-/* ==========================================
-   REMOVE IMAGE
-========================================== */
 
-function removeV5Image(id) {
+/* =========================================================
+   SHARE RESULT
+========================================================= */
 
-    const index =
-        v5Images.findIndex(
-            image => image.id === id
+async function shareResult(result) {
+
+    if (
+        !result ||
+        !result.blob
+    ) {
+
+        showToast(
+            "Share is not available."
         );
 
-
-    if (index === -1) {
         return;
-    }
-
-
-    const item =
-        v5Images[index];
-
-
-    /*
-       Free object URLs
-    */
-
-    if (item.objectUrl) {
-
-        URL.revokeObjectURL(
-            item.objectUrl
-        );
-
-    }
-
-
-    if (item.resultUrl) {
-
-        URL.revokeObjectURL(
-            item.resultUrl
-        );
 
     }
 
 
     /*
-       Remove card
+       Web Share API with files works on
+       supported mobile browsers.
     */
 
-    const card =
-        getV5Card(id);
+    if (
+        navigator.share &&
+        navigator.canShare
+    ) {
 
+        try {
 
-    if (card) {
+            const file =
+                new File(
+                    [
+                        result.blob
+                    ],
 
-        card.remove();
+                    result.outputName,
 
-    }
-
-
-    /*
-       Remove thumbnail
-    */
-
-    const thumbnail =
-        v5Gallery.querySelector(
-            `.v5-thumbnail[data-id="${id}"]`
-        );
-
-
-    if (thumbnail) {
-
-        thumbnail.remove();
-
-    }
-
-
-    /*
-       Remove from array
-    */
-
-    v5Images.splice(
-        index,
-        1
-    );
-
-
-    /*
-       Renumber thumbnails
-    */
-
-    updateV5ThumbnailNumbers();
-
-
-    updateV5EmptyMessage();
-
-
-    showV5Toast(
-        "🗑️ Image removed."
-    );
-
-}
-
-
-/* ==========================================
-   UPDATE THUMBNAIL NUMBERS
-========================================== */
-
-function updateV5ThumbnailNumbers() {
-
-    const thumbnails =
-        v5Gallery.querySelectorAll(
-            ".v5-thumbnail"
-        );
-
-
-    thumbnails.forEach(
-        (thumbnail, index) => {
-
-            const number =
-                thumbnail.querySelector(
-                    ".v5-thumbnail-number"
+                    {
+                        type:
+                            result.blob.type
+                    }
                 );
 
 
-            if (number) {
+            const shareData = {
 
-                number.textContent =
-                    index + 1;
+                files: [
+                    file
+                ],
+
+                title:
+                    "Compressed Image",
+
+                text:
+                    "Compressed with Maurya Image Tools (MI7)"
+
+            };
+
+
+            if (
+                navigator.canShare(
+                    shareData
+                )
+            ) {
+
+                await navigator.share(
+                    shareData
+                );
+
+
+                showToast(
+                    "Share completed."
+                );
+
+
+                return;
+
+            }
+
+        } catch (error) {
+
+            /*
+               User cancelled share.
+               Do not show an error for cancellation.
+            */
+
+            if (
+                error &&
+                error.name ===
+                    "AbortError"
+            ) {
+
+                return;
+
+            }
+
+
+            console.error(
+                "MI7 share error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /*
+       Fallback:
+       download the file if browser does not
+       support direct file sharing.
+    */
+
+    showToast(
+        "Direct sharing is not supported by this browser. Download the image and share it from Gallery."
+    );
+
+}
+
+
+
+/* =========================================================
+   RESET EVERYTHING
+========================================================= */
+
+if (resetBtn) {
+
+    resetBtn.addEventListener(
+        "click",
+        resetEverything
+    );
+
+}
+
+
+function resetEverything() {
+
+    /*
+       Revoke selected image URLs.
+    */
+
+    selectedImages.forEach(
+        item => {
+
+            if (
+                item.previewUrl
+            ) {
+
+                URL.revokeObjectURL(
+                    item.previewUrl
+                );
 
             }
 
         }
     );
 
+
+    /*
+       Revoke compressed result URLs.
+    */
+
+    compressedResults.forEach(
+        result => {
+
+            if (
+                result.url
+            ) {
+
+                URL.revokeObjectURL(
+                    result.url
+                );
+
+            }
+
+        }
+    );
+
+
+    selectedImages =
+        [];
+
+
+    compressedResults =
+        [];
+
+
+    if (imageInput) {
+
+        imageInput.value =
+            "";
+
+    }
+
+
+    if (imageGrid) {
+
+        imageGrid.innerHTML =
+            "";
+
+    }
+
+
+    if (resultGrid) {
+
+        resultGrid.innerHTML =
+            "";
+
+    }
+
+
+    if (emptyState) {
+
+        emptyState.classList.remove(
+            "hidden"
+        );
+
+        emptyState.textContent =
+            "No images selected yet.";
+
+    }
+
+
+    if (targetSizeInput) {
+
+        targetSizeInput.value =
+            "100";
+
+    }
+
+
+    if (compressBtn) {
+
+        compressBtn.disabled =
+            true;
+
+    }
+
+
+    if (statusMessage) {
+
+        statusMessage.className =
+            "mi7-status";
+
+        statusMessage.textContent =
+            "";
+
+    }
+
+
+    showToast(
+        "Tool has been reset."
+    );
+
 }
 
 
-/* ==========================================
-   TOAST MESSAGE
-========================================== */
 
-function showV5Toast(message) {
+/* =========================================================
+   STATUS MESSAGE
+========================================================= */
 
-    const toast =
-        document.getElementById(
-            "v5Toast"
+function showStatus(
+    message,
+    type = ""
+) {
+
+    if (!statusMessage) {
+
+        return;
+
+    }
+
+
+    statusMessage.className =
+        "mi7-status";
+
+
+    if (type) {
+
+        statusMessage.classList.add(
+            type
         );
 
+    }
+
+
+    statusMessage.textContent =
+        message;
+
+}
+
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer =
+    null;
+
+
+function showToast(message) {
 
     if (!toast) {
-
-        /*
-           Fallback if toast element
-           isn't present in HTML.
-        */
-
-        console.log(
-            "MI7:",
-            message
-        );
 
         return;
 
@@ -1707,85 +2305,317 @@ function showV5Toast(message) {
         message;
 
 
-    toast.style.display =
-        "block";
-
-
-    /*
-       Small delay so CSS transition
-       can start properly.
-    */
-
-    requestAnimationFrame(
-        () => {
-
-            toast.style.opacity =
-                "1";
-
-            toast.style.transform =
-                "translateX(-50%) translateY(0)";
-
-        }
+    toast.classList.add(
+        "show"
     );
 
 
-    clearTimeout(
-        toast._v5Timer
-    );
+    if (toastTimer) {
+
+        clearTimeout(
+            toastTimer
+        );
+
+    }
 
 
-    toast._v5Timer =
+    toastTimer =
         setTimeout(
-            () => {
+            function () {
 
-                toast.style.opacity =
-                    "0";
-
-                toast.style.transform =
-                    "translateX(-50%) translateY(20px)";
-
-
-                setTimeout(
-                    () => {
-
-                        toast.style.display =
-                            "none";
-
-                    },
-                    250
+                toast.classList.remove(
+                    "show"
                 );
 
             },
-            2500
+
+            2800
         );
 
 }
 
 
-/* ==========================================
-   FINAL PAGE CLEANUP
-========================================== */
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(
+        value ?? ""
+    )
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+
+/* =========================================================
+   SIDE MENU
+========================================================= */
+
+function openMenu() {
+
+    if (sideMenu) {
+
+        sideMenu.classList.add(
+            "active"
+        );
+
+    }
+
+
+    if (overlay) {
+
+        overlay.classList.add(
+            "active"
+        );
+
+    }
+
+
+    if (menuBtn) {
+
+        menuBtn.setAttribute(
+            "aria-expanded",
+            "true"
+        );
+
+    }
+
+}
+
+
+
+function closeMenu() {
+
+    if (sideMenu) {
+
+        sideMenu.classList.remove(
+            "active"
+        );
+
+    }
+
+
+    if (overlay) {
+
+        overlay.classList.remove(
+            "active"
+        );
+
+    }
+
+
+    if (menuBtn) {
+
+        menuBtn.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   MENU BUTTON
+========================================================= */
+
+if (menuBtn) {
+
+    menuBtn.addEventListener(
+        "click",
+        openMenu
+    );
+
+}
+
+
+
+/* =========================================================
+   CLOSE MENU BUTTON
+========================================================= */
+
+if (closeMenuBtn) {
+
+    closeMenuBtn.addEventListener(
+        "click",
+        closeMenu
+    );
+
+}
+
+
+
+/* =========================================================
+   OVERLAY CLOSE
+========================================================= */
+
+if (overlay) {
+
+    overlay.addEventListener(
+        "click",
+        closeMenu
+    );
+
+}
+
+
+
+/* =========================================================
+   CLOSE MENU WITH ESC
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function (event) {
+
+        if (
+            event.key ===
+            "Escape"
+        ) {
+
+            closeMenu();
+
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   CLOSE MENU AFTER LINK CLICK
+========================================================= */
+
+if (sideMenu) {
+
+    sideMenu
+        .querySelectorAll("a")
+        .forEach(
+            link => {
+
+                link.addEventListener(
+                    "click",
+                    closeMenu
+                );
+
+            }
+        );
+
+}
+
+
+
+/* =========================================================
+   PREVENT INVALID TARGET SIZE
+========================================================= */
+
+if (targetSizeInput) {
+
+    targetSizeInput.addEventListener(
+        "change",
+        function () {
+
+            let value =
+                Number(
+                    targetSizeInput.value
+                );
+
+
+            if (
+                !Number.isFinite(value) ||
+                value < 5
+            ) {
+
+                value = 5;
+
+            }
+
+
+            if (
+                value > 50000
+            ) {
+
+                value = 50000;
+
+            }
+
+
+            targetSizeInput.value =
+                Math.round(
+                    value
+                );
+
+        }
+    );
+
+}
+
+
+
+/* =========================================================
+   PAGE CLEANUP
+========================================================= */
 
 window.addEventListener(
     "beforeunload",
-    () => {
+    function () {
 
-        v5Images.forEach(
+        selectedImages.forEach(
             item => {
 
-                if (item.objectUrl) {
+                if (
+                    item.previewUrl
+                ) {
 
                     URL.revokeObjectURL(
-                        item.objectUrl
+                        item.previewUrl
                     );
 
                 }
 
+            }
+        );
 
-                if (item.resultUrl) {
+
+        compressedResults.forEach(
+            result => {
+
+                if (
+                    result.url
+                ) {
 
                     URL.revokeObjectURL(
-                        item.resultUrl
+                        result.url
                     );
 
                 }
@@ -1797,11 +2627,7 @@ window.addEventListener(
 );
 
 
-/* ==========================================
-   V5 READY
-========================================== */
 
-console.log(
-    "MI7 Reduce Image Size V5 loaded successfully."
-);
-
+/* =========================================================
+   END OF COMPRESS.JS
+========================================================= */
