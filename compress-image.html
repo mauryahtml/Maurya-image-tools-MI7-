@@ -11,55 +11,32 @@
     >
 
     <meta
-        name="description"
-        content="Reduce image size in KB online with Maurya Image Tools (MI7). Compress single or multiple JPG, PNG and WEBP images."
+        name="theme-color"
+        content="#1565d8"
     >
 
     <meta
-        name="theme-color"
-        content="#2563eb"
+        name="description"
+        content="Reduce image size in KB with Maurya Image Tools (MI7)."
     >
 
     <title>
-        Reduce Image Size in KB - Maurya Image Tools (MI7)
+        Reduce Image Size in KB | MI7 Image Tools
     </title>
 
 
-    <!-- =====================================
-         MI7 ICON
-    ====================================== -->
-
+    <!-- MI7 LOGO -->
     <link
         rel="icon"
         type="image/png"
-        href="logo.png"
-    >
-
-    <link
-        rel="apple-touch-icon"
-        href="logo.png"
+        href="assets/logo/192-logo.png"
     >
 
 
-    <!-- =====================================
-         TOOL CSS
-    ====================================== -->
-
+    <!-- TOOL CSS -->
     <link
         rel="stylesheet"
         href="tool.css"
-    >
-
-
-    <!-- =====================================
-         OPTIONAL MAIN SITE CSS
-         Keep this only if your project
-         already uses style.css
-    ====================================== -->
-
-    <link
-        rel="stylesheet"
-        href="style.css"
     >
 
 </head>
@@ -68,44 +45,49 @@
 <body>
 
 
-<!-- =========================================
-     MI7 HEADER
-========================================= -->
+<!-- ==========================================
+     MENU OVERLAY
+========================================== -->
+
+<div
+    id="overlay"
+    class="mi7-overlay"
+></div>
+
+
+
+<!-- ==========================================
+     HEADER
+========================================== -->
 
 <header class="mi7-header">
 
 
-    <!-- =====================================
-         MENU BUTTON
-    ====================================== -->
+    <!-- MENU BUTTON -->
 
     <button
+        id="menuBtn"
+        class="mi7-menu-btn"
         type="button"
-        class="mi7-menu-button"
-        id="mi7MenuButton"
         aria-label="Open Menu"
-        aria-expanded="false"
     >
-
         ☰
-
     </button>
 
 
-    <!-- =====================================
-         LOGO
-    ====================================== -->
+
+    <!-- MI7 LOGO + NAME -->
 
     <a
         href="index.html"
         class="mi7-brand"
-        aria-label="Maurya Image Tools Home"
+        aria-label="MI7 Home"
     >
 
         <img
-            src="logo.png"
+            src="assets/logo/logo.png"
             alt="MI7 Logo"
-            class="mi7-logo"
+            class="mi7-brand-logo"
         >
 
 
@@ -124,13 +106,12 @@
     </a>
 
 
-    <!-- =====================================
-         HOME BUTTON
-    ====================================== -->
+
+    <!-- HOME BUTTON -->
 
     <a
         href="index.html"
-        class="mi7-home-button"
+        class="mi7-home-btn"
     >
 
         🏠
@@ -142,18 +123,18 @@
 
 
 
-<!-- =========================================
-     SLIDE MENU
-========================================= -->
+<!-- ==========================================
+     SIDE MENU
+========================================== -->
 
-<aside
-    class="mi7-slide-menu"
-    id="mi7SlideMenu"
-    aria-hidden="true"
+<nav
+    id="sideMenu"
+    class="mi7-side-menu"
+    aria-label="MI7 Tools Menu"
 >
 
 
-    <div class="mi7-menu-header">
+    <div class="mi7-menu-top">
 
         <strong>
             MI7 Tools
@@ -161,9 +142,8 @@
 
 
         <button
+            id="closeMenu"
             type="button"
-            id="mi7MenuClose"
-            class="mi7-menu-close"
             aria-label="Close Menu"
         >
 
@@ -174,169 +154,169 @@
     </div>
 
 
-    <nav class="mi7-menu-links">
+
+    <a href="index.html">
+        🏠 Home
+    </a>
 
 
-        <a href="index.html">
-            🏠 Home
+    <a href="compress-image.html">
+        🗜️ Reduce Image Size in KB
+    </a>
+
+
+    <a href="resize-image-px.html">
+        📐 Resize Image in PX
+    </a>
+
+
+    <a href="resize-image-mm.html">
+        📏 Resize Image in MM
+    </a>
+
+
+    <a href="resize-image-cm.html">
+        📏 Resize Image in CM
+    </a>
+
+
+    <a href="passport-photo-maker.html">
+        🪪 Passport Photo Maker
+    </a>
+
+
+    <a href="signature-resizer.html">
+        ✍️ Signature Resizer
+    </a>
+
+
+    <a href="image-to-pdf.html">
+        📄 Image to PDF
+    </a>
+
+
+    <a href="jpg-to-pdf.html">
+        📄 JPG to PDF
+    </a>
+
+
+    <a href="pdf-to-image.html">
+        🖼️ PDF to Image
+    </a>
+
+
+    <hr>
+
+
+    <a href="about.html">
+        About
+    </a>
+
+
+    <a href="contact.html">
+        Contact
+    </a>
+
+
+    <a href="privacy-policy.html">
+        Privacy Policy
+    </a>
+
+
+    <a href="terms.html">
+        Terms &amp; Conditions
+    </a>
+
+
+    <a href="feedback.html">
+        Feedback
+    </a>
+
+</nav>
+
+
+
+<!-- ==========================================
+     MAIN
+========================================== -->
+
+<main class="mi7-main">
+
+
+    <!-- ======================================
+         ONE AND ONLY TOOL BOX
+    ======================================= -->
+
+    <section class="mi7-tool-box">
+
+
+        <!-- BACK HOME -->
+
+        <a
+            href="index.html"
+            class="mi7-back"
+        >
+
+            ← Back to Home
+
         </a>
 
 
-        <a href="compress-image.html">
-            🗜️ Reduce Image Size in KB
-        </a>
+
+        <!-- TITLE -->
+
+        <h1>
+            Reduce Image Size in KB
+        </h1>
 
 
-        <a href="resize-image-px.html">
-            📐 Resize Image in PX
-        </a>
+        <p class="mi7-subtitle">
 
+            Compress one or multiple images
+            without losing much quality.
 
-        <a href="resize-image-mm.html">
-            📏 Resize Image in MM
-        </a>
-
-
-        <a href="resize-image-cm.html">
-            📏 Resize Image in CM
-        </a>
-
-
-        <a href="passport-photo-maker.html">
-            🪪 Passport Photo Maker
-        </a>
-
-
-        <a href="signature-resizer.html">
-            ✍️ Signature Resizer
-        </a>
-
-
-        <a href="image-to-pdf.html">
-            📄 Image to PDF
-        </a>
-
-
-        <a href="jpg-to-pdf.html">
-            📄 JPG to PDF
-        </a>
-
-
-        <a href="pdf-to-image.html">
-            🖼️ PDF to Image
-        </a>
-
-
-        <a href="watermark-image.html">
-            💧 Watermark Image
-        </a>
-
-
-        <a href="add-text-image.html">
-            🔤 Add Text to Image
-        </a>
-
-
-    </nav>
-
-</aside>
+        </p>
 
 
 
-<!-- =========================================
-     MENU BACKDROP
-========================================= -->
-
-<div
-    class="mi7-menu-backdrop"
-    id="mi7MenuBackdrop"
-    aria-hidden="true"
-></div>
-
-
-
-<!-- =========================================
-     MAIN PAGE
-========================================= -->
-
-<main class="mi7-page">
-
-
-    <!-- =====================================
-         V5 COMPRESS TOOL START
-         
-         JS DEPENDENCIES:
-         imageInput
-         selectedImageGallery
-         compressResults
-         emptyMessage
-         compressCardTemplate
-    ====================================== -->
-
-    <section
-        class="compress-tool-v5"
-        id="compressTool"
-    >
-
-
-        <!-- =================================
-             TOOL TITLE
-        ================================== -->
-
-        <div class="compress-tool-header">
-
-            <h1>
-                Reduce Image Size in KB
-            </h1>
-
-            <p>
-                Compress one or multiple images
-                without losing much quality.
-            </p>
-
-        </div>
-
-
-
-        <!-- =================================
-             IMAGE SELECT AREA
-        ================================== -->
+        <!-- ==================================
+             IMAGE SELECT BOX
+        =================================== -->
 
         <label
-            class="v5-upload-box"
+            class="mi7-upload"
             for="imageInput"
         >
 
 
-            <div class="upload-icon">
+            <span class="mi7-upload-icon">
                 📷
-            </div>
-
-
-            <h3>
-                Select Multiple Images
-            </h3>
-
-
-            <p>
-                Choose JPG, PNG or WEBP images
-            </p>
-
-
-            <span>
-                You can select multiple images at once
             </span>
 
 
-            <!--
-                IMPORTANT:
-                V5 compress.js uses EXACTLY
-                this ID.
+            <strong>
+                Select Multiple Images
+            </strong>
+
+
+            <span>
+                JPG • PNG • WEBP
+            </span>
+
+
+            <small>
+                Tap here to choose multiple images
+            </small>
+
+
+
+            <!-- IMPORTANT:
+                 JS uses this exact ID
             -->
 
             <input
-                type="file"
                 id="imageInput"
+                type="file"
                 accept="image/jpeg,image/png,image/webp"
                 multiple
             >
@@ -345,361 +325,158 @@
 
 
 
-        <!-- =================================
-             SELECTED IMAGE GALLERY
-        ================================== -->
-
-        <div
-            class="selected-image-gallery"
-            id="selectedImageGallery"
-        >
-
-        </div>
-
-
-
-        <!-- =================================
-             EMPTY MESSAGE
-        ================================== -->
-
-        <div
-            class="v5-empty-message"
-            id="emptyMessage"
-        >
-
-            Select one or more images to start.
-
-        </div>
-
-
-
-        <!-- =================================
-             IMAGE RESULT CARDS
+        <!-- ==================================
+             SMALL IMAGE THUMBNAILS
              
-             Each selected image gets
-             its OWN card here.
-        ================================== -->
+             1  2  3
+             4  5  6
+        =================================== -->
 
         <div
-            class="compress-results"
-            id="compressResults"
+            id="imageGrid"
+            class="mi7-image-grid"
         >
 
         </div>
 
 
 
-        <!-- =================================
-             CARD TEMPLATE
-             
-             V5 compress.js uses this
-             exact template ID.
-        ================================== -->
+        <!-- NO IMAGE MESSAGE -->
 
-        <template id="compressCardTemplate">
+        <div
+            id="emptyState"
+            class="mi7-empty"
+        >
 
+            No images selected yet.
 
-            <article
-                class="compress-image-card"
-            >
+        </div>
 
 
-                <!-- IMAGE PREVIEW -->
 
-                <div class="compress-preview">
+        <!-- ==================================
+             TARGET SIZE
+        =================================== -->
 
-                    <img
-                        class="compress-preview-image"
-                        src=""
-                        alt="Selected Image"
-                    >
-
-                </div>
+        <div class="mi7-target-row">
 
 
-                <!-- IMAGE INFORMATION -->
+            <label for="targetSize">
 
-                <div class="compress-image-info">
+                Target size per image
 
-                    <h3
-                        class="compress-file-name"
-                    >
-                        Image
-                    </h3>
+            </label>
 
 
-                    <div class="image-info-grid">
+            <div class="mi7-target-input">
 
 
-                        <div class="info-item">
-
-                            <span class="info-label">
-                                Original Size
-                            </span>
-
-                            <strong class="original-size">
-                                -
-                            </strong>
-
-                        </div>
-
-
-                        <div class="info-item">
-
-                            <span class="info-label">
-                                Dimensions
-                            </span>
-
-                            <strong class="image-dimensions">
-                                -
-                            </strong>
-
-                        </div>
-
-
-                        <div class="info-item">
-
-                            <span class="info-label">
-                                Format
-                            </span>
-
-                            <strong class="image-format">
-                                -
-                            </strong>
-
-                        </div>
-
-
-                    </div>
-
-                </div>
-
-
-                <!-- COMPRESSION SETTINGS -->
-
-                <div class="compression-settings">
-
-
-                    <label>
-                        Target Size
-                    </label>
-
-
-                    <div class="target-size-row">
-
-
-                        <input
-                            type="number"
-                            class="target-size-input"
-                            value="100"
-                            min="5"
-                            max="50000"
-                            inputmode="numeric"
-                        >
-
-
-                        <span class="target-size-unit">
-                            KB
-                        </span>
-
-
-                    </div>
-
-
-                    <button
-                        type="button"
-                        class="v5-compress-button"
-                    >
-
-                        🗜️ Compress Image
-
-                    </button>
-
-
-                </div>
-
-
-                <!-- STATUS -->
-
-                <div
-                    class="compression-status"
-                    aria-live="polite"
-                >
-
-                    <span class="status-icon">
-                        ⏳
-                    </span>
-
-
-                    <span class="status-text">
-                        Ready to compress
-                    </span>
-
-                </div>
-
-
-                <!-- RESULT -->
-
-                <div
-                    class="compression-result"
+                <input
+                    id="targetSize"
+                    type="number"
+                    min="5"
+                    max="50000"
+                    value="100"
+                    inputmode="numeric"
                 >
 
 
-                    <div class="result-title">
-
-                        <span>
-                            ✅ Compression Result
-                        </span>
-
-                    </div>
+                <span>
+                    KB
+                </span>
 
 
-                    <div class="result-image-area">
+            </div>
 
-                        <img
-                            class="result-preview-image"
-                            src=""
-                            alt="Compressed Image"
-                        >
-
-                    </div>
+        </div>
 
 
-                    <div class="result-details">
+
+        <!-- ==================================
+             ONE COMPRESS BUTTON
+        =================================== -->
+
+        <button
+            id="compressBtn"
+            class="mi7-primary-btn"
+            type="button"
+        >
+
+            🗜️ Compress Images
+
+        </button>
 
 
-                        <div class="result-item">
 
-                            <span>
-                                Original
-                            </span>
+        <!-- STATUS MESSAGE -->
 
-                            <strong
-                                class="result-original-size"
-                            >
-                                -
-                            </strong>
+        <div
+            id="statusMessage"
+            class="mi7-status"
+            aria-live="polite"
+        >
 
-                        </div>
+        </div>
 
 
-                        <div class="result-item">
 
-                            <span>
-                                Compressed
-                            </span>
+        <!-- ==================================
+             RESULTS
+             
+             Every image gets its own
+             small result inside SAME
+             main tool box.
+        =================================== -->
 
-                            <strong
-                                class="result-compressed-size"
-                            >
-                                -
-                            </strong>
+        <div
+            id="resultGrid"
+            class="mi7-result-grid"
+        >
 
-                        </div>
-
-
-                        <div class="result-item">
-
-                            <span>
-                                Saved
-                            </span>
-
-                            <strong
-                                class="result-saved-percent"
-                            >
-                                -
-                            </strong>
-
-                        </div>
+        </div>
 
 
-                    </div>
+
+        <!-- ==================================
+             ONE RESET BUTTON
+        =================================== -->
+
+        <button
+            id="resetBtn"
+            class="mi7-reset-btn"
+            type="button"
+        >
+
+            🔄 Reset All
+
+        </button>
 
 
-                    <!-- RESULT ACTIONS -->
+        </section>
 
-                    <div class="result-actions">
-
-
-                        <button
-                            type="button"
-                            class="v5-download-button"
-                        >
-
-                            ⬇️ Download
-
-                        </button>
-
-
-                        <button
-                            type="button"
-                            class="v5-share-button"
-                        >
-
-                            📤 Share
-
-                        </button>
-
-
-                        <button
-                            type="button"
-                            class="v5-reset-button"
-                        >
-
-                            🔄 Remove
-
-                        </button>
-
-
-                    </div>
-
-
-                </div>
-
-
-            </article>
-
-
-        </template>
-
-
-    </section>
-
-
-    <!-- =====================================
-         PART 1 ENDS HERE
-         
-         PART 2 WILL CONTINUE FROM HERE.
-    ====================================== -->
-
-<!-- =========================================
+    <!-- ==========================================
          GOOGLE ADSENSE AREA
-    ========================================== -->
+    =========================================== -->
 
     <section class="mi7-ad-section">
 
         <div class="mi7-ad-box">
-
-            <span>
-                Google AdSense Area
-            </span>
-
+            Google AdSense Area
         </div>
 
     </section>
 
 
 
-    <!-- =========================================
+    <!-- ==========================================
          HOW TO USE
-    ========================================== -->
+    =========================================== -->
 
-    <section class="mi7-info-section">
+    <section class="mi7-info-box">
 
         <h2>
             📖 How to Use
         </h2>
-
 
         <ol>
 
@@ -709,32 +486,43 @@
             </li>
 
             <li>
-                Each image will appear separately
-                with its preview and image details.
+                Selected images will appear as
+                small thumbnails inside the tool box.
             </li>
 
             <li>
-                Enter the required target size
-                in <strong>KB</strong>.
+                The details of each selected image
+                will be shown below its thumbnail.
             </li>
 
             <li>
-                Tap <strong>Compress Image</strong>.
+                Enter the required target size in
+                <strong>KB</strong>.
+            </li>
+
+            <li>
+                Tap
+                <strong>Compress Images</strong>.
             </li>
 
             <li>
                 The compressed result will appear
-                inside the same image card.
+                inside the same tool box.
             </li>
 
             <li>
                 Use <strong>Download</strong> to save
-                the compressed image.
+                an individual compressed image.
             </li>
 
             <li>
                 Use <strong>Share</strong> to share
-                the compressed image from your device.
+                an individual compressed image.
+            </li>
+
+            <li>
+                Tap <strong>Reset All</strong> to
+                remove all selected images and results.
             </li>
 
         </ol>
@@ -743,21 +531,20 @@
 
 
 
-    <!-- =========================================
+    <!-- ==========================================
          FEATURES
-    ========================================== -->
+    =========================================== -->
 
-    <section class="mi7-info-section">
+    <section class="mi7-info-box">
 
         <h2>
             ⭐ Features
         </h2>
 
-
         <ul>
 
             <li>
-                Compress single and multiple images
+                Compress single or multiple images
             </li>
 
             <li>
@@ -769,7 +556,13 @@
             </li>
 
             <li>
-                Separate preview for every image
+                Small thumbnail preview
+                for every selected image
+            </li>
+
+            <li>
+                Separate image details
+                for every image
             </li>
 
             <li>
@@ -778,11 +571,13 @@
             </li>
 
             <li>
-                Download images individually
+                Download each compressed image
+                individually
             </li>
 
             <li>
-                Share images individually
+                Share each compressed image
+                individually
             </li>
 
             <li>
@@ -790,11 +585,7 @@
             </li>
 
             <li>
-                Processing happens in your browser
-            </li>
-
-            <li>
-                Images are not uploaded to our server
+                Images are processed in your browser
             </li>
 
         </ul>
@@ -803,32 +594,34 @@
 
 
 
-    <!-- =========================================
+    <!-- ==========================================
          PRIVACY
-    ========================================== -->
+    =========================================== -->
 
-    <section class="mi7-info-section">
+    <section class="mi7-info-box">
 
         <h2>
             🔒 Privacy
         </h2>
 
-
         <p>
 
-            Your images are processed directly in
-            your browser. They are not uploaded to
-            or permanently stored on the MI7 server
-            by this image compression tool.
+            MI7 Reduce Image Size in KB processes
+            selected images directly in your browser.
 
         </p>
 
+        <p>
+
+            The selected images are not intentionally
+            uploaded to an MI7 server for compression.
+
+        </p>
 
         <p>
 
-            After leaving or refreshing the page,
-            temporary image data used by the browser
-            is cleared.
+            Temporary image data is removed when you
+            reset the tool or leave/refresh the page.
 
         </p>
 
@@ -836,20 +629,28 @@
 
 
 
-    <!-- =========================================
+    <!-- ==========================================
          FOOTER
-    ========================================== -->
+    =========================================== -->
 
     <footer class="mi7-footer">
 
 
         <div class="mi7-footer-brand">
 
-            <img
-                src="logo.png"
-                alt="MI7 Logo"
-                class="mi7-footer-logo"
+
+            <a
+                href="index.html"
+                class="mi7-footer-logo-link"
             >
+
+                <img
+                    src="assets/logo/192-logo.png"
+                    alt="MI7 Logo"
+                    class="mi7-footer-logo"
+                >
+
+            </a>
 
 
             <div>
@@ -864,39 +665,41 @@
 
             </div>
 
+
         </div>
 
 
 
         <!-- FOOTER LINKS -->
 
-        <nav class="mi7-footer-links">
-
+        <nav
+            class="mi7-footer-links"
+            aria-label="Footer Navigation"
+        >
 
             <a href="index.html">
                 Home
             </a>
 
-
             <a href="about.html">
                 About
             </a>
-
 
             <a href="contact.html">
                 Contact
             </a>
 
-
-            <a href="privacy.html">
+            <a href="privacy-policy.html">
                 Privacy
             </a>
-
 
             <a href="terms.html">
                 Terms
             </a>
 
+            <a href="feedback.html">
+                Feedback
+            </a>
 
         </nav>
 
@@ -917,16 +720,13 @@
 
 
 
-<!-- =========================================
-     V5 TOAST
-     
-     compress.js uses EXACT ID:
-     v5Toast
-========================================== -->
+<!-- ==========================================
+     TOAST MESSAGE
+=========================================== -->
 
 <div
-    class="v5-toast"
-    id="v5Toast"
+    id="toast"
+    class="mi7-toast"
     role="status"
     aria-live="polite"
 >
@@ -934,206 +734,12 @@
 
 
 
-<!-- =========================================
-     V5 LOADING
-========================================== -->
-
-<div
-    class="v5-loading"
-    id="v5Loading"
-    aria-hidden="true"
->
-
-    <div class="v5-loader"></div>
-
-    <p>
-        Processing your image...
-    </p>
-
-</div>
-
-
-
-<!-- =========================================
-     MENU SCRIPT
-     
-     This handles the MI7 slide menu
-     without changing main.js.
-========================================== -->
-
-<script>
-
-(function () {
-
-    const menuButton =
-        document.getElementById(
-            "mi7MenuButton"
-        );
-
-    const closeButton =
-        document.getElementById(
-            "mi7MenuClose"
-        );
-
-    const slideMenu =
-        document.getElementById(
-            "mi7SlideMenu"
-        );
-
-    const backdrop =
-        document.getElementById(
-            "mi7MenuBackdrop"
-        );
-
-
-    function openMenu() {
-
-        if (!slideMenu) return;
-
-
-        slideMenu.classList.add(
-            "active"
-        );
-
-
-        if (backdrop) {
-
-            backdrop.classList.add(
-                "active"
-            );
-
-        }
-
-
-        if (menuButton) {
-
-            menuButton.setAttribute(
-                "aria-expanded",
-                "true"
-            );
-
-        }
-
-
-        slideMenu.setAttribute(
-            "aria-hidden",
-            "false"
-        );
-
-    }
-
-
-    function closeMenu() {
-
-        if (!slideMenu) return;
-
-
-        slideMenu.classList.remove(
-            "active"
-        );
-
-
-        if (backdrop) {
-
-            backdrop.classList.remove(
-                "active"
-            );
-
-        }
-
-
-        if (menuButton) {
-
-            menuButton.setAttribute(
-                "aria-expanded",
-                "false"
-            );
-
-        }
-
-
-        slideMenu.setAttribute(
-            "aria-hidden",
-            "true"
-        );
-
-    }
-
-
-    if (menuButton) {
-
-        menuButton.addEventListener(
-            "click",
-            openMenu
-        );
-
-    }
-
-
-    if (closeButton) {
-
-        closeButton.addEventListener(
-            "click",
-            closeMenu
-        );
-
-    }
-
-
-    if (backdrop) {
-
-        backdrop.addEventListener(
-            "click",
-            closeMenu
-        );
-
-    }
-
-
-    document.addEventListener(
-        "keydown",
-        function (event) {
-
-            if (
-                event.key === "Escape"
-            ) {
-
-                closeMenu();
-
-            }
-
-        }
-    );
-
-
-    if (slideMenu) {
-
-        slideMenu
-            .querySelectorAll("a")
-            .forEach(function (link) {
-
-                link.addEventListener(
-                    "click",
-                    closeMenu
-                );
-
-            });
-
-    }
-
-})();
-
-</script>
-
-
-
-<!-- =========================================
-     MI7 COMPRESS JS
+<!-- ==========================================
+     JAVASCRIPT
      
      IMPORTANT:
-     Keep the V5 compress.js exactly
-     as previously provided.
-========================================== -->
+     New JS file will be connected here.
+=========================================== -->
 
 <script
     src="compress.js"
@@ -1144,12 +750,5 @@
 
 </body>
 
-<script>
-/* Menu open/close script */
-</script>
-
-<script
-    src="compress.js"
-    defer
-></script>
-  </html>
+    </html>
+    
