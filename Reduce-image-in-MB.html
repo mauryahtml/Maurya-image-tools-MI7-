@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#2563eb"
+    >
+
+    <meta
+        name="description"
+        content="Reduce image size in MB online with Maurya Image Tools."
+    >
+
+    <title>
+        Reduce Image Size in MB - Maurya Image Tools
+    </title>
+
+
+    <!-- COMMON TOOL CSS -->
+    <link
+        rel="stylesheet"
+        href="tool.css"
+    >
+
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     MOBILE / SIDE MENU OVERLAY
+===================================================== -->
+
+<div
+    class="mi7-overlay"
+    id="overlay"
+></div>
+
+
+<!-- =====================================================
+     SIDE MENU
+===================================================== -->
+
+<aside
+    class="mi7-side-menu"
+    id="sideMenu"
+>
+
+    <div class="mi7-side-header">
+
+        <strong>
+            MI7 Tools
+        </strong>
+
+        <button
+            type="button"
+            class="mi7-close-menu"
+            id="closeMenu"
+            aria-label="Close menu"
+        >
+            ✕
+        </button>
+
+    </div>
+
+
+    <nav class="mi7-side-links">
+
+        <a href="index.html">
+            🏠 Home
+        </a>
+
+        <a href="compress-image.html">
+            📉 Reduce Image Size in KB
+        </a>
+
+        <a href="compress-mb.html">
+            📦 Reduce Image Size in MB
+        </a>
+
+        <a href="resize-image.html">
+            📐 Image Resize
+        </a>
+
+        <a href="passport-photo.html">
+            🪪 Passport Photo Maker
+        </a>
+
+        <a href="signature-resizer.html">
+            ✍️ Signature Resizer
+        </a>
+
+    </nav>
+
+</aside>
+
+
+
+<!-- =====================================================
+     HEADER
+===================================================== -->
+
+<header class="mi7-header">
+
+
+    <!-- MENU BUTTON -->
+
+    <button
+        type="button"
+        class="mi7-menu-btn"
+        id="menuBtn"
+        aria-label="Open menu"
+        aria-expanded="false"
+    >
+        ☰
+    </button>
+
+
+
+    <!-- BRAND / LOGO -->
+
+    <a
+        href="index.html"
+        class="mi7-brand"
+        aria-label="Maurya Image Tools Home"
+    >
+
+        <img
+            src="logo.512.png"
+            alt="MI7 Logo"
+            class="mi7-brand-logo"
+        >
+
+        <div class="mi7-brand-text">
+
+            <strong>
+                Maurya Image Tools
+            </strong>
+
+            <span>
+                Fast • Simple • Private
+            </span>
+
+        </div>
+
+    </a>
+
+
+
+    <!-- HOME BUTTON -->
+
+    <a
+        href="index.html"
+        class="mi7-home-btn"
+        aria-label="Home"
+    >
+
+        🏠
+
+        <span>
+            Home
+        </span>
+
+    </a>
+
+
+</header>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="mi7-main">
+
+
+    <!-- =================================================
+         MAIN TOOL BOX
+    ================================================== -->
+
+    <section
+        class="mi7-tool-box"
+    >
+
+
+        <h1>
+            Reduce Image Size in MB
+        </h1>
+
+
+        <p class="mi7-subtitle">
+            Compress multiple images to your desired MB size.
+        </p>
+
+
+
+        <!-- =================================================
+             IMAGE SELECT AREA
+        ================================================== -->
+
+        <label
+            class="mi7-upload"
+            for="imageInput"
+        >
+
+            <div class="mi7-upload-icon">
+                📷
+            </div>
+
+
+            <strong>
+                Select Images
+            </strong>
+
+
+            <span>
+                Select multiple JPG, PNG or WEBP images
+            </span>
+
+        </label>
+
+
+        <input
+            type="file"
+            id="imageInput"
+            accept="image/jpeg,image/png,image/webp"
+            multiple
+            hidden
+        >
+
+
+
+        <!-- =================================================
+             EMPTY STATE
+        ================================================== -->
+
+        <div
+            class="mi7-empty-state"
+            id="emptyState"
+        >
+            No images selected yet.
+        </div>
+
+
+
+        <!-- =================================================
+             SELECTED IMAGE GRID
+        ================================================== -->
+
+        <div
+            class="mi7-image-grid"
+            id="imageGrid"
+        ></div>
+
+
+
+        <!-- =================================================
+             TARGET SIZE
+        ================================================== -->
+
+        <div class="mi7-target-row">
+
+            <label
+                for="targetSize"
+            >
+                Target Size
+            </label>
+
+
+            <div class="mi7-target-input">
+
+                <input
+                    type="number"
+                    id="targetSize"
+                    value="2"
+                    min="0.05"
+                    max="50"
+                    step="0.05"
+                    inputmode="decimal"
+                >
+
+
+                <span>
+                    MB
+                </span>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             COMPRESS BUTTON
+        ================================================== -->
+
+        <button
+            type="button"
+            class="mi7-primary-btn"
+            id="compressBtn"
+            disabled
+        >
+
+            🗜️ Compress Images
+
+        </button>
+
+
+
+        <!-- =================================================
+             STATUS
+        ================================================== -->
+
+        <div
+            class="mi7-status"
+            id="statusMessage"
+            aria-live="polite"
+        ></div>
+
+
+
+        <!-- =================================================
+             RESULTS
+        ================================================== -->
+
+        <div
+            class="mi7-result-grid"
+            id="resultGrid"
+        ></div>
+
+
+
+        <!-- =================================================
+             RESET
+        ================================================== -->
+
+        <button
+            type="button"
+            class="mi7-reset-btn"
+            id="resetBtn"
+        >
+
+            🔄 Reset All
+
+        </button>
+
+
+    </section>
+
+
+    <!-- Part 2 me ADS + HOW TO USE + FOOTER continue hoga -->
+
+
+</main>
+
+
+
+<!-- =====================================================
+     TOAST
+===================================================== -->
+
+<div
+    class="mi7-toast"
+    id="toast"
+    role="status"
+    aria-live="polite"
+></div>
+<!-- =====================================================
+     ADVERTISEMENT AREA
+===================================================== -->
+
+<section class="mi7-ad-section">
+
+    <div class="mi7-ad-label">
+        Advertisement
+    </div>
+
+    <div class="mi7-ad-box">
+        <!-- Ad code can be added here later -->
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     HOW TO USE
+===================================================== -->
+
+<section class="mi7-info-section">
+
+    <h2>
+        How to Use Reduce Image Size in MB
+    </h2>
+
+
+    <div class="mi7-info-content">
+
+        <div class="mi7-step">
+
+            <span class="mi7-step-number">
+                1
+            </span>
+
+            <div>
+
+                <strong>
+                    Select Images
+                </strong>
+
+                <p>
+                    Select one or multiple images
+                    from your device.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="mi7-step">
+
+            <span class="mi7-step-number">
+                2
+            </span>
+
+            <div>
+
+                <strong>
+                    Choose Target Size
+                </strong>
+
+                <p>
+                    Enter the maximum size you want
+                    for your compressed images in MB.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="mi7-step">
+
+            <span class="mi7-step-number">
+                3
+            </span>
+
+            <div>
+
+                <strong>
+                    Compress Images
+                </strong>
+
+                <p>
+                    Tap the Compress Images button
+                    to reduce the image size.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="mi7-step">
+
+            <span class="mi7-step-number">
+                4
+            </span>
+
+            <div>
+
+                <strong>
+                    Download or Share
+                </strong>
+
+                <p>
+                    After compression, download or
+                    share each image separately.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     FEATURES
+===================================================== -->
+
+<section class="mi7-info-section">
+
+    <h2>
+        Features
+    </h2>
+
+
+    <ul class="mi7-feature-list">
+
+        <li>
+            Multiple image compression
+        </li>
+
+        <li>
+            Target size in MB
+        </li>
+
+        <li>
+            Separate result for every image
+        </li>
+
+        <li>
+            Original and compressed size details
+        </li>
+
+        <li>
+            Image dimensions in pixels
+        </li>
+
+        <li>
+            Download compressed images
+        </li>
+
+        <li>
+            Share compressed images
+        </li>
+
+        <li>
+            Images are processed directly in your browser
+        </li>
+
+    </ul>
+
+</section>
+
+
+
+<!-- =====================================================
+     PRIVACY NOTE
+===================================================== -->
+
+<section class="mi7-privacy-box">
+
+    <h2>
+        🔒 Privacy
+    </h2>
+
+    <p>
+        Your images are processed directly on your
+        device using your browser. Images are not
+        uploaded to our server for compression.
+    </p>
+
+</section>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="mi7-footer">
+
+
+    <!-- FOOTER BRAND -->
+
+    <div class="mi7-footer-brand">
+
+        <img
+            src="logo.512.png"
+            alt="MI7 Logo"
+            class="mi7-footer-logo"
+        >
+
+
+        <div>
+
+            <strong>
+                Maurya Image Tools
+            </strong>
+
+            <p>
+                Simple and useful image tools
+                for everyone.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- FOOTER LINKS -->
+
+    <div class="mi7-footer-links">
+
+        <a href="index.html">
+            Home
+        </a>
+
+        <a href="about.html">
+            About
+        </a>
+
+        <a href="privacy.html">
+            Privacy Policy
+        </a>
+
+        <a href="contact.html">
+            Contact
+        </a>
+
+    </div>
+
+
+
+    <!-- COPYRIGHT -->
+
+    <div class="mi7-footer-bottom">
+
+        © 2026 Maurya Image Tools (MI7).
+        All rights reserved.
+
+    </div>
+
+
+  </footer>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script
+    src="compress-mb.js"
+    defer
+></script>
+
+
+</body>
+
+          </html>
+          
